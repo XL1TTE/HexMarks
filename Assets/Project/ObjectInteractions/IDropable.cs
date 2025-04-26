@@ -19,7 +19,7 @@ namespace Project.ObjectInteractions
         
         
         void ConfigureDropEntry(){
-            m_interactable.m_DragEndEntry.callback.AddListener(OnItemDroping);
+            m_interactable.AddEndDragListener(OnItemDroping);
         }
 
         public virtual void OnItemDroping(BaseEventData eventData)

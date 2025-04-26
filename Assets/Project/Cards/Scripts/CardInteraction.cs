@@ -33,17 +33,14 @@ namespace Project.Cards
 
         private void ConfigurePointerEnterEntry(Action<BaseEventData> action)
         {
-            EventTrigger.Entry entry = m_interactable.m_PointerEnterEntry;
-            entry.callback.AddListener((eventData) => OnPointerEnter?.Invoke(eventData));
-            entry.callback.AddListener((eventData) => action?.Invoke(eventData));
+            m_interactable.AddPointerEnterListener((eventData) => OnPointerEnter?.Invoke(eventData));
+            m_interactable.AddPointerEnterListener((eventData) => action?.Invoke(eventData));
         }
 
         private void ConfigurePointerExitEntry(Action<BaseEventData> action)
         {
-            EventTrigger.Entry entry = m_interactable.m_PointerExitEntry;
-
-            entry.callback.AddListener((eventData) => OnPointerExit?.Invoke(eventData));
-            entry.callback.AddListener((eventData) => action?.Invoke(eventData));
+            m_interactable.AddPointerExitListener((eventData) => OnPointerExit?.Invoke(eventData));
+            m_interactable.AddPointerExitListener((eventData) => action?.Invoke(eventData));
         }
 
     }

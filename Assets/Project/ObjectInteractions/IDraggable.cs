@@ -36,20 +36,18 @@ namespace Project.ObjectInteractions
         #endregion
         
         private void ConfigureDragBeginEntry(){
-            EventTrigger.Entry entry = m_interactable.m_DragBeginEntry;
-            entry.callback.AddListener((eventData) => OnDragBegin?.Invoke(eventData));
-            entry.callback.AddListener(DragBeginHandler);
+
+            m_interactable.AddBeginDragListener((eventData) => OnDragBegin?.Invoke(eventData));
+            m_interactable.AddBeginDragListener(DragBeginHandler);
         }
         private void ConfigureDragEntry(){
-            EventTrigger.Entry entry = m_interactable.m_DragEntry;
-            entry.callback.AddListener((eventData) => OnDrag?.Invoke(eventData));
-            entry.callback.AddListener(DragHandler);
+            m_interactable.AddDragListener((eventData) => OnDrag?.Invoke(eventData));
+            m_interactable.AddDragListener(DragHandler);
 
         }
         private void ConfigureDragRealeseEntry(){
-            EventTrigger.Entry entry = m_interactable.m_DragEndEntry;
-            entry.callback.AddListener((eventData) => OnDragRealese?.Invoke(eventData));
-            entry.callback.AddListener(DragReleaseHandler);
+            m_interactable.AddEndDragListener((eventData) => OnDragRealese?.Invoke(eventData));
+            m_interactable.AddEndDragListener(DragReleaseHandler);
         }
         
            
