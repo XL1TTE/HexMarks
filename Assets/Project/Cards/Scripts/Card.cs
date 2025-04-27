@@ -1,17 +1,34 @@
+using System;
+using Project.Layouts;
+using Unity.VisualScripting;
+using UnityEngine;
+using UnityEngine.Events;
+using UnityEngine.EventSystems;
+
 namespace Project.Cards{
-    public class Card{
-        public Card(CardView a_view, CardModel a_model, CardController a_controller){
-            m_View = a_view;
-            m_Model = a_model;
-            m_Controller = a_controller;
+    public class Card
+    {
+        public Card(CardModel a_model, CardView a_cardView){
+            m_model = a_model;
+            m_view = a_cardView;
+            m_view.Init(this);
         }
-        public CardView m_View;
-        public CardModel m_Model;
-        public CardController m_Controller;
-    }
-    
-    public class CardDefenition{
+        private CardModel m_model;
+        private CardView m_view;
+
+        #region View API
+        public Transform GetViewTransform() => m_view.transform;
+        public bool IsDragging() => m_view.IsDragging();
         
+        public void AddDragBeginListener(UnityAction listener) => m_view.AddDragBeginListener(listener);
+        public void AddDragEndListener(UnityAction listener) => m_view.AddDragEndListener(listener);
+        public void RemoveDragBeginListener(UnityAction listener) => m_view.RemoveDragBeginListener(listener);
+        public void RemoveDragEndListener(UnityAction listener) => m_view.RemoveDragEndListener(listener);
+        #endregion
+
+        private ICardLayout m_currentLayout;
+        public void SetLayout(ICardLayout layout) => m_currentLayout = layout;
+        public void LeaveLayout() => m_currentLayout?.Release(this);
     }
 }
 

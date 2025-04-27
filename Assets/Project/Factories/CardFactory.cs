@@ -32,14 +32,9 @@ namespace Project.Factories{
             
             CardView view = m_container.InstantiatePrefabForComponent<CardView>(m_prefab);
             
-            CardController controller = new CardController(model);
+            Card controller = new Card(model, view);
             
-            view.Init(controller);
-            if(view.TryGetComponent<CardInteraction>(out var cardInteraction)){
-                cardInteraction.Init(controller);
-            }
-            
-            return new Card(view, model, controller);
+            return controller;
         }
     }
 }

@@ -74,7 +74,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 2010bcdcd6db0af4ea23b9ec337df446, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.645283, g: 0.645283, b: 0.645283, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -100,6 +100,7 @@ GameObject:
   - component: {fileID: 5743957011285599110}
   - component: {fileID: -7744878003136116450}
   - component: {fileID: 3512977498119873134}
+  - component: {fileID: 5359190581053177594}
   m_Layer: 0
   m_Name: CardView
   m_TagString: Untagged
@@ -135,6 +136,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b44c1a15c9a1a8341a7f39c2495a78e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_renderer: {fileID: 3025905534095920436}
 --- !u!114 &1713774503023555407
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -205,41 +207,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3239b53513c4f2e42a1cdccdf1adf2a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_PointerEnterEntry:
-    eventID: 4
-    callback:
-      m_PersistentCalls:
-        m_Calls: []
-  m_PointerExitEntry:
-    eventID: 4
-    callback:
-      m_PersistentCalls:
-        m_Calls: []
-  m_PointerUpEntry:
-    eventID: 4
-    callback:
-      m_PersistentCalls:
-        m_Calls: []
-  m_PointerDownEntry:
-    eventID: 4
-    callback:
-      m_PersistentCalls:
-        m_Calls: []
-  m_DragBeginEntry:
-    eventID: 4
-    callback:
-      m_PersistentCalls:
-        m_Calls: []
-  m_DragEndEntry:
-    eventID: 4
-    callback:
-      m_PersistentCalls:
-        m_Calls: []
-  m_DragEntry:
-    eventID: 4
-    callback:
-      m_PersistentCalls:
-        m_Calls: []
 --- !u!114 &5743957011285599110
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -252,6 +219,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99494b3a4a8dd27499de6a79b3389054, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_OnHoverScaleDuration: 0.25
+  m_OnHoverScalePower: 1.1
 --- !u!114 &-7744878003136116450
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -283,3 +252,15 @@ MonoBehaviour:
   m_DropMask:
     serializedVersion: 2
     m_Bits: 64
+--- !u!210 &5359190581053177594
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7928856498719591837}
+  m_Enabled: 1
+  m_SortingLayerID: -1757365013
+  m_SortingLayer: 1
+  m_SortingOrder: 0
+  m_SortAtRoot: 0

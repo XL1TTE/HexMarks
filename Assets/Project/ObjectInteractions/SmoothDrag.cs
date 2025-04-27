@@ -15,7 +15,7 @@ namespace Project.ObjectInteractions
         protected override void DragBeginHandler(BaseEventData eventData)
         {
             isDragging = true;
-            m_Collider.enabled = false;
+
             PointerEventData MouseEventData = eventData as PointerEventData;
             mousePosition = g_MainCamera.ScreenToWorldPoint(
                 new Vector3(MouseEventData.position.x, MouseEventData.position.y, -zDepth));
@@ -32,7 +32,7 @@ namespace Project.ObjectInteractions
         {
             transform.position = mousePosition;
             isDragging = false;
-            m_Collider.enabled = true;
+
         }
 
         private void FixedUpdate()

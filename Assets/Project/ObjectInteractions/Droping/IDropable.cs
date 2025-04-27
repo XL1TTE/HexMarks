@@ -16,15 +16,19 @@ namespace Project.ObjectInteractions
         Interactable m_interactable;
         Camera g_mainCamera;
         [SerializeField] LayerMask m_DropMask;
-        
-        
+
+
+        void OnDestroy()
+        {
+            m_interactable.RemoveEndDragListener(OnItemDroping);
+        }
+
         void ConfigureDropEntry(){
             m_interactable.AddEndDragListener(OnItemDroping);
         }
 
         public virtual void OnItemDroping(BaseEventData eventData)
         {
-
             PointerEventData MouseEventData = eventData as PointerEventData;
 
             Vector2 mousePosition = g_mainCamera.ScreenToWorldPoint(MouseEventData.position);
@@ -32,11 +36,10 @@ namespace Project.ObjectInteractions
 
             if (hit.collider != null)
             {
-                GameObject dropHandler = hit.collider.gameObject;
-                Debug.Log($"Droped {dropHandler}");
+                IDropHandler dropHandler = hit.collider.GetComponent<IDropHandler>();
                 if (dropHandler != null)
                 {
-                    return;
+                    dropHandler.HandleDrop(gameObject);
                 }
             }
         }

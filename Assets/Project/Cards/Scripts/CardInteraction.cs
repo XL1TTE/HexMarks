@@ -1,6 +1,8 @@
 using System;
+using DG.Tweening;
 using Project.ObjectInteractions;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.EventSystems;
 
 namespace Project.Cards
@@ -11,37 +13,112 @@ namespace Project.Cards
         void Awake()
         {
             m_interactable = GetComponent<Interactable>();
+            m_cardView = GetComponent<CardView>();
+
+            m_cardView.AddDragBeginListener(DisableInteractions);
+            m_cardView.AddDragEndListener(EnableInteractions);
+
+            ConfigureCardAnimations();
+            EnableInteractions();
         }
+
+        void Start()
+        {
+            m_CardDefaultScale = transform.localScale;
+        }
+
+        private UnityAction PointerEnterHandlers;
+        private UnityAction PointerExitHandlers;
+        private UnityAction PointerClickHandlers;
         
-        public void Init(CardController a_controller){
-            m_cardController = a_controller;
-            
-            if (m_cardController == null) { return; }
+        
+        private Interactable m_interactable;
+        private CardView m_cardView;
+        
+        
+        #region Animations Settings
+            Tween m_ScaleTween;
+            Vector3 m_CardDefaultScale;
+        
+            [Header("Animation Settings")]
+            [SerializeField, Range(0.1f, 1.5f)] float m_OnHoverScaleDuration;
+            [SerializeField, Range(1f, 2f)] float m_OnHoverScalePower;
+        #endregion
+        
+        
+        void OnDestroy()
+        {
+            PointerClickHandlers = null;
+            PointerEnterHandlers = null;
+            PointerExitHandlers = null;
 
-            ConfigurePointerEnterEntry(m_cardController.PointerEnterHandler);
-            ConfigurePointerExitEntry(m_cardController.PointerExitHandler);
+            m_cardView.RemoveDragBeginListener(DisableInteractions);
+            m_cardView.RemoveDragEndListener(EnableInteractions);
         }
 
-        private Interactable m_interactable;
-        private CardController m_cardController;
 
+        #region Callbacks Setup
+        
+        private void EnableInteractions(){
+            m_interactable.AddPointerClickListener(OnPointerClicked);
+            m_interactable.AddPointerEnterListener(OnPointerEnter);
+            m_interactable.AddPointerExitListener(OnPointerExit);
+        }
+        private void DisableInteractions(){
+            m_interactable.RemovePointerClickListener(OnPointerClicked);
+            m_interactable.RemovePointerEnterListener(OnPointerEnter);
+            m_interactable.RemovePointerExitListener(OnPointerExit);
+        }       
 
-        #region RemoteEventHands
-            Action<BaseEventData> OnPointerEnter;
-            Action<BaseEventData> OnPointerExit;
         #endregion
 
-        private void ConfigurePointerEnterEntry(Action<BaseEventData> action)
+        #region Handlers
+
+        private void OnPointerClicked(BaseEventData eventData)
         {
-            m_interactable.AddPointerEnterListener((eventData) => OnPointerEnter?.Invoke(eventData));
-            m_interactable.AddPointerEnterListener((eventData) => action?.Invoke(eventData));
+            PointerClickHandlers?.Invoke();
+        }
+        private void OnPointerEnter(BaseEventData eventData)
+        {
+            PointerEnterHandlers?.Invoke();
         }
 
-        private void ConfigurePointerExitEntry(Action<BaseEventData> action)
+        private void OnPointerExit(BaseEventData eventData)
         {
-            m_interactable.AddPointerExitListener((eventData) => OnPointerExit?.Invoke(eventData));
-            m_interactable.AddPointerExitListener((eventData) => action?.Invoke(eventData));
+            PointerExitHandlers?.Invoke();
         }
+
+
+        #endregion
+
+        #region Card Animations
+
+        private void ConfigureCardAnimations()
+        {
+            PointerEnterHandlers += CardPointerHover;
+            PointerExitHandlers += CardPointerUnHover;
+        }
+
+        private void CardPointerHover(){
+            m_cardView.SetSortingOrder(999);
+
+            m_cardView.ChangeColor(Color.white);
+            
+            if(m_ScaleTween != null){m_ScaleTween.Kill();}
+            
+            m_ScaleTween = transform.DOScale(transform.localScale * m_OnHoverScalePower, m_OnHoverScaleDuration);
+        }
+        private void CardPointerUnHover(){
+            
+            m_cardView.SetSortingOrder(1);
+            
+            m_cardView.ChangeColor(Color.gray);
+
+            if (m_ScaleTween != null) { m_ScaleTween.Kill(); }
+            
+            m_ScaleTween = transform.DOScale(m_CardDefaultScale, m_OnHoverScaleDuration);
+        }
+        #endregion
 
     }
 }

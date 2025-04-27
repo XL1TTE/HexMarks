@@ -1,4 +1,4 @@
-using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
@@ -9,73 +9,88 @@ namespace Project.ObjectInteractions
     [RequireComponent(typeof(EventTrigger), typeof(BoxCollider2D))]
     public class Interactable : MonoBehaviour
     {
+        private EventTrigger m_eventTrigger;
+
+        private UnityAction<BaseEventData> m_onPointerClick;
+        private UnityAction<BaseEventData> m_onPointerEnter;
+        private UnityAction<BaseEventData> m_onPointerExit;
+        private UnityAction<BaseEventData> m_onPointerDown;
+        private UnityAction<BaseEventData> m_onPointerUp;
+        private UnityAction<BaseEventData> m_onBeginDrag;
+        private UnityAction<BaseEventData> m_onDrag;
+        private UnityAction<BaseEventData> m_onEndDrag;
         
-    #region Event Entries
-        private readonly EventTrigger.Entry m_pointerEnterEntry = new() { eventID = EventTriggerType.PointerEnter };
-        private readonly EventTrigger.Entry m_pointerExitEntry = new() { eventID = EventTriggerType.PointerExit };
-        private readonly EventTrigger.Entry m_pointerDownEntry = new() { eventID = EventTriggerType.PointerDown };
-        private readonly EventTrigger.Entry m_pointerUpEntry = new() { eventID = EventTriggerType.PointerUp };
-        private readonly EventTrigger.Entry m_beginDragEntry = new() { eventID = EventTriggerType.BeginDrag };
-        private readonly EventTrigger.Entry m_dragEntry = new() { eventID = EventTriggerType.Drag };
-        private readonly EventTrigger.Entry m_endDragEntry = new() { eventID = EventTriggerType.EndDrag };
-    #endregion
-
-    private EventTrigger m_eventTrigger;
-
-    protected virtual void Awake()
-    {
-        m_eventTrigger = GetComponent<EventTrigger>();
-        InitializeEventSystem();
-    }
-
-    private void InitializeEventSystem()
-    {
-        var triggers = new List<EventTrigger.Entry>
+        protected virtual void Awake()
         {
-            m_pointerEnterEntry,
-            m_pointerExitEntry,
-            m_pointerDownEntry,
-            m_pointerUpEntry,
-            m_beginDragEntry,
-            m_dragEntry,
-            m_endDragEntry
-        };
-        
-        m_eventTrigger.triggers = triggers;
-    }
-
-    #region Add Listeners API
-    public void AddPointerEnterListener(UnityAction<BaseEventData> action) => AddListener(m_pointerEnterEntry, action);
-    public void AddPointerExitListener(UnityAction<BaseEventData> action) => AddListener(m_pointerExitEntry, action);
-    public void AddPointerDownListener(UnityAction<BaseEventData> action) => AddListener(m_pointerDownEntry, action);
-    public void AddPointerUpListener(UnityAction<BaseEventData> action) => AddListener(m_pointerUpEntry, action);
-    public void AddBeginDragListener(UnityAction<BaseEventData> action) => AddListener(m_beginDragEntry, action);
-    public void AddDragListener(UnityAction<BaseEventData> action) => AddListener(m_dragEntry, action);
-    public void AddEndDragListener(UnityAction<BaseEventData> action) => AddListener(m_endDragEntry, action);
-    #endregion
-
-    #region Remove Listeners API
-    public void RemovePointerEnterListener(UnityAction<BaseEventData> action) => RemoveListener(m_pointerEnterEntry, action);
-    public void RemovePointerExitListener(UnityAction<BaseEventData> action) => RemoveListener(m_pointerExitEntry, action);
-    public void RemovePointerDownListener(UnityAction<BaseEventData> action) => RemoveListener(m_pointerDownEntry, action);
-    public void RemovePointerUpListener(UnityAction<BaseEventData> action) => RemoveListener(m_pointerUpEntry, action);
-    public void RemoveBeginDragListener(UnityAction<BaseEventData> action) => RemoveListener(m_beginDragEntry, action);
-    public void RemoveDragListener(UnityAction<BaseEventData> action) => RemoveListener(m_dragEntry, action);
-    public void RemoveEndDragListener(UnityAction<BaseEventData> action) => RemoveListener(m_endDragEntry, action);
-    #endregion
-    
-    #region Helper Methods
-        private static void AddListener(EventTrigger.Entry entry, UnityAction<BaseEventData> action)
-        {
-            if (entry == null || action == null) return;
-            entry.callback.AddListener(action.Invoke);
+            m_eventTrigger = GetComponent<EventTrigger>();
+            InitializeEventSystem();
         }
 
-        private static void RemoveListener(EventTrigger.Entry entry, UnityAction<BaseEventData> action)
+        EventTrigger.Entry pointeClickEntry = new EventTrigger.Entry { eventID = EventTriggerType.PointerClick };
+        EventTrigger.Entry pointerEnterEntry = new EventTrigger.Entry { eventID = EventTriggerType.PointerEnter };
+        EventTrigger.Entry pointerExitEntry = new EventTrigger.Entry { eventID = EventTriggerType.PointerExit };
+        EventTrigger.Entry pointerDownEntry = new EventTrigger.Entry { eventID = EventTriggerType.PointerDown };
+        EventTrigger.Entry pointerUpEntry = new EventTrigger.Entry { eventID = EventTriggerType.PointerUp };
+        EventTrigger.Entry beginDragEntry = new EventTrigger.Entry { eventID = EventTriggerType.BeginDrag };
+        EventTrigger.Entry dragEntry = new EventTrigger.Entry { eventID = EventTriggerType.Drag };
+        EventTrigger.Entry endDragEntry = new EventTrigger.Entry { eventID = EventTriggerType.EndDrag };
+
+        private void InitializeEventSystem()
         {
-            if (entry == null || action == null) return;
-            entry.callback.RemoveListener(action.Invoke);
+            pointeClickEntry.callback.AddListener((eventData) => m_onPointerClick?.Invoke(eventData));
+            pointerEnterEntry.callback.AddListener((eventData) => m_onPointerEnter?.Invoke(eventData));
+            pointerExitEntry.callback.AddListener((eventData) => m_onPointerExit?.Invoke(eventData));
+            pointerDownEntry.callback.AddListener((eventData) => m_onPointerDown?.Invoke(eventData));
+            pointerUpEntry.callback.AddListener((eventData) => m_onPointerUp?.Invoke(eventData));
+            beginDragEntry.callback.AddListener((eventData) => m_onBeginDrag?.Invoke(eventData));
+            dragEntry.callback.AddListener((eventData) => m_onDrag?.Invoke(eventData));
+            endDragEntry.callback.AddListener((eventData) => m_onEndDrag?.Invoke(eventData));
+
+            m_eventTrigger.triggers = new List<EventTrigger.Entry>
+            {
+                pointeClickEntry,
+                pointerEnterEntry,
+                pointerExitEntry,
+                pointerDownEntry,
+                pointerUpEntry,
+                beginDragEntry,
+                dragEntry,
+                endDragEntry
+            };
         }
-    #endregion
+
+        #region Добавление обработчиков
+        public void AddPointerClickListener(UnityAction<BaseEventData> action) => m_onPointerClick += action;
+        public void AddPointerEnterListener(UnityAction<BaseEventData> action) => m_onPointerEnter += action;
+        public void AddPointerExitListener(UnityAction<BaseEventData> action) => m_onPointerExit += action;
+        public void AddPointerDownListener(UnityAction<BaseEventData> action) => m_onPointerDown += action;
+        public void AddPointerUpListener(UnityAction<BaseEventData> action) => m_onPointerUp += action;
+        public void AddBeginDragListener(UnityAction<BaseEventData> action) => m_onBeginDrag += action;
+        public void AddDragListener(UnityAction<BaseEventData> action) => m_onDrag += action;
+        public void AddEndDragListener(UnityAction<BaseEventData> action) => m_onEndDrag += action;
+        #endregion
+
+        #region Удаление обработчиков
+        public void RemovePointerClickListener(UnityAction<BaseEventData> action) => m_onPointerClick -= action;
+        public void RemovePointerEnterListener(UnityAction<BaseEventData> action) => m_onPointerEnter -= action;
+        public void RemovePointerExitListener(UnityAction<BaseEventData> action) => m_onPointerExit -= action;
+        public void RemovePointerDownListener(UnityAction<BaseEventData> action) => m_onPointerDown -= action;
+        public void RemovePointerUpListener(UnityAction<BaseEventData> action) => m_onPointerUp -= action;
+        public void RemoveBeginDragListener(UnityAction<BaseEventData> action) => m_onBeginDrag -= action;
+        public void RemoveDragListener(UnityAction<BaseEventData> action) => m_onDrag -= action;
+        public void RemoveEndDragListener(UnityAction<BaseEventData> action) => m_onEndDrag -= action;
+        #endregion
+
+        private void OnDestroy()
+        {
+            m_onPointerClick = null;
+            m_onPointerEnter = null;
+            m_onPointerExit = null;
+            m_onPointerDown = null;
+            m_onPointerUp = null;
+            m_onBeginDrag = null;
+            m_onDrag = null;
+            m_onEndDrag = null;
+        }
     }
 }
