@@ -3,35 +3,33 @@ using UnityEngine.EventSystems;
 
 namespace Project.ObjectInteractions
 {
-    [RequireComponent(typeof(Interactable))]
+    [RequireComponent(typeof(IDraggable))]
     public class IDropable: MonoBehaviour{
 
         void Start()
         {
-            m_interactable = GetComponent<Interactable>();
+            m_draggable = GetComponent<IDraggable>();
             g_mainCamera = Camera.main;
 
             ConfigureDropEntry();
         }
-        Interactable m_interactable;
+        IDraggable m_draggable;
         Camera g_mainCamera;
         [SerializeField] LayerMask m_DropMask;
 
 
         void OnDestroy()
         {
-            m_interactable.RemoveEndDragListener(OnItemDroping);
+            m_draggable.NotifyDragEnd -= OnItemDroping;
         }
 
         void ConfigureDropEntry(){
-            m_interactable.AddEndDragListener(OnItemDroping);
+            m_draggable.NotifyDragEnd += OnItemDroping;
         }
 
-        public virtual void OnItemDroping(BaseEventData eventData)
+        public virtual void OnItemDroping()
         {
-            PointerEventData MouseEventData = eventData as PointerEventData;
-
-            Vector2 mousePosition = g_mainCamera.ScreenToWorldPoint(MouseEventData.position);
+            Vector2 mousePosition = g_mainCamera.ScreenToWorldPoint(Input.mousePosition);
             RaycastHit2D hit = Physics2D.Raycast(mousePosition, Vector2.zero, Mathf.Infinity, m_DropMask);
 
             if (hit.collider != null)

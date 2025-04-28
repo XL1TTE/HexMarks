@@ -1,4 +1,6 @@
 using System;
+using System.Collections;
+using Project.Layouts;
 using Project.ObjectInteractions;
 using UnityEngine;
 using UnityEngine.Events;
@@ -6,31 +8,71 @@ using UnityEngine.EventSystems;
 using UnityEngine.Rendering;
 
 namespace Project.Cards{
-    public class CardView : MonoBehaviour
+    
+    public class CardView : MonoBehaviour, IHaveInteractions
     {
         void Awake()
         {
             TryGetComponent(out m_draggable);
             TryGetComponent(out m_sorting);
+            TryGetComponent(out m_Interactions);
         }
         public void Init(Card a_CardController){
             m_CardController = a_CardController;
         }
         private Card m_CardController;
         public Card GetCardController() => m_CardController;
-        
-        [SerializeField] private SpriteRenderer m_renderer;
-        public void ChangeColor(Color a_color) => m_renderer.color = a_color;
+
+        #region Dragable
         private IDraggable m_draggable;
+        public void EnableDragging() => m_draggable.EnableDragBehaviour();
+        public void DisableDragging() => m_draggable.DisableDragBehaviour();
         public bool IsDragging() => m_draggable.isDragging;
+        #endregion
 
+        #region Sorting
         private SortingGroup m_sorting;
-        public void SetSortingOrder(int order) => m_sorting.sortingOrder = order;
+        public SortingGroup GetSortingGroup() => m_sorting;
+        #endregion
 
+
+        public Transform GetTransform() => transform;
+
+        #region Layouts
+        private ICardLayout m_currentLayout;
+        public void SetLayout(ICardLayout layout) => m_currentLayout = layout;
+        public void LeaveLayout() => m_currentLayout?.Release(this);
+        #endregion
+
+        #region Drag Event Listeners
         public void AddDragBeginListener(UnityAction listener) => m_draggable.NotifyDragBegin += listener;
         public void AddDragEndListener(UnityAction listener) => m_draggable.NotifyDragEnd += listener;
         public void RemoveDragBeginListener(UnityAction listener) => m_draggable.NotifyDragBegin -= listener;
         public void RemoveDragEndListener(UnityAction listener) => m_draggable.NotifyDragEnd -= listener;
+        #endregion
+
+
+        #region Renderer
+            [SerializeField] protected SpriteRenderer m_Renderer;
+
+            public SpriteRenderer GetRenderer() => m_Renderer;
+        #endregion
+
+        #region CardInteractions
+        private CardInteractions m_Interactions;
+        public CardInteractions GetInteractions() => m_Interactions;
+        public Collider2D GetCollider() => m_draggable.m_Collider;
+        
+        #endregion
+        
+        public void UseCard(){
+            StartCoroutine(m_CardController.UseCard());
+        }
+
+        void OnDisable()
+        {
+            LeaveLayout();
+        }
     }
 }
 

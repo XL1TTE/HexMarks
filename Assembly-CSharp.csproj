@@ -66,20 +66,31 @@
   <ItemGroup>
     <Compile Include="Assets\Project\Testing.cs" />
     <Compile Include="Assets\Project\CardLayouts\CardHand.cs" />
+    <Compile Include="Assets\Project\StateMachines\BattleStateMachine.cs" />
+    <Compile Include="Assets\Project\JobSystem\Job.cs" />
     <Compile Include="Assets\Project\Cards\Scripts\CardView.cs" />
-    <Compile Include="Assets\Project\ObjectInteractions\Interactable.cs" />
+    <Compile Include="Assets\Project\ObjectInteractions\Interactions\IHaveInteractions.cs" />
     <Compile Include="Assets\Project\Cards\Scripts\CardModel.cs" />
     <Compile Include="Assets\Project\Cards\Scripts\CardDefenition.cs" />
-    <Compile Include="Assets\Project\Cards\Scripts\CardInteraction.cs" />
     <Compile Include="Assets\Project\ZenjectInstallers\CardInstaller.cs" />
     <Compile Include="Assets\Project\Cards\Scripts\Card.cs" />
     <Compile Include="Assets\Project\ObjectInteractions\IDraggable.cs" />
     <Compile Include="Assets\Project\ObjectInteractions\Droping\CardDropHandler.cs" />
+    <Compile Include="Assets\Project\StateMachines\CardStates\EnemyTurnState.cs" />
+    <Compile Include="Assets\Project\JobSystem\Jobs\JobApplyCardEffects.cs" />
     <Compile Include="Assets\Project\ObjectInteractions\SmoothDrag.cs" />
     <Compile Include="Assets\Project\CardLayouts\LimitCardsLayout.cs" />
+    <Compile Include="Assets\Project\JobSystem\Jobs\JobPlayCardAnimation.cs" />
+    <Compile Include="Assets\Project\Factories\CardViewObjectPool.cs" />
+    <Compile Include="Assets\Project\Game\Battle\BattleController.cs" />
+    <Compile Include="Assets\Project\Game\GameLevels\Scripts\GameLevel.cs" />
     <Compile Include="Assets\Project\Bootstrap\Bootstrap.cs" />
+    <Compile Include="Assets\Project\ObjectInteractions\Interactions\InteractionsBase.cs" />
     <Compile Include="Assets\Project\CardLayouts\ICardLayout.cs" />
     <Compile Include="Assets\Project\ObjectInteractions\Droping\IDropHandler.cs" />
+    <Compile Include="Assets\Utilities\Extensions\ListExtentions.cs" />
+    <Compile Include="Assets\Project\ObjectInteractions\Interactions\Interactable.cs" />
+    <Compile Include="Assets\Project\Cards\Scripts\CardInteractions.cs" />
     <Compile Include="Assets\Project\ObjectInteractions\Droping\IDropable.cs" />
     <Compile Include="Assets\Project\Factories\CardFactory.cs" />
   </ItemGroup>

@@ -1,4 +1,5 @@
 using System;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -32,7 +33,6 @@ namespace Project.ObjectInteractions
         {
             transform.position = mousePosition;
             isDragging = false;
-
         }
 
         private void FixedUpdate()

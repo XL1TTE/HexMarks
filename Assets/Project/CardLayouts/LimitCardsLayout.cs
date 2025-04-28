@@ -6,11 +6,12 @@ namespace Project.Layouts{
     public class LimitCardsLayout : CardHand
     {
         [SerializeField, Range(1, 10)] int m_MaxItems = 1;
-        public override void Claim(Card a_card)
+        public override bool TryClaim(CardView a_card)
         {
-            if(m_ClaimedItems.Count >= m_MaxItems) {return;}
+            if(m_ClaimedItems.Count >= m_MaxItems) {return false;}
             
-            base.Claim(a_card);
+            return base.TryClaim(a_card);
         }
+        
     }
 }

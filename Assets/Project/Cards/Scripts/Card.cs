@@ -1,9 +1,5 @@
-using System;
-using Project.Layouts;
-using Unity.VisualScripting;
-using UnityEngine;
-using UnityEngine.Events;
-using UnityEngine.EventSystems;
+using System.Collections;
+using Project.JobSystem;
 
 namespace Project.Cards{
     public class Card
@@ -13,22 +9,15 @@ namespace Project.Cards{
             m_view = a_cardView;
             m_view.Init(this);
         }
+        
         private CardModel m_model;
         private CardView m_view;
-
-        #region View API
-        public Transform GetViewTransform() => m_view.transform;
-        public bool IsDragging() => m_view.IsDragging();
+        public CardView GetView() => m_view;
         
-        public void AddDragBeginListener(UnityAction listener) => m_view.AddDragBeginListener(listener);
-        public void AddDragEndListener(UnityAction listener) => m_view.AddDragEndListener(listener);
-        public void RemoveDragBeginListener(UnityAction listener) => m_view.RemoveDragBeginListener(listener);
-        public void RemoveDragEndListener(UnityAction listener) => m_view.RemoveDragEndListener(listener);
-        #endregion
-
-        private ICardLayout m_currentLayout;
-        public void SetLayout(ICardLayout layout) => m_currentLayout = layout;
-        public void LeaveLayout() => m_currentLayout?.Release(this);
+        public IEnumerator UseCard(){
+            yield return m_model.GetCardExecutionSequence(m_view).Proccess();
+            yield return new JobReturnCardViewToPool(m_view).Proccess();
+        }
     }
 }
 

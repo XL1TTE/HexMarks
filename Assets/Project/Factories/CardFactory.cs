@@ -1,7 +1,5 @@
 using System.Collections;
-using System.Collections.Generic;
 using Project.Cards;
-using UnityEngine;
 using Zenject;
 
 namespace Project.Factories{
@@ -13,13 +11,12 @@ namespace Project.Factories{
     }
     public class CardFactory : ICardFactory
     {
-        public CardFactory(DiContainer a_container, CardView a_prefab){
-            m_container = a_container;
-            m_prefab = a_prefab;
+        [Inject]
+        public CardFactory(CardViewObjectPool a_cardViewPool){
+            m_cardViewPool = a_cardViewPool;
         }
         
-        private readonly DiContainer m_container;
-        private readonly CardView m_prefab;
+        private readonly CardViewObjectPool m_cardViewPool;
         
         public Card CreateCardFromDef(CardDefenition def)
         {
@@ -30,7 +27,7 @@ namespace Project.Factories{
         {
             CardModel model = new CardModel();
             
-            CardView view = m_container.InstantiatePrefabForComponent<CardView>(m_prefab);
+            CardView view = m_cardViewPool.Get();
             
             Card controller = new Card(model, view);
             

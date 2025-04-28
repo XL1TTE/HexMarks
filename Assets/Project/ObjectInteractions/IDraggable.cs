@@ -36,21 +36,28 @@ namespace Project.ObjectInteractions
             DisableDragBehaviour();
         }
         
-        private void EnableDragBehaviour(){
-            m_interactable.AddBeginDragListener(DragBeginHandler);
-            m_interactable.AddBeginDragListener((eventData) => NotifyDragBegin?.Invoke());
-            m_interactable.AddDragListener(DragHandler);
-            m_interactable.AddEndDragListener((eventData) => NotifyDragEnd?.Invoke());
-            m_interactable.AddEndDragListener(DragReleaseHandler);
+        public void EnableDragBehaviour(){
+            m_interactable.AddBeginDragListener(OnDragBegin);
+            m_interactable.AddDragListener(OnDrag);
+            m_interactable.AddEndDragListener(OnDragEnd);
         }
         
-        [ContextMenu("DisableDrag")]
-        private void DisableDragBehaviour(){
-            m_interactable.RemoveBeginDragListener(DragBeginHandler);
-            m_interactable.RemoveBeginDragListener((eventData) => NotifyDragBegin?.Invoke());
-            m_interactable.RemoveDragListener(DragHandler);
-            m_interactable.RemoveEndDragListener((eventData) => NotifyDragEnd?.Invoke());
-            m_interactable.RemoveEndDragListener(DragReleaseHandler);
+        public void DisableDragBehaviour(){
+            m_interactable.RemoveBeginDragListener(OnDragBegin);
+            m_interactable.RemoveDragListener(OnDrag);
+            m_interactable.RemoveEndDragListener(OnDragEnd);
+        }
+        
+        private void OnDragBegin(BaseEventData eventData){
+            DragBeginHandler(eventData);
+            NotifyDragBegin?.Invoke();
+        }
+        private void OnDrag(BaseEventData eventData){
+            DragHandler(eventData);
+        }
+        private void OnDragEnd(BaseEventData eventData){
+            DragReleaseHandler(eventData);
+            NotifyDragEnd?.Invoke();
         }
         
            

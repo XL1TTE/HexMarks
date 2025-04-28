@@ -11,18 +11,19 @@ namespace Project.Layouts
 {
     public class CardHand : MonoBehaviour, ICardLayout
     {
-        protected List<Card> m_ClaimedItems = new();
+        protected List<CardView> m_ClaimedItems = new();
+        public IReadOnlyList<CardView> GetAllItems() => m_ClaimedItems;
         [SerializeField, Range(1.0f, 10.0f)] protected float m_Spacing = 1.0f;
         [SerializeField, Range(0.1f, 2f)] protected float m_AlingDuration = 0.25f;
 
         private bool m_NeedsAlignment = false;
         private List<Tween> m_ActiveAlignTweens = new List<Tween>();
 
-        public virtual void Claim(Card a_card)
+        public virtual bool TryClaim(CardView a_card)
         {
             m_ClaimedItems.Add(a_card);
             
-            a_card.GetViewTransform().SetParent(transform);
+            a_card.GetTransform().SetParent(transform);
             
             // Update layout, releasing from old one and set to new. 
             a_card.LeaveLayout();
@@ -32,9 +33,10 @@ namespace Project.Layouts
             a_card.AddDragEndListener(OnEndDrag);
 
             RequestAlignment();
+            return true;
         }
 
-        public virtual void Release(Card a_card)
+        public virtual void Release(CardView a_card)
         {
             m_ClaimedItems.Remove(a_card);
 
@@ -92,7 +94,7 @@ namespace Project.Layouts
 
                 var x_pos = m_position.x + startOffset + (m_Spacing * i);
 
-                var tween = c.GetViewTransform().DOLocalMove(new Vector3(x_pos, 0, m_position.z + i + 1), m_AlingDuration);
+                var tween = c.GetTransform().DOLocalMove(new Vector3(x_pos, 0, m_position.z + i + 1), m_AlingDuration);
                 m_ActiveAlignTweens.Add(tween);
             }
 
@@ -100,7 +102,7 @@ namespace Project.Layouts
 
         }
 
-        void LateUpdate()
+        protected virtual void LateUpdate()
         {
             if (m_NeedsAlignment)
             {

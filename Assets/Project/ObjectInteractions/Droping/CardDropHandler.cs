@@ -10,11 +10,10 @@ namespace Project.ObjectInteractions{
         public void HandleDrop(GameObject obj)
         {
             if(!obj.TryGetComponent<CardView>(out var cardView)){return;}
+                          
+            if(!m_cardLayout.TryClaim(cardView)){return;};
             
-            var card = cardView.GetCardController();
-              
-            m_cardLayout.Claim(card);
-            // card.Use()?
+            cardView.UseCard();
         }
     }
 }

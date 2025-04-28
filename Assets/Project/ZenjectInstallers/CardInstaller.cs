@@ -6,14 +6,14 @@ using Zenject;
 namespace Project.ZenjectInstallers{
     public class CardInstaller : MonoInstaller
     {
-        [SerializeField] CardView m_cardPrefab;
-
+        [SerializeField] private CardViewObjectPool m_CardViewPool;
         public override void InstallBindings()
         {
+            Container.Bind<CardViewObjectPool>().FromInstance(m_CardViewPool).AsSingle();
+            
             Container.Bind<ICardFactory>()
                 .To<CardFactory>()
-                .AsSingle()
-                .WithArguments(m_cardPrefab);
+                .AsSingle();        
         }
     }
 }
