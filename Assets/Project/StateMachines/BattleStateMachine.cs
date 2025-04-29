@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using Project.Cards;
+using Project.Game.Battle.UI;
 
 namespace Project.StateMachines.BattleStateMachine{
     
@@ -19,7 +20,7 @@ namespace Project.StateMachines.BattleStateMachine{
             if(state == null){return;}
 
             var context = new BattleStateContext(m_test.GetCardsInHand());
-
+            
             m_CurrentState?.Exit(context);
             
             state.Enter(context);
@@ -35,7 +36,9 @@ namespace Project.StateMachines.BattleStateMachine{
         {
             m_Cards = Cards;
         }
+        
         public IEnumerable<CardView> m_Cards;
+        public BattleUI m_BattleUI;
     }
     
     public abstract class IBattleState{
@@ -66,7 +69,7 @@ namespace Project.StateMachines.BattleStateMachine{
         CardStates.PlayerTurnState CardState = new CardStates.PlayerTurnState();
         public override void Enter(BattleStateContext context)
         {
-            foreach(var card in context.m_Cards){
+            foreach (var card in context.m_Cards){
                 CardState.Enter(card);
             }
         }

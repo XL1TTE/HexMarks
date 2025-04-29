@@ -18,22 +18,31 @@ namespace Project.Cards
             m_CardDefaultColor = m_subject.GetRenderer().color;
 
             EnableDefaultInteractions();
-
-            m_interactable.AddBeginDragListener(OnDragBegin);
-            m_interactable.AddEndDragListener(OnDragEnd);
+            
+            
+            m_interactable.AddBeginDragListener(LockHover);
+            m_interactable.AddEndDragListener(UnlockHover);
         }
 
         void OnDisable()
         {
             SetCardStateToDefault();
-            
         }
 
         void OnDestroy()
         {
-            m_interactable.RemoveBeginDragListener(OnDragBegin);
-            m_interactable.RemoveEndDragListener(OnDragEnd);
+            m_interactable.RemoveBeginDragListener(LockHover);
+            m_interactable.RemoveEndDragListener(UnlockHover);
         }
+
+        #region Locks
+        private int m_hoverLocks = 0;
+        private bool IsHoverAllowed => m_hoverLocks == 0;
+        public void LockHover(BaseEventData eventData = null) => m_hoverLocks++;
+        public void UnlockHover(BaseEventData eventData = null) => m_hoverLocks = Mathf.Max(0, m_hoverLocks - 1);
+
+        #endregion
+
 
         #region Animations Settings
         Tween m_ScaleTween;
@@ -57,15 +66,6 @@ namespace Project.Cards
             SetSortingOrder(0);
         }
         
-        
-        private void OnDragBegin(BaseEventData eventData = null){
-            m_subject.GetCollider().enabled = false;
-        }
-        
-        private void OnDragEnd(BaseEventData eventData = null){
-            m_subject.GetCollider().enabled = true;
-        }
-
         #region Hover Behaviour
         [SerializeField] private Color OnHoverColor;
             public void SetOnHoverColor(Color a_color) => OnHoverColor = a_color;
@@ -92,18 +92,24 @@ namespace Project.Cards
 
         private void HighlightCard(BaseEventData eventData = null)
         {
-            SetSortingOrder(999);
+            if(IsHoverAllowed){
+                SetSortingOrder(999);
 
-            ChangeColor(OnHoverColor);
+                ChangeColor(OnHoverColor);
+            }
         }
         private void UnHighlightCard(BaseEventData eventData = null)
         {
-            SetSortingOrder(0);
+            if(IsHoverAllowed){
+                SetSortingOrder(0);
 
-            ChangeColor(m_CardDefaultColor);
+                ChangeColor(m_CardDefaultColor);
+            }
         }
         private void ScaleUpCard(BaseEventData eventData = null)
         {
+            if(!IsHoverAllowed) {return;}
+            
             if (m_ScaleTween != null) { m_ScaleTween.Kill(); }
 
             SetSortingOrder(999);
@@ -113,6 +119,8 @@ namespace Project.Cards
         }
         private void ScaleDownCard(BaseEventData eventData = null)
         {
+            if(!IsHoverAllowed) {return;}
+            
             if (m_ScaleTween != null) { m_ScaleTween.Kill(); }
 
             SetSortingOrder(0);

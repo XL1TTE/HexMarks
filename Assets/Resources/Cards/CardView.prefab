@@ -236,7 +236,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isDragging: 0
   m_Collider: {fileID: 0}
-  dampingSpeed: 13
+  dampingSpeed: 20
   zDepth: 5
 --- !u!114 &3512977498119873134
 MonoBehaviour:

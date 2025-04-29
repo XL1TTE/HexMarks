@@ -1,6 +1,9 @@
 using System.Collections.Generic;
 using Project.Cards;
+using Project.EventBus;
+using Project.EventBus.Signals;
 using Project.Factories;
+using Project.Game.Battle.UI;
 using Project.Layouts;
 using Project.StateMachines.BattleStateMachine;
 using Project.StateMachines.CardStates;
@@ -37,15 +40,18 @@ namespace Project
         }
 
         [Inject]
-        private void Construct(ICardFactory a_cardFactory){
+        private void Construct(ICardFactory a_cardFactory, SignalBus signalBus){
             m_cardFactory = a_cardFactory;
+            m_SignalBus = signalBus;
         }
         
         ICardFactory m_cardFactory;
+        SignalBus m_SignalBus;
         [SerializeField] CardHand m_cardHand;
         public IReadOnlyList<CardView> GetCardsInHand() => m_cardHand.GetAllItems();
         
-        
+        [SerializeField] private BattleUI m_BattleUI;
+        public BattleUI GetUI() => m_BattleUI;        
         BattleStateMachine stateMachine;
         
         void Update()
@@ -57,9 +63,12 @@ namespace Project
             }
             if(Input.GetKeyDown(KeyCode.LeftBracket)){
                 stateMachine.ChangeState<StateMachines.BattleStateMachine.EnemyTurnState>();
+                m_SignalBus.SendSignal(new BattleStateChanged("Enemy turn!"));
             }
             if(Input.GetKeyDown(KeyCode.RightBracket)){
                 stateMachine.ChangeState<StateMachines.BattleStateMachine.PlayerTurnState>();
+                m_SignalBus.SendSignal(new BattleStateChanged("Your turn!"));
+
             }
         }
     }

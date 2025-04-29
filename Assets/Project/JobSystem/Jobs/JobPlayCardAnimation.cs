@@ -1,61 +1,52 @@
 
 using System.Collections;
 using DG.Tweening;
-using Project.Cards;
-using Project.Factories;
 using UnityEngine;
 
 namespace Project.JobSystem{
 
     public class JobPlayCardAnimation : Job
     {
-        public JobPlayCardAnimation(CardView a_cardView) => m_cardView = a_cardView;
-        public JobPlayCardAnimation(Sequence a_animation, CardView a_cardView){
+        public JobPlayCardAnimation(Sequence a_animation)
+        {
             m_animation = a_animation;
-            m_cardView = a_cardView;
         }
         
-        Sequence m_animation;
-        CardView m_cardView;
-        
+        Sequence m_animation;        
         public override IEnumerator Proccess()
         {
-            yield return PlayDefaultAnimation();
+            yield return PlayAnimation(m_animation);
         }
-        
-        private IEnumerator PlayDefaultAnimation(){
-            
-            m_animation = DOTween.Sequence();
 
-            m_animation.Append(
-                m_cardView.GetRenderer().DOColor(Color.red, 0.25f).SetLoops(2, LoopType.Yoyo)
-            );
+        private IEnumerator PlayAnimation(Sequence animation){
+            animation.SetAutoKill(false);
 
-            m_animation.Join(m_cardView.GetTransform().DOShakePosition(
-                    0.5f,
-                    new Vector3(0.15f, 0.15f, 0),
-                    vibrato: 25
-            ));
+            yield return animation.Play();
 
-            m_animation.SetAutoKill(false);
+            yield return animation.WaitForCompletion();
 
-            yield return m_animation.WaitForCompletion();
-
-
-            m_animation.Kill();
+            animation.Kill();
         }
     }
-    
-    public class JobReturnCardViewToPool : Job
+
+    public class JobSwitchColliderEnabledState : Job
     {
-        public JobReturnCardViewToPool(CardView a_cardView){
-            m_cardView = a_cardView;
+        public JobSwitchColliderEnabledState(GameObject obj, bool IsEnabled){
+            m_obj = obj;
+            m_IsEnabled = IsEnabled;
         }
-        CardView m_cardView;
+        private GameObject m_obj; 
+        private bool m_IsEnabled;
         public override IEnumerator Proccess()
         {
-            CardViewObjectPool.current.Return(m_cardView);
-            yield break;
+            Collider2D collider;
+            if(!m_obj.TryGetComponent(out collider)){
+                
+                collider = m_obj.GetComponentInChildren<Collider2D>();
+                if (collider == null) { yield break; }
+            }
+            
+            collider.enabled = m_IsEnabled;
         }
     }
 }

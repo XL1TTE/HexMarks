@@ -64,14 +64,26 @@
     <Analyzer Include="D:\Unity\2022.3.45f1\Editor\Data\Tools\Unity.SourceGenerators\Unity.Properties.SourceGenerator.dll" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Project\DataResolving\DataContext.cs" />
     <Compile Include="Assets\Project\Testing.cs" />
+    <Compile Include="Assets\Project\Cards\CardEffects\Effects\ColdDamageEffect.cs" />
+    <Compile Include="Assets\Project\ZenjectInstallers\DataResoverInstaller.cs" />
     <Compile Include="Assets\Project\CardLayouts\CardHand.cs" />
     <Compile Include="Assets\Project\StateMachines\BattleStateMachine.cs" />
+    <Compile Include="Assets\Project\DataResolving\DataRosolver.cs" />
+    <Compile Include="Assets\Project\Cards\CardEffects\Effects\FireDamageEffect.cs" />
+    <Compile Include="Assets\Project\Game\Battle\BattleUI.cs" />
+    <Compile Include="Assets\Project\Factories\ICardFactory.cs" />
+    <Compile Include="Assets\Project\Cards\CardEffects\Scripts\ICardEffect.cs" />
     <Compile Include="Assets\Project\JobSystem\Job.cs" />
     <Compile Include="Assets\Project\Cards\Scripts\CardView.cs" />
+    <Compile Include="Assets\Project\Factories\EnemyViewFactory.cs" />
     <Compile Include="Assets\Project\ObjectInteractions\Interactions\IHaveInteractions.cs" />
+    <Compile Include="Assets\Project\ObjectInteractions\Droping\DropHandlerType.cs" />
     <Compile Include="Assets\Project\Cards\Scripts\CardModel.cs" />
     <Compile Include="Assets\Project\Cards\Scripts\CardDefenition.cs" />
+    <Compile Include="Assets\Project\JobSystem\Jobs\JobReturnCardViewToPool.cs" />
+    <Compile Include="Assets\Project\ZenjectInstallers\EnemyInstaller.cs" />
     <Compile Include="Assets\Project\ZenjectInstallers\CardInstaller.cs" />
     <Compile Include="Assets\Project\Cards\Scripts\Card.cs" />
     <Compile Include="Assets\Project\ObjectInteractions\IDraggable.cs" />
@@ -79,6 +91,9 @@
     <Compile Include="Assets\Project\StateMachines\CardStates\EnemyTurnState.cs" />
     <Compile Include="Assets\Project\JobSystem\Jobs\JobApplyCardEffects.cs" />
     <Compile Include="Assets\Project\ObjectInteractions\SmoothDrag.cs" />
+    <Compile Include="Assets\Utilities\Tooltips\FloatingTextUtility.cs" />
+    <Compile Include="Assets\Project\DataResolving\DataRequestResolvers\EnemyTargetResolver.cs" />
+    <Compile Include="Assets\Utilities\Extensions\StringExtantions.cs" />
     <Compile Include="Assets\Project\CardLayouts\LimitCardsLayout.cs" />
     <Compile Include="Assets\Project\JobSystem\Jobs\JobPlayCardAnimation.cs" />
     <Compile Include="Assets\Project\Factories\CardViewObjectPool.cs" />
@@ -87,12 +102,44 @@
     <Compile Include="Assets\Project\Bootstrap\Bootstrap.cs" />
     <Compile Include="Assets\Project\ObjectInteractions\Interactions\InteractionsBase.cs" />
     <Compile Include="Assets\Project\CardLayouts\ICardLayout.cs" />
+    <Compile Include="Assets\Project\ZenjectInstallers\EventBusInstaller.cs" />
     <Compile Include="Assets\Project\ObjectInteractions\Droping\IDropHandler.cs" />
     <Compile Include="Assets\Utilities\Extensions\ListExtentions.cs" />
     <Compile Include="Assets\Project\ObjectInteractions\Interactions\Interactable.cs" />
     <Compile Include="Assets\Project\Cards\Scripts\CardInteractions.cs" />
     <Compile Include="Assets\Project\ObjectInteractions\Droping\IDropable.cs" />
+    <Compile Include="Assets\Project\DataResolving\IDataResolverUser.cs" />
+    <Compile Include="Assets\Project\UI\UINotification.cs" />
     <Compile Include="Assets\Project\Factories\CardFactory.cs" />
+    <Compile Include="Assets\Project\DataResolving\IDataRequestResolver.cs" />
+    <Compile Include="Assets\Project\EventBus\EventBus.cs" />
+    <Compile Include="Assets\Project\EventBus\Signals\BattleSignals\BattleStateChanged.cs" />
+    <Compile Include="Assets\Project\DataResolving\DataRequierment.cs" />
+    <Compile Include="Assets\Project\Factories\IEnemyViewFactory.cs" />
+    <Compile Include="Assets\Project\EventBus\Signals\ISignal.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
+    <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />
+    <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap.shader" />
+    <None Include="Assets\TextMesh Pro\Shaders\TMPro_Mobile.cginc" />
+    <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF SSD.shader" />
+    <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Surface-Mobile.shader" />
+    <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Surface.shader" />
+    <None Include="Assets\TextMesh Pro\Sprites\EmojiOne Attribution.txt" />
+    <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap-Custom-Atlas.shader" />
+    <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF.shader" />
+    <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile SSD.shader" />
+    <None Include="Assets\TextMesh Pro\Resources\LineBreaking Leading Characters.txt" />
+    <None Include="Assets\TextMesh Pro\Shaders\TMPro_Properties.cginc" />
+    <None Include="Assets\TextMesh Pro\Shaders\TMPro_Surface.cginc" />
+    <None Include="Assets\TextMesh Pro\Resources\LineBreaking Following Characters.txt" />
+    <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Masking.shader" />
+    <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF Overlay.shader" />
+    <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap-Mobile.shader" />
+    <None Include="Assets\TextMesh Pro\Fonts\LiberationSans - OFL.txt" />
+    <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile.shader" />
+    <None Include="Assets\TextMesh Pro\Shaders\TMP_Sprite.shader" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
