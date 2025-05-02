@@ -1,5 +1,8 @@
+using System.Collections;
+using DG.Tweening;
 using Project.EventBus;
 using Project.EventBus.Signals;
+using Project.JobSystem;
 using UnityEngine;
 using Zenject;
 
@@ -41,7 +44,19 @@ namespace Project.Enemies
             m_SignalBus.SendSignal(new EnemyDyingSignal(this));
         }
         
-        public void Die(){
+        public IEnumerator Die(){
+            
+            yield return new JobSwitchColliderEnabledState(gameObject, false).Proccess();
+            
+            var die_tween = transform.DOShakePosition(
+                    2f,
+                    new Vector3(0.15f, 0.15f, 0),
+                    vibrato: 45,
+                    randomnessMode: ShakeRandomnessMode.Harmonic
+            );
+            
+            yield return die_tween.WaitForCompletion();
+
             m_SignalBus.SendSignal(new EnemyDiedSignal(this));
             Destroy(gameObject);
         }

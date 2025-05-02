@@ -40,7 +40,7 @@ namespace Project.GameManagers{
             }
             
             m_EnemiesCoroutines.Remove(enemy);
-            enemy.Die();
+            yield return enemy.Die();
         }
         
         private void OnCardPlayedOnEnemy(CardUsedOnEnemySignal signal){
