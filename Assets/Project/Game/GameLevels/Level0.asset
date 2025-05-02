@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Level0
   m_EditorClassIdentifier: 
   m_Enemies:
-  - {fileID: 7474540193881344916, guid: 91760cfad1ada334d9fd0bec57e2684c, type: 3}
-  - {fileID: 7474540193881344916, guid: 91760cfad1ada334d9fd0bec57e2684c, type: 3}
-  - {fileID: 7474540193881344916, guid: 91760cfad1ada334d9fd0bec57e2684c, type: 3}
+  - {fileID: 2575075141357443638, guid: 91760cfad1ada334d9fd0bec57e2684c, type: 3}
+  - {fileID: 2575075141357443638, guid: 91760cfad1ada334d9fd0bec57e2684c, type: 3}
+  - {fileID: 2575075141357443638, guid: 91760cfad1ada334d9fd0bec57e2684c, type: 3}

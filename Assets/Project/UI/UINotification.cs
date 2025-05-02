@@ -16,12 +16,12 @@ namespace Project.UI
         }
         [Inject]
         private void Construct(SignalBus a_signalBus){
-            a_signalBus.Subscribe<BattleStateChanged>(ShowNotification);   
+            a_signalBus.Subscribe<BattleStateChangedSignal>(ShowNotification);   
         }    
         [SerializeField] TextMeshProUGUI m_NotificationText;
         [SerializeField] float m_NotificationDuration;
         
-        public void ShowNotification(BattleStateChanged signal){
+        public void ShowNotification(BattleStateChangedSignal signal){
             gameObject.SetActive(true);
             StartCoroutine(ShowNotificationCoroutine(signal.m_StateChangedMessage, m_NotificationDuration));
         }

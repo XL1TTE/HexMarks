@@ -65,11 +65,19 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Project\DataResolving\DataContext.cs" />
+    <Compile Include="Assets\Project\EventBus\Signals\BattleSignals\Cards\CardUsedOnEnemySignal.cs" />
+    <Compile Include="Assets\Project\EventBus\Signals\BattleSignals\Enemies\SetEnemyTargetSignal.cs" />
+    <Compile Include="Assets\Project\Enemies\Enemy.cs" />
+    <Compile Include="Assets\Project\Factories\HealthBarFactory.cs" />
     <Compile Include="Assets\Project\Testing.cs" />
+    <Compile Include="Assets\Project\EventBus\Signals\BattleSignals\Enemies\EnemyDyingSignal.cs" />
     <Compile Include="Assets\Project\Cards\CardEffects\Effects\ColdDamageEffect.cs" />
     <Compile Include="Assets\Project\ZenjectInstallers\DataResoverInstaller.cs" />
     <Compile Include="Assets\Project\CardLayouts\CardHand.cs" />
+    <Compile Include="Assets\Project\EventBus\Signals\BattleSignals\Enemies\EnemyHealthChanged.cs" />
     <Compile Include="Assets\Project\StateMachines\BattleStateMachine.cs" />
+    <Compile Include="Assets\Project\UI\ProgressBars\IProgressBar.cs" />
+    <Compile Include="Assets\Project\EventBus\Signals\BattleSignals\PlayerHealthChangedSingal.cs" />
     <Compile Include="Assets\Project\DataResolving\DataRosolver.cs" />
     <Compile Include="Assets\Project\Cards\CardEffects\Effects\FireDamageEffect.cs" />
     <Compile Include="Assets\Project\Game\Battle\BattleUI.cs" />
@@ -88,12 +96,17 @@
     <Compile Include="Assets\Project\Cards\Scripts\Card.cs" />
     <Compile Include="Assets\Project\ObjectInteractions\IDraggable.cs" />
     <Compile Include="Assets\Project\ObjectInteractions\Droping\CardDropHandler.cs" />
+    <Compile Include="Assets\Project\ZenjectInstallers\HealthBarInstaller.cs" />
     <Compile Include="Assets\Project\StateMachines\CardStates\EnemyTurnState.cs" />
+    <Compile Include="Assets\Project\GameManagers\HealthBarManager.cs" />
+    <Compile Include="Assets\Project\Player\IPlayerHealthData.cs" />
     <Compile Include="Assets\Project\JobSystem\Jobs\JobApplyCardEffects.cs" />
     <Compile Include="Assets\Project\ObjectInteractions\SmoothDrag.cs" />
     <Compile Include="Assets\Utilities\Tooltips\FloatingTextUtility.cs" />
     <Compile Include="Assets\Project\DataResolving\DataRequestResolvers\EnemyTargetResolver.cs" />
     <Compile Include="Assets\Utilities\Extensions\StringExtantions.cs" />
+    <Compile Include="Assets\Project\UI\ProgressBars\HealthBar.cs" />
+    <Compile Include="Assets\Project\GameManagers\BattleSequenceManager.cs" />
     <Compile Include="Assets\Project\CardLayouts\LimitCardsLayout.cs" />
     <Compile Include="Assets\Project\JobSystem\Jobs\JobPlayCardAnimation.cs" />
     <Compile Include="Assets\Project\Factories\CardViewObjectPool.cs" />
@@ -108,14 +121,19 @@
     <Compile Include="Assets\Project\ObjectInteractions\Interactions\Interactable.cs" />
     <Compile Include="Assets\Project\Cards\Scripts\CardInteractions.cs" />
     <Compile Include="Assets\Project\ObjectInteractions\Droping\IDropable.cs" />
+    <Compile Include="Assets\Project\Wrappers\CoroutineWrapper.cs" />
     <Compile Include="Assets\Project\DataResolving\IDataResolverUser.cs" />
     <Compile Include="Assets\Project\UI\UINotification.cs" />
     <Compile Include="Assets\Project\Factories\CardFactory.cs" />
+    <Compile Include="Assets\Project\EventBus\Signals\BattleSignals\Enemies\EnemySpawnedSignal.cs" />
+    <Compile Include="Assets\Project\EventBus\Signals\BattleSignals\Enemies\EnemyDiedSignal.cs" />
     <Compile Include="Assets\Project\DataResolving\IDataRequestResolver.cs" />
     <Compile Include="Assets\Project\EventBus\EventBus.cs" />
+    <Compile Include="Assets\Project\Factories\IHealthBarFactory.cs" />
     <Compile Include="Assets\Project\EventBus\Signals\BattleSignals\BattleStateChanged.cs" />
     <Compile Include="Assets\Project\DataResolving\DataRequierment.cs" />
     <Compile Include="Assets\Project\Factories\IEnemyViewFactory.cs" />
+    <Compile Include="Assets\Project\Player\PlayerData.cs" />
     <Compile Include="Assets\Project\EventBus\Signals\ISignal.cs" />
   </ItemGroup>
   <ItemGroup>

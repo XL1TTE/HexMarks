@@ -65,8 +65,8 @@ namespace Project.Cards{
         
         #endregion
         
-        public void UseCard(){
-            StartCoroutine(m_CardController.UseCard());
+        public IEnumerator GetUseCardRoutine(){
+            return m_CardController.UseCard();
         }
 
         void OnDisable()

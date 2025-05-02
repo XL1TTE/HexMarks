@@ -1,3 +1,4 @@
+using Project.Enemies;
 using UnityEngine;
 using Zenject;
 
@@ -10,9 +11,9 @@ namespace Project.Factories{
         {
             m_container = container;
         }
-        public GameObject CreateEnemy(GameObject prefab, Transform parent)
+        public Enemy CreateEnemy(Enemy prefab, Transform parent)
         {
-            var instance = m_container.InstantiatePrefab(prefab, parent);
+            var instance = m_container.InstantiatePrefabForComponent<Enemy>(prefab, parent);
             
             return instance;
         }

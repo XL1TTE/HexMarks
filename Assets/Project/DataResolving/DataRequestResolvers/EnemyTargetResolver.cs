@@ -1,4 +1,5 @@
 
+using Project.Enemies;
 using Project.EventBus;
 using Project.EventBus.Signals;
 using UnityEngine;
@@ -7,7 +8,7 @@ using Zenject;
 namespace Project.DataResolving.DataRequestResolvers{
     public class EnemyTargetResolver : IDataRequestResolver
     {
-        private GameObject m_CurrentEnemyTarget;
+        private Enemy m_CurrentEnemyTarget;
         private void SetCurrentEnemyTarget(SetEnemyTargetSignal signal) => m_CurrentEnemyTarget = signal.GetTarget();
         
         
@@ -18,7 +19,7 @@ namespace Project.DataResolving.DataRequestResolvers{
         
         public bool CanResolve(DataRequierment req)
         {
-            return req.GetReqName() == "EnemyTarget" && req.GetReqDataType() == typeof(GameObject);
+            return req.GetReqName() == "EnemyTarget" && req.GetReqDataType() == typeof(Enemy);
         }
 
         public object Resolve(DataRequierment req)

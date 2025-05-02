@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Project.Cards;
 using Project.EventBus;
@@ -5,6 +6,7 @@ using Project.EventBus.Signals;
 using Project.Factories;
 using Project.Game.Battle.UI;
 using Project.Layouts;
+using Project.Player;
 using Project.StateMachines.BattleStateMachine;
 using Project.StateMachines.CardStates;
 using UnityEngine;
@@ -26,17 +28,26 @@ namespace Project
         /// 
         /// (+-) Make simple state machine for battle controller 1) enemy turn state, 2) player turn state
         /// (+-) Make placeholder for state switching, just for testing
-        /// (-) Make simple PlayerData with Health at least
-        /// (-) Make some ui representation of player health
+        /// (+) Make simple PlayerData with Health at least
+        /// (+) Make some ui representation of player health
         /// (-) Make some sort of turns system - queue or something...
         /// (-) Make OnCardPlayed event to notify battle controller
         /// (-) Make enemies that will damage player on their turn (turn changed after player plays one card)
-        /// (-) Make ability for card that will actually do damage to enemy
+        /// (-) Make ability for card to actually damage enemy
+        /// (-) Make some kind of health bars above enemies (object pool?)
         /// (-) Make tooltip for enemy health on pointer hover
         /// (-) Make enemy die handler in battle controller
+        /// 
+        /// 
+        /// !!! Make game system in this kind of way - [EnemySpawnedSignal -> EnemiesHealthBarsController 
+        /// -> Spawn HealthBars above enemy. EnemyHealthChanged -> EnemiesHealthBarsController -> UpdateHealthBarValue]  
         void Awake()
         {
             stateMachine = new BattleStateMachine(this);
+            
+            playerData = new PlayerData();
+            playerHealthData = new PlayerHealthData(playerData.GetMaxHealth(), playerData.GetMaxHealth());
+            m_SignalBus.SendSignal(new PlayerHealthChangedSingal(playerHealthData));
         }
 
         [Inject]
@@ -48,11 +59,21 @@ namespace Project
         ICardFactory m_cardFactory;
         SignalBus m_SignalBus;
         [SerializeField] CardHand m_cardHand;
-        public IReadOnlyList<CardView> GetCardsInHand() => m_cardHand.GetAllItems();
         
-        [SerializeField] private BattleUI m_BattleUI;
-        public BattleUI GetUI() => m_BattleUI;        
+        public IReadOnlyList<CardView> GetCardsInHand() => m_cardHand.GetAllItems();      
         BattleStateMachine stateMachine;
+        
+        PlayerData playerData;
+        
+        IPlayerHealthData playerHealthData;
+        public void PlayerTakeDamage(float amount){
+            playerHealthData.SetCurrentHealth(Mathf.Max(0, playerHealthData.GetCurrentHealth() - amount));
+            m_SignalBus.SendSignal(new PlayerHealthChangedSingal(playerHealthData));
+        }
+        public void HealPlayer(float amount){
+            playerHealthData.SetCurrentHealth(Mathf.Min(playerHealthData.GetMaxHealth(), playerHealthData.GetCurrentHealth() + amount));
+            m_SignalBus.SendSignal(new PlayerHealthChangedSingal(playerHealthData));
+        }
         
         void Update()
         {
@@ -63,12 +84,19 @@ namespace Project
             }
             if(Input.GetKeyDown(KeyCode.LeftBracket)){
                 stateMachine.ChangeState<StateMachines.BattleStateMachine.EnemyTurnState>();
-                m_SignalBus.SendSignal(new BattleStateChanged("Enemy turn!"));
+                m_SignalBus.SendSignal(new BattleStateChangedSignal("Enemy turn!"));
             }
             if(Input.GetKeyDown(KeyCode.RightBracket)){
                 stateMachine.ChangeState<StateMachines.BattleStateMachine.PlayerTurnState>();
-                m_SignalBus.SendSignal(new BattleStateChanged("Your turn!"));
+                m_SignalBus.SendSignal(new BattleStateChangedSignal("Your turn!"));
 
+            }
+            
+            if(Input.GetKeyDown(KeyCode.DownArrow)){
+                PlayerTakeDamage(10);
+            }
+            if(Input.GetKeyDown(KeyCode.UpArrow)){
+                HealPlayer(10);
             }
         }
     }

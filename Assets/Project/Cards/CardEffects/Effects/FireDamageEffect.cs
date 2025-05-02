@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using DG.Tweening;
 using Project.DataResolving;
+using Project.Enemies;
 using Project.JobSystem;
 using Project.Utilities.Extantions;
 using Project.Utilities.Tooltips;
@@ -13,14 +14,13 @@ namespace Project.Cards.Effects{
         public override IReadOnlyList<DataRequierment> GetDataRequests()
         {
             return new List<DataRequierment>{
-              new DataRequierment("EnemyTarget", typeof(GameObject))  
+              new DataRequierment("EnemyTarget", typeof(Enemy))  
             };
         }
 
         public override JobSequence GetJob(CardView cardView, DataContext context)
         {
-            var target = context.Get<GameObject>("EnemyTarget");
-            Debug.Log(target);
+            var target = context.Get<Enemy>("EnemyTarget");
 
             var m_animSequence = DOTween.Sequence();
             TMP_Text text = null;
@@ -73,8 +73,8 @@ namespace Project.Cards.Effects{
             });
 
             JobSequence job = new JobSequence(new List<Job>{
+                new JobApplyCardEffects(target, 25),
                 new JobPlayCardAnimation(m_animSequence),
-                new JobApplyCardEffects()
             });
             
             return job;

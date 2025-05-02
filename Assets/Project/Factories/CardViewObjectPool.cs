@@ -11,10 +11,12 @@ namespace Project.Factories{
             if(current == null){
                 current = this;
             }
+            m_DefaulObjScale = m_prefab.gameObject.transform.localScale;
         }
 
+        private Vector3 m_DefaulObjScale;
+
         [SerializeField] private Transform m_PoolContainer;
-        
         [SerializeField] private CardView  m_prefab;
         
         private Queue<CardView> m_freeObjects = new();
@@ -44,6 +46,7 @@ namespace Project.Factories{
         private CardView ConfigObject(CardView a_obj, bool isActive)
         {
             var cardObject = a_obj.gameObject;
+            
             cardObject.SetActive(isActive);
             
             return a_obj;
