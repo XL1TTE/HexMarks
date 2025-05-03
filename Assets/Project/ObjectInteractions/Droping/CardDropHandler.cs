@@ -21,9 +21,9 @@ namespace Project.ObjectInteractions{
         [SerializeField] DropHandlerType HandlerType;
                 
         private void OnCardDropOnEnemy(CardView cardView){
-            Enemy enemy;
+            EnemyView enemy;
             if(!TryGetComponent(out enemy)){
-                enemy = GetComponentInParent<Enemy>();
+                enemy = GetComponentInParent<EnemyView>();
             }
             
             m_signalBus.SendSignal(new SetEnemyTargetSignal(enemy));

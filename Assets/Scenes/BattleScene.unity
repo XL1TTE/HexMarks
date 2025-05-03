@@ -1045,7 +1045,7 @@ Transform:
   m_GameObject: {fileID: 1319746137}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 540.76184, y: 612.4033, z: 5.1149607}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1098,6 +1098,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a21ce2fe4f810634995712605a16e93e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_CardsHand: {fileID: 571370523}
 --- !u!1 &1399315433
 GameObject:
   m_ObjectHideFlags: 0
@@ -1127,7 +1128,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b752560fbc4237f45862fcd453a73cf5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_cardHand: {fileID: 571370523}
+  battleController: {fileID: 1981819449}
+  battleManager: {fileID: 1351787150}
 --- !u!4 &1399315435
 Transform:
   m_ObjectHideFlags: 0
@@ -1339,7 +1341,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f94a5a02bc5bfd040baca5dc7bd640a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_BattleUI: {fileID: 1488041118}
   m_Levels:
   - {fileID: 11400000, guid: dc67c7d0d6c995e42be8bc69cb017a6c, type: 2}
   - {fileID: 11400000, guid: dea62f3a3204a9b4388cd86cde873568, type: 2}
@@ -1356,8 +1357,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1981819448}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -540.76184, y: -612.4033, z: -5.1149607}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

@@ -18,7 +18,7 @@ namespace Project.Cards{
         private CardView m_view;
         public CardView GetView() => m_view;
         
-        public IEnumerator UseCard(){
+        public IEnumerator GetCardUseSequence(){
             yield return new JobSwitchColliderEnabledState(m_view.gameObject, false).Proccess();
             yield return m_model.GetCardExecutionSequence(m_view, m_dataResolver).Proccess();
             yield return new JobSwitchColliderEnabledState(m_view.gameObject, true).Proccess();

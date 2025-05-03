@@ -2,11 +2,11 @@ using Project.Enemies;
 
 namespace Project.EventBus.Signals{
     public class EnemyHealthChangedSignal : ISignal{
-        public EnemyHealthChangedSignal(Enemy enemy){
+        public EnemyHealthChangedSignal(EnemyView enemy){
             m_Enemy = enemy;
         }
-        private Enemy m_Enemy;
-        public Enemy GetEnemy() => m_Enemy;
+        private EnemyView m_Enemy;
+        public EnemyView GetEnemy() => m_Enemy;
 
     }
     

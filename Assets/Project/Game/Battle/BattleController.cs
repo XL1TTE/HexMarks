@@ -1,11 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using Project.Cards;
 using Project.Enemies;
 using Project.EventBus;
 using Project.EventBus.Signals;
 using Project.Factories;
 using Project.Game.Battle.UI;
 using Project.Game.GameLevels;
+using Project.Layouts;
 using Project.UI;
 using Project.Utilities.Extantions;
 using UnityEngine;
@@ -16,13 +18,14 @@ namespace Project.Game.Battle{
     public class BattleController : MonoBehaviour
     {
         [Inject]
-        private void Construct(SignalBus signalBus, IEnemyViewFactory enemyViewFactory)
+        private void Construct(
+            SignalBus signalBus, 
+            IEnemyViewFactory enemyViewFactory)
         {
             m_enemyViewFactory = enemyViewFactory;
             m_SignalBus = signalBus;
         }
-        
-        [SerializeField] private BattleUI m_BattleUI;
+
         [SerializeField] private List<GameLevel> m_Levels;
         [SerializeField] private List<Transform> m_EnemySpawnPoints;
         
@@ -31,18 +34,19 @@ namespace Project.Game.Battle{
         private IEnemyViewFactory m_enemyViewFactory;
         private SignalBus m_SignalBus;
         
-        private List<Enemy> m_EnemiesInBattle = new();
+        private List<EnemyView> m_EnemiesInBattle = new();
 
         void Awake()
         {
             WinMessage.SetActive(false);
         }
 
-        void Start()
-        {
+        public void Initialize(){
             m_SignalBus.Subscribe<EnemyDiedSignal>(OnEnemyDied);
-
-            NextLevel();            
+        }
+        
+        public void StartBattle(){
+            NextLevel();
         }
 
         private void NextLevel(){
@@ -53,15 +57,17 @@ namespace Project.Game.Battle{
             
             int index = 0;
             foreach (var p in m_EnemySpawnPoints){
-                var enemy = m_enemyViewFactory.CreateEnemy(enemies[index], p);
+                
+                var enemy = m_enemyViewFactory.CreateFromDef(enemies[index], p);
                 m_EnemiesInBattle.Add(enemy);
 
                 m_SignalBus.SendSignal(new EnemySpawnedSignal(enemy));
 
-                if (++index >= enemies.Count){return;}
+                if (++index >= enemies.Count){break;}
             }
+            m_SignalBus.SendSignal(new BattleStartSignal(m_EnemiesInBattle, Testing.playerData));
         }
-        
+
         private void OnEnemyDied(EnemyDiedSignal signal){
             m_EnemiesInBattle.Remove(signal.GetEnemy());
             if(m_EnemiesInBattle.Count == 0){
@@ -73,11 +79,10 @@ namespace Project.Game.Battle{
             WinMessage.SetActive(true);
             yield return new WaitForSeconds(2);
 
-            NextLevel();
-
             WinMessage.SetActive(false);
             
+            NextLevel();
         }
     }
-    
+
 }

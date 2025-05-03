@@ -4,7 +4,9 @@ using Project.Cards;
 using Project.EventBus;
 using Project.EventBus.Signals;
 using Project.Factories;
+using Project.Game.Battle;
 using Project.Game.Battle.UI;
+using Project.GameManagers;
 using Project.Layouts;
 using Project.Player;
 using Project.StateMachines.BattleStateMachine;
@@ -43,61 +45,27 @@ namespace Project
         /// -> Spawn HealthBars above enemy. EnemyHealthChanged -> EnemiesHealthBarsController -> UpdateHealthBarValue]  
         void Awake()
         {
-            stateMachine = new BattleStateMachine(this);
-            
             playerData = new PlayerData();
-            playerHealthData = new PlayerHealthData(playerData.GetMaxHealth(), playerData.GetMaxHealth());
-            m_SignalBus.SendSignal(new PlayerHealthChangedSingal(playerHealthData));
+
+
+            battleManager.Enable();
+            
+            battleController.Initialize();
+            
+            battleController.StartBattle();
         }
 
         [Inject]
-        private void Construct(ICardFactory a_cardFactory, SignalBus signalBus){
-            m_cardFactory = a_cardFactory;
+        private void Construct(SignalBus signalBus){
             m_SignalBus = signalBus;
         }
         
-        ICardFactory m_cardFactory;
+        [SerializeField] BattleController battleController;
+        [SerializeField] BattleSequenceManager battleManager;
+        
         SignalBus m_SignalBus;
-        [SerializeField] CardHand m_cardHand;
         
-        public IReadOnlyList<CardView> GetCardsInHand() => m_cardHand.GetAllItems();      
-        BattleStateMachine stateMachine;
+        public static PlayerData playerData;
         
-        PlayerData playerData;
-        
-        IPlayerHealthData playerHealthData;
-        public void PlayerTakeDamage(float amount){
-            playerHealthData.SetCurrentHealth(Mathf.Max(0, playerHealthData.GetCurrentHealth() - amount));
-            m_SignalBus.SendSignal(new PlayerHealthChangedSingal(playerHealthData));
-        }
-        public void HealPlayer(float amount){
-            playerHealthData.SetCurrentHealth(Mathf.Min(playerHealthData.GetMaxHealth(), playerHealthData.GetCurrentHealth() + amount));
-            m_SignalBus.SendSignal(new PlayerHealthChangedSingal(playerHealthData));
-        }
-        
-        void Update()
-        {
-            if(Input.GetKeyDown(KeyCode.Space)){
-                Card card = m_cardFactory.CreateNewCard();
-                
-                m_cardHand.TryClaim(card.GetView());
-            }
-            if(Input.GetKeyDown(KeyCode.LeftBracket)){
-                stateMachine.ChangeState<StateMachines.BattleStateMachine.EnemyTurnState>();
-                m_SignalBus.SendSignal(new BattleStateChangedSignal("Enemy turn!"));
-            }
-            if(Input.GetKeyDown(KeyCode.RightBracket)){
-                stateMachine.ChangeState<StateMachines.BattleStateMachine.PlayerTurnState>();
-                m_SignalBus.SendSignal(new BattleStateChangedSignal("Your turn!"));
-
-            }
-            
-            if(Input.GetKeyDown(KeyCode.DownArrow)){
-                PlayerTakeDamage(10);
-            }
-            if(Input.GetKeyDown(KeyCode.UpArrow)){
-                HealPlayer(10);
-            }
-        }
     }
 }

@@ -14,14 +14,14 @@ namespace Project.Cards.Effects{
         public override IReadOnlyList<DataRequierment> GetDataRequests()
         {
             return new List<DataRequierment>{
-                new DataRequierment("EnemyTarget", typeof(Enemy))  
+                new DataRequierment("EnemyTarget", typeof(EnemyView))  
             };
         }
 
         public override JobSequence GetJob(CardView cardView, DataContext context)
         {
             
-            var target = context.Get<Enemy>("EnemyTarget");
+            var target = context.Get<EnemyView>("EnemyTarget");
             
             var m_animSequence = DOTween.Sequence();
 

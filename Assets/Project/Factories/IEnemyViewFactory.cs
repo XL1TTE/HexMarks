@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Project.Factories{
     public interface IEnemyViewFactory{
-        Enemy CreateEnemy(Enemy prefab, Transform parent);
+        EnemyView CreateFromDef(EnemyDefenition def, Transform parent);
     }
 }
 

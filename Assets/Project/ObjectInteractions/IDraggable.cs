@@ -11,7 +11,7 @@ namespace Project.ObjectInteractions
     public class IDraggable : MonoBehaviour
     {
   
-        void Start()
+        void Awake()
         {
             m_Collider = gameObject.GetComponent<Collider2D>();
             g_MainCamera = Camera.main;

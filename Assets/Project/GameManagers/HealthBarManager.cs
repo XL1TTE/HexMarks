@@ -22,7 +22,7 @@ namespace Project.GameManagers{
         
         private SignalBus m_SignalBus;
         private IHealthBarFactory m_Factory;
-        private Dictionary<Enemy, HealthBar> m_Cache = new();
+        private Dictionary<EnemyView, HealthBar> m_Cache = new();
         
         public void Disable(){
             m_SignalBus.Unsubscribe<EnemySpawnedSignal>(OnEnemySpawned);
@@ -38,20 +38,22 @@ namespace Project.GameManagers{
         
         private void OnEnemyHealthChanged(EnemyHealthChangedSignal signal)
         {
-            var enemy = signal.GetEnemy();
+            var enemyView = signal.GetEnemy();
+            var enemy = enemyView.GetController();
 
-            if (!m_Cache.TryGetValue(enemy, out var bar)) { return; }
+            if (!m_Cache.TryGetValue(enemyView, out var bar)) { return; }
 
             bar.UpdateProgress(enemy.GetCurrentHealth() / enemy.GetMaxHealth());
         }
         private void OnEnemySpawned(EnemySpawnedSignal signal)
         {
-            var enemy = signal.GetEnemy();
-            
-            HealthBar bar = m_Factory.CreateHealthBar(enemy.transform);
+            var enemyView = signal.GetEnemy();
+            var enemy = enemyView.GetController();
+
+            HealthBar bar = m_Factory.CreateHealthBar(enemyView.transform);
             bar.UpdateProgress(enemy.GetCurrentHealth() / enemy.GetMaxHealth());
 
-            m_Cache.Add(enemy, bar);
+            m_Cache.Add(enemyView, bar);
         }
         private void OnEnemyDied(EnemyDiedSignal signal){
             var enemy = signal.GetEnemy();

@@ -1,3 +1,5 @@
+using UnityEngine.UIElements;
+
 namespace Project.EventBus.Signals{
     
     public class BattleStateChangedSignal: ISignal{

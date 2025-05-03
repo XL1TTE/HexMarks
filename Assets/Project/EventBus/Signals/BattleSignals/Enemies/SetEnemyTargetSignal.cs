@@ -6,9 +6,9 @@ using UnityEngine;
 namespace Project.EventBus.Signals{
     public class SetEnemyTargetSignal : ISignal{
         
-        private Enemy m_target;
-        public Enemy GetTarget() => m_target;
-        public SetEnemyTargetSignal(Enemy target){
+        private EnemyView m_target;
+        public EnemyView GetTarget() => m_target;
+        public SetEnemyTargetSignal(EnemyView target){
             m_target = target;
         }
     }

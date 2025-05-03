@@ -3,15 +3,17 @@ using System;
 using System.Collections.Generic;
 using Project.Cards;
 using Project.Game.Battle.UI;
+using Project.GameManagers;
+using Project.Layouts;
 
 namespace Project.StateMachines.BattleStateMachine{
     
     public class BattleStateMachine{
         
-        public BattleStateMachine(Testing test){
-            m_test = test;
+        public BattleStateMachine(BattleSequenceManager battleManager){
+            m_battleManager = battleManager;
         }
-        Testing m_test;
+        BattleSequenceManager m_battleManager;
         
         IBattleState m_CurrentState;
         
@@ -19,7 +21,7 @@ namespace Project.StateMachines.BattleStateMachine{
             var state = Activator.CreateInstance(typeof(T)) as IBattleState;
             if(state == null){return;}
 
-            var context = new BattleStateContext(m_test.GetCardsInHand());
+            var context = new BattleStateContext(m_battleManager.GetCardsInHand());
             
             m_CurrentState?.Exit(context);
             
@@ -38,7 +40,6 @@ namespace Project.StateMachines.BattleStateMachine{
         }
         
         public IEnumerable<CardView> m_Cards;
-        public BattleUI m_BattleUI;
     }
     
     public abstract class IBattleState{

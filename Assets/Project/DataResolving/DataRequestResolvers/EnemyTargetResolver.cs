@@ -8,9 +8,8 @@ using Zenject;
 namespace Project.DataResolving.DataRequestResolvers{
     public class EnemyTargetResolver : IDataRequestResolver
     {
-        private Enemy m_CurrentEnemyTarget;
+        private EnemyView m_CurrentEnemyTarget;
         private void SetCurrentEnemyTarget(SetEnemyTargetSignal signal) => m_CurrentEnemyTarget = signal.GetTarget();
-        
         
         [Inject]
         private void Construct(SignalBus signalBus){
@@ -19,7 +18,7 @@ namespace Project.DataResolving.DataRequestResolvers{
         
         public bool CanResolve(DataRequierment req)
         {
-            return req.GetReqName() == "EnemyTarget" && req.GetReqDataType() == typeof(Enemy);
+            return req.GetReqName() == "EnemyTarget" && req.GetReqDataType() == typeof(EnemyView);
         }
 
         public object Resolve(DataRequierment req)

@@ -3,12 +3,12 @@ using Project.Enemies;
 namespace Project.EventBus.Signals{
     public class EnemyDyingSignal : ISignal
     {
-        public EnemyDyingSignal(Enemy enemy)
+        public EnemyDyingSignal(EnemyView enemy)
         {
             m_Enemy = enemy;
         }
-        private Enemy m_Enemy;
-        public Enemy GetEnemy() => m_Enemy;
+        private EnemyView m_Enemy;
+        public EnemyView GetEnemy() => m_Enemy;
 
     }
 

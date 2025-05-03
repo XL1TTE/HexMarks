@@ -11,11 +11,15 @@ namespace Project.Factories{
         {
             m_container = container;
         }
-        public Enemy CreateEnemy(Enemy prefab, Transform parent)
+        
+        public EnemyView CreateFromDef(EnemyDefenition def, Transform parent)
         {
-            var instance = m_container.InstantiatePrefabForComponent<Enemy>(prefab, parent);
+            var view = m_container.InstantiatePrefabForComponent<EnemyView>(def.GetPrefab(), parent);
+            var model = def.GetModel();
             
-            return instance;
+            var enemyController = new Enemy(view, model);
+            
+            return view;
         }
     }
 }
