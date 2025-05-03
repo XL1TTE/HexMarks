@@ -8,7 +8,7 @@ namespace Project.Enemies{
         [SerializeField, Range(1f, 10000f)] private float m_Health = 10f;
         [SerializeField, Range(1f, 10000f)] private float m_MaxHealth = 10f;
         [SerializeField, Range(1f, 10000f)] private float m_Damage = 1f;
-        [SerializeField, Range(1f, 100f)] private float m_Initiative = 1f;
+        [SerializeField, Range(1, 100)] private int m_Initiative = 1;
 
         [SerializeField] private BaseEnemyDieAnimation m_DieAnimation;
 

@@ -11,8 +11,8 @@ namespace Project.Player
     {
         public event Action<PlayerData> OnDamageTaken;
         
-        private float m_Initiative = 10f;
-        public float GetInitiaive() => m_Initiative;
+        private int m_Initiative = 10;
+        public int GetInitiaive() => m_Initiative;
         
         private float m_Health = 100.0f;
         private float m_MaxHealth = 100.0f;

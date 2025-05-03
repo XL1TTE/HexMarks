@@ -28,7 +28,7 @@ namespace Project.Enemies{
         
         public EnemyAI GetAI() => m_Model.GetAI();
         
-        public float GetInitiaive() => m_Model.GetInitiaive();
+        public int GetInitiaive() => m_Model.GetInitiaive();
         
         public IEnumerator GetDieSequence() => m_Model.GetDieSequence(m_View);
     }

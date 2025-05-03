@@ -1,10 +1,8 @@
 using System;
 using System.Collections;
-using Project.EventBus;
-using Project.EventBus.Signals;
 using TMPro;
 using UnityEngine;
-using Zenject;
+using UnityEngine.UI;
 
 namespace Project.UI
 {
@@ -12,24 +10,31 @@ namespace Project.UI
     {
         void Awake()
         {
+            if(current == null){
+                current = this;
+            }
             gameObject.SetActive(false);
         }
-        [Inject]
-        private void Construct(SignalBus a_signalBus){
-            a_signalBus.Subscribe<BattleStateChangedSignal>(ShowNotification);   
-        }    
-        [SerializeField] TextMeshProUGUI m_NotificationText;
-        [SerializeField] float m_NotificationDuration;
         
-        public void ShowNotification(BattleStateChangedSignal signal){
+        
+        public static UINotification current = null;
+
+        [SerializeField] TextMeshProUGUI m_NotificationText;
+        [SerializeField] Image m_BackGround;
+        
+        public IEnumerator ShowNotification(string message, float duration, Color backgroundColor){
             gameObject.SetActive(true);
-            StartCoroutine(ShowNotificationCoroutine(signal.m_StateChangedMessage, m_NotificationDuration));
+            
+            m_BackGround.color = backgroundColor;
+            
+            yield return ShowNotificationCoroutine(message, duration);
         }
         
         private void ShowText(string a_message) => m_NotificationText.text = a_message;
         private void ClearText() => m_NotificationText.text = String.Empty;
     
-        public IEnumerator ShowNotificationCoroutine(string a_message, float a_duration){
+        private IEnumerator ShowNotificationCoroutine(string a_message, float a_duration)
+        {
             ShowText(a_message);
             yield return new WaitForSeconds(a_duration);
             ClearText();

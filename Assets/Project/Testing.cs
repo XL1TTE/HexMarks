@@ -1,16 +1,7 @@
-using System;
-using System.Collections.Generic;
-using Project.Cards;
 using Project.EventBus;
-using Project.EventBus.Signals;
-using Project.Factories;
 using Project.Game.Battle;
-using Project.Game.Battle.UI;
 using Project.GameManagers;
-using Project.Layouts;
 using Project.Player;
-using Project.StateMachines.BattleStateMachine;
-using Project.StateMachines.CardStates;
 using UnityEngine;
 using Zenject;
 
@@ -45,8 +36,6 @@ namespace Project
         /// -> Spawn HealthBars above enemy. EnemyHealthChanged -> EnemiesHealthBarsController -> UpdateHealthBarValue]  
         void Awake()
         {
-            playerData = new PlayerData();
-
 
             battleManager.Enable();
             
@@ -55,17 +44,9 @@ namespace Project
             battleController.StartBattle();
         }
 
-        [Inject]
-        private void Construct(SignalBus signalBus){
-            m_SignalBus = signalBus;
-        }
         
         [SerializeField] BattleController battleController;
         [SerializeField] BattleSequenceManager battleManager;
-        
-        SignalBus m_SignalBus;
-        
-        public static PlayerData playerData;
         
     }
 }

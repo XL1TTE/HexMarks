@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Project.Cards;
@@ -8,8 +9,10 @@ using Project.Factories;
 using Project.Game.Battle.UI;
 using Project.Game.GameLevels;
 using Project.Layouts;
+using Project.Player;
 using Project.UI;
 using Project.Utilities.Extantions;
+using Unity.VisualScripting;
 using UnityEngine;
 using Zenject;
 
@@ -34,23 +37,24 @@ namespace Project.Game.Battle{
         private IEnemyViewFactory m_enemyViewFactory;
         private SignalBus m_SignalBus;
         
-        private List<EnemyView> m_EnemiesInBattle = new();
-
         void Awake()
         {
             WinMessage.SetActive(false);
         }
 
         public void Initialize(){
-            m_SignalBus.Subscribe<EnemyDiedSignal>(OnEnemyDied);
+            m_SignalBus.Subscribe<PlayerWonBattleSignal>(OnPlayerWon);
+            m_SignalBus.Subscribe<PlayerLostBattleSignal>(OnPlayerLost);
         }
-        
+
         public void StartBattle(){
             NextLevel();
         }
 
         private void NextLevel(){
             if(m_Levels.Count == 0){return;}
+
+            List<EnemyView> m_EnemiesInBattle = new();
             
             var level = m_Levels.Dequeue();
             var enemies = level.GetEnemies();
@@ -65,23 +69,26 @@ namespace Project.Game.Battle{
 
                 if (++index >= enemies.Count){break;}
             }
-            m_SignalBus.SendSignal(new BattleStartSignal(m_EnemiesInBattle, Testing.playerData));
+            m_SignalBus.SendSignal(new BattleStartSignal(m_EnemiesInBattle));
         }
 
-        private void OnEnemyDied(EnemyDiedSignal signal){
-            m_EnemiesInBattle.Remove(signal.GetEnemy());
-            if(m_EnemiesInBattle.Count == 0){
-                StartCoroutine(OnLevelComplete());
-            }
+        private void OnPlayerWon(PlayerWonBattleSignal signal)
+        {
+            StartCoroutine(OnLevelComplete());
+        }
+        private void OnPlayerLost(PlayerLostBattleSignal signal){
+            StartCoroutine(OnPlayerLostRoutine());
+        }
+
+        private IEnumerator OnLevelComplete(){
+            
+            yield return UINotification.current.ShowNotification("You won!", 2.0f, "#46EE59".ToColor());
+
+            NextLevel();
         }
         
-        private IEnumerator OnLevelComplete(){
-            WinMessage.SetActive(true);
-            yield return new WaitForSeconds(2);
-
-            WinMessage.SetActive(false);
-            
-            NextLevel();
+        private IEnumerator OnPlayerLostRoutine(){
+            yield return UINotification.current.ShowNotification("You lost!", 2.0f, "#751B13".ToColor());
         }
     }
 

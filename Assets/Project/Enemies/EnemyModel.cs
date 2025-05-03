@@ -7,7 +7,7 @@ namespace Project.Enemies{
     public class EnemyModel
     {
         
-        public EnemyModel(float health, float maxHealth, float damage, float initiative){
+        public EnemyModel(float health, float maxHealth, float damage, int initiative){
             m_Health = health;
             m_MaxHealth = maxHealth;
             m_Damage = damage;
@@ -17,7 +17,7 @@ namespace Project.Enemies{
             m_AI = new EnemyAI(this);
         }
         
-        private float m_Initiaive;
+        private int m_Initiaive;
         private float m_Health;
         private float m_MaxHealth;
         private float m_Damage;
@@ -36,7 +36,7 @@ namespace Project.Enemies{
         public float GetCurrentHealth() => m_Health;
         public float GetEnemyDamage() => m_Damage;
         
-        public float GetInitiaive() => m_Initiaive;
+        public int GetInitiaive() => m_Initiaive;
         
         public EnemyAI GetAI() => m_AI;
         

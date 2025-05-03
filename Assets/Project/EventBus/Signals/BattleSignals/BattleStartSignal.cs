@@ -8,17 +8,10 @@ namespace Project.EventBus.Signals{
         private List<EnemyView> m_EnemiesInBattle;
         public List<EnemyView> GetEnemiesInBattle() => m_EnemiesInBattle;
         
-        private PlayerData m_PlayerData;
-        public PlayerData GetPlayerInBattle() => m_PlayerData;
-        
         public BattleStartSignal(
-            List<EnemyView> enemiesInBattle,
-            PlayerData playerInBattle
-        )
+            List<EnemyView> enemiesInBattle)
         {
             m_EnemiesInBattle = enemiesInBattle;
-            m_PlayerData = playerInBattle;
         }
     }
-    
 }

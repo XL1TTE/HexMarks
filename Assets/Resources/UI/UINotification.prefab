@@ -192,7 +192,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.16981131, g: 0.16628693, b: 0.16628693, a: 0.43137255}
+  m_Color: {r: 0.2830189, g: 0.2830189, b: 0.2830189, a: 0.6431373}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -222,7 +222,7 @@ GameObject:
   - component: {fileID: 1019908318182000883}
   - component: {fileID: 7918163628903807140}
   m_Layer: 0
-  m_Name: BattleStateTransition
+  m_Name: UINotification
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -308,4 +308,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_NotificationText: {fileID: 399568257077484935}
-  m_NotificationDuration: 5
+  m_BackGround: {fileID: 2777942616094712185}

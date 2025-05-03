@@ -11,9 +11,11 @@ namespace Project.TurnSystem{
         
         protected ITurnTaker(SignalBus signalBus){
             m_SignalBus = signalBus;
+            
         }
         protected SignalBus m_SignalBus;
         public abstract void SendTurnNotification();
+        public abstract int GetInitiative();
     }
 
 
@@ -26,6 +28,11 @@ namespace Project.TurnSystem{
             m_player = playerData;
         }
 
+        public override int GetInitiative()
+        {
+            return m_player.GetInitiaive();
+        }
+
         public override void SendTurnNotification()
         {
             m_SignalBus.SendSignal(new PlayerTurnSignal(m_player));
@@ -35,19 +42,21 @@ namespace Project.TurnSystem{
     public class EnemyTurnTaker : ITurnTaker
     {
         private EnemyView m_enemy;
+        public EnemyView GetEnemy() => m_enemy;
 
         public EnemyTurnTaker(SignalBus signalBus, EnemyView enemy) : base(signalBus)
         {
             m_enemy = enemy;
         }
 
+        public override int GetInitiative()
+        {
+            return m_enemy.GetController().GetInitiaive();
+        }
+
         public override void SendTurnNotification()
         {
             m_SignalBus.SendSignal(new EnemyTurnSignal(m_enemy));
         }
-    }
-    
-    public interface IHaveInitiative{
-        float GetInitiaive();
     }
 }

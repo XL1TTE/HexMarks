@@ -15,5 +15,14 @@ namespace Project.Utilities.Extantions{
         public static void Enqueue<T>(this List<T> list, T item){
             list.Add(item);
         }
+
+        public static bool TryRemove<T>(this List<T> queue, Predicate<T> predicate)
+        {
+            foreach (var t in queue)
+            {
+                if (predicate.Invoke(t)) { queue.Remove(t); return true; }
+            }
+            return false;
+        }
     } 
 }

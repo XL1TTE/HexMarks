@@ -12,13 +12,12 @@ namespace Project.Cards
     [RequireComponent(typeof(Interactable))]
     public class CardInteractions : InteractionsBase
     {
-        void Start()
+        void OnEnable()
         {
             m_CardDefaultScale = m_subject.GetTransform().localScale;
             m_CardDefaultColor = m_subject.GetRenderer().color;
 
             EnableDefaultInteractions();
-            
             
             m_interactable.AddBeginDragListener(LockHover);
             m_interactable.AddEndDragListener(UnlockHover);
@@ -67,7 +66,7 @@ namespace Project.Cards
         }
         
         #region Hover Behaviour
-        [SerializeField] private Color OnHoverColor;
+            [SerializeField] private Color OnHoverColor;
             public void SetOnHoverColor(Color a_color) => OnHoverColor = a_color;
             
             public void EnableOnHoverHighlight() {
