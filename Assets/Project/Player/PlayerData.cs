@@ -1,27 +1,42 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Project.Actors.Stats;
 using Project.TurnSystem;
 using UnityEngine;
 
 namespace Project.Player
 {
-
-    public class PlayerData
+    
+    public class PlayerInBattle : IHealthStatsAccessor
     {
-        public event Action<PlayerData> OnDamageTaken;
+        public PlayerInBattle(PlayerStats stats)
+        {
+            m_Stats = stats;
+        }
         
-        private int m_Initiative = 10;
-        public int GetInitiaive() => m_Initiative;
+        private PlayerStats m_Stats;
         
-        private float m_Health = 100.0f;
-        private float m_MaxHealth = 100.0f;
-        public float GetMaxHealth() => m_MaxHealth;
-        public float GetCurrentHealth() => m_Health;
-        
-        public void TakeDamage(float amount){
-            m_Health = Mathf.Clamp(m_Health - amount, 0, m_MaxHealth);
+        public float GetMaxHealth() => m_Stats.m_BaseStats.m_MaxHealth;
+        public float GetCurrentHealth() => m_Stats.m_BaseStats.m_Health;
+        public int GetInitiative() => m_Stats.m_BaseStats.m_Initiative;
+
+        public event Action<PlayerInBattle> OnDamageTaken;
+
+        public void TakeDamage(float amount)
+        {
+            m_Stats.m_BaseStats.m_Health = Mathf.Clamp(m_Stats.m_BaseStats.m_Health - amount, 0, m_Stats.m_BaseStats.m_MaxHealth);
             OnDamageTaken?.Invoke(this);
         }
+    }
+    
+    [Serializable]
+    public class PlayerData
+    {
+        public PlayerData() {}
+        [SerializeField] private PlayerStats m_Stats;
+        
+        public PlayerInBattle GetPlayerInBattle() 
+            => new PlayerInBattle(m_Stats);
     }
 }

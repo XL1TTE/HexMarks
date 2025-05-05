@@ -21,16 +21,16 @@ namespace Project.TurnSystem{
 
     public class PlayerTurnTaker : ITurnTaker
     {
-        private PlayerData m_player;
+        private PlayerInBattle m_player;
 
-        public PlayerTurnTaker(SignalBus signalBus, PlayerData playerData) : base(signalBus)
+        public PlayerTurnTaker(SignalBus signalBus, PlayerInBattle playerData) : base(signalBus)
         {
             m_player = playerData;
         }
 
         public override int GetInitiative()
         {
-            return m_player.GetInitiaive();
+            return m_player.GetInitiative();
         }
 
         public override void SendTurnNotification()

@@ -1,12 +1,20 @@
+using System;
 using System.Collections.Generic;
 using Project.Cards.Effects;
 using Project.DataResolving;
 using Project.JobSystem;
+using UnityEngine;
 
 namespace Project.Cards{
+    
+    [Serializable]
     public class CardModel
     {
-        private List<ICardEffect> m_Effects = new List<ICardEffect>{new ColdDamageEffect(), new FireDamageEffect()};
+        [SerializeField] private Sprite m_CardSprite;
+        public Sprite GetCardSprite() => m_CardSprite;
+        
+        [SerializeReference, SubclassSelector]
+        private ICardEffect[] m_Effects = Array.Empty<ICardEffect>();
         
         public JobSequence GetCardExecutionSequence(CardView a_cardView, DataRosolver a_resolver){
 

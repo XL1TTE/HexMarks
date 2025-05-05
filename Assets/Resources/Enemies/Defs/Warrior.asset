@@ -13,8 +13,10 @@ MonoBehaviour:
   m_Name: Warrior
   m_EditorClassIdentifier: 
   m_Prefab: {fileID: 2575075141357443638, guid: 91760cfad1ada334d9fd0bec57e2684c, type: 3}
-  m_Health: 50
-  m_MaxHealth: 50
-  m_Damage: 15
-  m_Initiative: 5
+  m_Stats:
+    m_BaseStats:
+      m_Health: 100
+      m_MaxHealth: 100
+      m_Initiative: 1
+    m_Damage: 15
   m_DieAnimation: {fileID: 11400000, guid: 54591daa57648a344a08c29240f61a4e, type: 2}

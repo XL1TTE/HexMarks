@@ -44,6 +44,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: feedc3dbc55d72c41a91ca9781952603, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_PlayerDataFactory:
+    rid: 559003927408541701
+  references:
+    version: 2
+    RefIds:
+    - rid: 559003927408541701
+      type: {class: PlayerDataFactory, ns: Project.Factories, asm: Assembly-CSharp}
+      data:
+        m_SaveFilePath: 
+        m_defaultData:
+          m_Stats:
+            m_BaseStats:
+              m_Health: 100
+              m_MaxHealth: 100
+              m_Initiative: 10
 --- !u!1 &2227295660237143958
 GameObject:
   m_ObjectHideFlags: 0
@@ -230,6 +245,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_CardViewPool: {fileID: 6301489889764467293}
+  m_CardModels:
+  - m_CardSprite: {fileID: 21300000, guid: 83bc183fa7c77f84ba90feaefc8f5bea, type: 3}
+    m_Effects:
+    - rid: 559003927408541702
+    - rid: 559003927408541704
+  - m_CardSprite: {fileID: 21300000, guid: 45e99f80eb3d9c44c946931b41cc155b, type: 3}
+    m_Effects:
+    - rid: 559003927408541703
+  references:
+    version: 2
+    RefIds:
+    - rid: 559003927408541702
+      type: {class: FireDamageEffect, ns: Project.Cards.Effects, asm: Assembly-CSharp}
+      data: 
+    - rid: 559003927408541703
+      type: {class: AoeOnAllEnemiesFireDamageEffect, ns: Project.Cards.Effects, asm: Assembly-CSharp}
+      data: 
+    - rid: 559003927408541704
+      type: {class: ColdDamageEffect, ns: Project.Cards.Effects, asm: Assembly-CSharp}
+      data: 
 --- !u!1 &6359750325381898505
 GameObject:
   m_ObjectHideFlags: 0

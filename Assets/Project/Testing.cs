@@ -1,3 +1,4 @@
+using System;
 using Project.EventBus;
 using Project.Game.Battle;
 using Project.GameManagers;
@@ -34,7 +35,7 @@ namespace Project
         /// 
         /// !!! Make game system in this kind of way - [EnemySpawnedSignal -> EnemiesHealthBarsController 
         /// -> Spawn HealthBars above enemy. EnemyHealthChanged -> EnemiesHealthBarsController -> UpdateHealthBarValue]  
-        void Awake()
+        void Start()
         {
 
             battleManager.Enable();
@@ -47,6 +48,6 @@ namespace Project
         
         [SerializeField] BattleController battleController;
         [SerializeField] BattleSequenceManager battleManager;
-        
     }
 }
+

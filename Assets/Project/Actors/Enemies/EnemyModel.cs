@@ -1,4 +1,5 @@
 using System.Collections;
+using Project.Actors.Stats;
 using Project.Enemies.AIs;
 using Project.TurnSystem;
 using UnityEngine;
@@ -7,20 +8,14 @@ namespace Project.Enemies{
     public class EnemyModel
     {
         
-        public EnemyModel(float health, float maxHealth, float damage, int initiative){
-            m_Health = health;
-            m_MaxHealth = maxHealth;
-            m_Damage = damage;
-            m_Initiaive = initiative;
-
+        public EnemyModel(EnemyStats stats)
+        {
+            m_Stats = stats;
 
             m_AI = new EnemyAI(this);
         }
         
-        private int m_Initiaive;
-        private float m_Health;
-        private float m_MaxHealth;
-        private float m_Damage;
+        private EnemyStats m_Stats;
         
         private EnemyAI m_AI;
         
@@ -30,13 +25,13 @@ namespace Project.Enemies{
         public IEnumerator GetDieSequence(EnemyView view) => m_DieAnimation.GetDieSequence(view);
 
         public void TakeDamage(float amount){
-            m_Health = Mathf.Clamp(m_Health - amount, 0, m_MaxHealth);
+            m_Stats.m_BaseStats.m_Health = Mathf.Clamp(m_Stats.m_BaseStats.m_Health - amount, 0, m_Stats.m_BaseStats.m_MaxHealth);
         }
-        public float GetMaxHealth() => m_MaxHealth;
-        public float GetCurrentHealth() => m_Health;
-        public float GetEnemyDamage() => m_Damage;
+        public float GetMaxHealth() => m_Stats.m_BaseStats.m_MaxHealth;
+        public float GetCurrentHealth() => m_Stats.m_BaseStats.m_Health;
+        public float GetEnemyDamage() => m_Stats.m_Damage;
         
-        public int GetInitiaive() => m_Initiaive;
+        public int GetInitiaive() => m_Stats.m_BaseStats.m_Initiative;
         
         public EnemyAI GetAI() => m_AI;
         

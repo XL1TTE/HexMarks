@@ -12,7 +12,9 @@ namespace Project.ZenjectInstallers{
             //Here we bind all of our Data Request Resolvers//
             
             Container.Bind<EnemyTargetResolver>().FromNew().AsSingle();
-            Container.Bind<PlayerDataResolver>().FromNew().AsSingle();
+            Container.Bind<PlayerInBattleReqResolver>().FromNew().AsSingle();
+            
+            Container.Bind<EnemiesInBattleReqResolver>().FromNew().AsSingle();
         }
     }
 }

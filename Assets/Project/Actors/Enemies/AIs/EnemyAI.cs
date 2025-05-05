@@ -19,13 +19,13 @@ namespace Project.Enemies.AIs{
         {
             return new List<DataRequierment>{
               //new DataRequierment("PlayerHand", typeof(CardHand)),
-              new DataRequierment("Player", typeof(PlayerData))  
+              new DataRequierment("PlayerInBattle", typeof(PlayerInBattle))  
             };
         }
         
         public IEnumerator GetAITurnSequence(DataContext context)
         {
-            var player = context.Get<PlayerData>("Player");
+            var player = context.Get<PlayerInBattle>("PlayerInBattle");
 
 
             Debug.Log($"Enemy {m_Model} taking his turn...");

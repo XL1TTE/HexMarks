@@ -1,25 +1,26 @@
+using System;
 using System.Collections;
 using Project.Player;
+using UnityEngine;
 using Zenject;
 
 namespace Project.Factories{
-    public interface IPlayerDataSaver{
-        IEnumerator LoadPlayerData();
+    public interface IPlayerDataFactory{
+        PlayerData LoadPlayerData();
         IEnumerator SavePlayerData();
     }
 
-    public class SaveSystem : IPlayerDataSaver
+    [Serializable]
+    public class PlayerDataFactory : IPlayerDataFactory
     {
-        [Inject]
-        private void Construct(PlayerData playerData){
-            m_playerData = playerData;
-        }
-        private PlayerData m_playerData;
+        [SerializeField] private string m_SaveFilePath;
         
-        public IEnumerator LoadPlayerData()
+        [SerializeField] private PlayerData m_defaultData;
+        
+        public PlayerData LoadPlayerData()
         {
-            m_playerData = new PlayerData();
-            yield return null;
+            if(m_defaultData == null){return new PlayerData(); }
+            return m_defaultData;
         }
 
         public IEnumerator SavePlayerData()

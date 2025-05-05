@@ -7,10 +7,15 @@ namespace Project.DataResolving{
         private List<IDataRequestResolver> m_reqResolvers = new();
         
         [Inject]
-        private void Construct(EnemyTargetResolver res1, PlayerDataResolver res2){
+        private void Construct(
+            EnemyTargetResolver res1, 
+            PlayerInBattleReqResolver res2,
+            EnemiesInBattleReqResolver res3)
+        {
             // Adding reqResolvers here;
             m_reqResolvers.Add(res1);
             m_reqResolvers.Add(res2);
+            m_reqResolvers.Add(res3);
         }
         
         public DataContext Resolve(IDataResolverUser user){

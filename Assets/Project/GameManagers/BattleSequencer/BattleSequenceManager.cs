@@ -22,22 +22,17 @@ namespace Project.GameManagers{
 
 
         [Inject]
-        private void Construct(SignalBus signalBus, DataRosolver resolver, ICardFactory cardFactory, PlayerData playerData)
+        private void Construct(SignalBus signalBus, DataRosolver resolver, ICardFactory cardFactory)
         {
             m_SignalBus = signalBus;
             m_DataResolver = resolver;
             m_CardFactory = cardFactory;
-            m_PlayerData = playerData;
         }
         public void Enable()
         {
             InitializeUI();
 
             m_EnemySequencer = new EnemyInBattleSequencer(m_SignalBus, this);
-            
-            m_PlayerData.OnDamageTaken += OnPlayerDamageTaken;
-            // To make initial handle.
-            OnPlayerDamageTaken(m_PlayerData);
 
             m_SignalBus.Subscribe<BattleStartSignal>(OnBattleStarted);
             
@@ -50,7 +45,7 @@ namespace Project.GameManagers{
         [SerializeReference] private CardHand m_CardsHand;
         [SerializeReference] private BattleUI m_BattleUI; 
         
-        private PlayerData m_PlayerData;
+        private PlayerInBattle m_PlayerInBattle;
         private SignalBus m_SignalBus;
         private DataRosolver m_DataResolver;
         private ICardFactory m_CardFactory;
@@ -70,8 +65,15 @@ namespace Project.GameManagers{
         private void OnBattleStarted(BattleStartSignal signal)
         {
             m_EnemiesInBattle = signal.GetEnemiesInBattle();
+            m_PlayerInBattle = signal.GetPlayerInBattle();
+            
+            m_PlayerInBattle.OnDamageTaken += OnPlayerDamageTaken;            
 
             m_TurnsQueue = CreateTurnQueue(signal);
+
+
+            // Initial notification
+            m_SignalBus.SendSignal(new PlayerHealthChangedSingal(m_PlayerInBattle));
 
             UpdatePlayerHand();
 
@@ -90,7 +92,7 @@ namespace Project.GameManagers{
             {
                 temp.Add(new EnemyTurnTaker(m_SignalBus, e));
             }
-            temp.Add(new PlayerTurnTaker(m_SignalBus, m_PlayerData));
+            temp.Add(new PlayerTurnTaker(m_SignalBus, m_PlayerInBattle));
 
             return TurnsUtility.CreateTurnsQueue(temp);
         }
@@ -160,10 +162,9 @@ namespace Project.GameManagers{
             yield return enemyAI.GetAITurnSequence(aiContext);
         }
 
-        private void OnPlayerDamageTaken(PlayerData player)
+        private void OnPlayerDamageTaken(PlayerInBattle player)
         {
-            m_SignalBus.SendSignal(new PlayerHealthChangedSingal(
-                new PlayerHealthData(player.GetCurrentHealth(), player.GetMaxHealth())));
+            m_SignalBus.SendSignal(new PlayerHealthChangedSingal(player));
 
             if (player.GetCurrentHealth() == 0)
             {

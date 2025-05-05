@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Project.Cards;
+using Project.DataResolving.DataRequestResolvers;
 using Project.Enemies;
 using Project.EventBus;
 using Project.EventBus.Signals;
@@ -23,10 +24,15 @@ namespace Project.Game.Battle{
         [Inject]
         private void Construct(
             SignalBus signalBus, 
-            IEnemyViewFactory enemyViewFactory)
+            IEnemyViewFactory enemyViewFactory,
+            PlayerData playerData,
+            PlayerInBattleReqResolver playerInBattleReqResolver)
         {
             m_enemyViewFactory = enemyViewFactory;
             m_SignalBus = signalBus;
+            m_playerData = playerData;
+
+            m_playerInBattleReqResolver = playerInBattleReqResolver;
         }
 
         [SerializeField] private List<GameLevel> m_Levels;
@@ -34,9 +40,13 @@ namespace Project.Game.Battle{
         
         [SerializeField] private GameObject WinMessage;
         
+        private PlayerData m_playerData;
+        private PlayerInBattle m_playerInBattle;
         private IEnemyViewFactory m_enemyViewFactory;
         private SignalBus m_SignalBus;
         
+        private PlayerInBattleReqResolver m_playerInBattleReqResolver;
+
         void Awake()
         {
             WinMessage.SetActive(false);
@@ -45,6 +55,10 @@ namespace Project.Game.Battle{
         public void Initialize(){
             m_SignalBus.Subscribe<PlayerWonBattleSignal>(OnPlayerWon);
             m_SignalBus.Subscribe<PlayerLostBattleSignal>(OnPlayerLost);
+
+            m_playerInBattle = m_playerData.GetPlayerInBattle();
+
+            m_playerInBattleReqResolver.Set(m_playerInBattle);
         }
 
         public void StartBattle(){
@@ -69,7 +83,7 @@ namespace Project.Game.Battle{
 
                 if (++index >= enemies.Count){break;}
             }
-            m_SignalBus.SendSignal(new BattleStartSignal(m_EnemiesInBattle));
+            m_SignalBus.SendSignal(new BattleStartSignal(m_EnemiesInBattle, m_playerInBattle));
         }
 
         private void OnPlayerWon(PlayerWonBattleSignal signal)

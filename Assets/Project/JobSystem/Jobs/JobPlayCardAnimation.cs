@@ -4,9 +4,9 @@ using DG.Tweening;
 
 namespace Project.JobSystem{
 
-    public class JobPlayCardAnimation : Job
+    public class JobPlayAnimation : Job
     {
-        public JobPlayCardAnimation(Sequence a_animation)
+        public JobPlayAnimation(Sequence a_animation)
         {
             m_animation = a_animation;
         }

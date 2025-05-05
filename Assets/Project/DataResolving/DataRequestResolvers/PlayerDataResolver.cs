@@ -2,17 +2,14 @@ using Project.Player;
 using Zenject;
 
 namespace Project.DataResolving.DataRequestResolvers{
-    public class PlayerDataResolver : IDataRequestResolver
+    public class PlayerInBattleReqResolver : IDataRequestResolver
     {
-        [Inject]
-        private void Construct(PlayerData playerData){
-            m_PlayerData = playerData;
-        }
-        private PlayerData m_PlayerData;
+        private PlayerInBattle m_PlayerData;
+        public void Set(PlayerInBattle state) => m_PlayerData = state;
         
         public bool CanResolve(DataRequierment req)
         {
-            return req.GetReqName() == "Player" && req.GetReqDataType() == typeof(PlayerData);
+            return req.GetReqName() == "PlayerInBattle" && req.GetReqDataType() == typeof(PlayerInBattle);
         }
 
         public object Resolve(DataRequierment req)

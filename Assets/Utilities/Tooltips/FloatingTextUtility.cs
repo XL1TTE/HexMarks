@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using Project.Utilities.Extantions;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 namespace Project.Utilities.Tooltips{
     
@@ -36,8 +37,15 @@ namespace Project.Utilities.Tooltips{
             else
             { 
                 text_obj = new GameObject("WorldSpaceText");
+                
+                text_obj.layer = LayerMask.NameToLayer("VeryTop");
+                
                 textComponent = text_obj.AddComponent<TextMeshPro>();
-                if(m_DefaultTextScale == Vector3.zero){
+                
+                var sorting = text_obj.AddComponent<SortingGroup>();
+                sorting.sortingOrder = 999;
+
+                if (m_DefaultTextScale == Vector3.zero){
                     m_DefaultTextScale = text_obj.transform.localScale;
                 }
             }
