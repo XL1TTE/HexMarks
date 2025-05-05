@@ -4,6 +4,7 @@ using System.Linq;
 using Project.Enemies;
 using Project.EventBus;
 using Project.EventBus.Signals;
+using Project.JobSystem;
 using Project.TurnSystem;
 using Project.Utilities.Extantions;
 using Project.Wrappers;
@@ -29,7 +30,8 @@ namespace Project.GameManagers.BattleSequence{
         private BattleSequenceManager m_manager;
 
         private Dictionary<EnemyView, List<AwaitedCoroutine>> m_enemiesRoutinesToAwait = new();
-
+        
+        public bool isAlowedToProccessTurn = true;
 
         private void OnEnemySpawned(EnemySpawnedSignal signal)
         {
@@ -50,9 +52,10 @@ namespace Project.GameManagers.BattleSequence{
 
         private IEnumerator EnemyDeathRoutine(EnemyView enemy)
         {
-
+            isAlowedToProccessTurn = false;
             yield return WaitForAllRoutinesOnEnemy(enemy);
-            
+            isAlowedToProccessTurn = true;
+
             yield return PlayEnemyDieSequence(enemy);
             
             m_SignalBus.SendSignal(new EnemyDiedSignal(enemy));
@@ -62,6 +65,8 @@ namespace Project.GameManagers.BattleSequence{
         
         private IEnumerator WaitForAllRoutinesOnEnemy(EnemyView enemy)
         {
+            
+            
             if (!m_enemiesRoutinesToAwait.TryGetValue(enemy, out var awaiters))
             {
                 yield break;
@@ -76,8 +81,12 @@ namespace Project.GameManagers.BattleSequence{
         }
 
         private IEnumerator PlayEnemyDieSequence(EnemyView enemy){
+            yield return new JobSwitchColliderEnabledState(enemy.gameObject, false).Proccess();
+            
             var enemyDieSequence = enemy.GetController().GetDieSequence();
             yield return enemyDieSequence;
+
+            yield return new JobSwitchColliderEnabledState(enemy.gameObject, true).Proccess();
         }
 
         private void OnCardPlayedOnEnemy(CardUsedOnEnemySignal signal)

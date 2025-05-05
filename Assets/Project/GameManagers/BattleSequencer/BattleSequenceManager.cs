@@ -118,7 +118,8 @@ namespace Project.GameManagers{
 
         private void ProccessTurn(){
             if(m_TurnsQueue.Count == 0){return;}
-
+            if(!m_EnemySequencer.isAlowedToProccessTurn) {return;}
+            
             var turnTaker = m_TurnsQueue.Dequeue();
             m_TurnsQueue.Enqueue(turnTaker);
             turnTaker.SendTurnNotification();

@@ -17,8 +17,6 @@ namespace Project.ObjectInteractions
             g_MainCamera = Camera.main;
 
             m_interactable = GetComponent<Interactable>();
-            
-            EnableDragBehaviour();
         }
 
         private Interactable m_interactable;
