@@ -7,13 +7,15 @@ using UnityEngine;
 
 namespace Project.Cards.Effects{
     public class ColorWithTextEnemyAnimation{
-        public ColorWithTextEnemyAnimation(Color color, string text)
+        public ColorWithTextEnemyAnimation(Color defaultColor, Color targetColor, string text)
         {
-            m_color = color;
+            m_defaultColor = defaultColor;
+            m_targetColor = targetColor;
             m_text = text;
         }
 
-        private Color m_color;
+        private Color m_defaultColor;
+        private Color m_targetColor;
         private string m_text;
 
         public Job GetAnimation(EnemyView enemyView)
@@ -28,7 +30,7 @@ namespace Project.Cards.Effects{
                     enemyView.transform.position + Vector3.up * (enemyView.GetRenderer().bounds.extents.y + 0.3f),
                     enemyView.transform,
                     6,
-                    m_color
+                    m_targetColor
                 );
             });
 
@@ -51,7 +53,7 @@ namespace Project.Cards.Effects{
 
 
             m_animSequence.Append(
-                enemyView.GetRenderer().DOColor(m_color, 0.5f).SetLoops(2, LoopType.Yoyo)
+                enemyView.GetRenderer().DOColor(m_targetColor, 0.5f)        
             );
 
             m_animSequence.Join(enemyView.transform.DOShakePosition(
@@ -60,6 +62,10 @@ namespace Project.Cards.Effects{
                     vibrato: 45,
                     randomnessMode: ShakeRandomnessMode.Harmonic
             ));
+
+            m_animSequence.Append(
+                enemyView.GetRenderer().DOColor(m_defaultColor, 0.5f)
+            );
 
             m_animSequence.AppendCallback(() =>
             {

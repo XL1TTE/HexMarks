@@ -4,8 +4,8 @@ using UnityEngine;
 
 namespace Project.Enemies{
     
-    public abstract class BaseEnemyDieAnimation : ScriptableObject
+    public abstract class BaseEnemyAnimation
     {
-        public abstract IEnumerator GetDieSequence(EnemyView enemyView);
+        public abstract IEnumerator GetAnimationRoutine(EnemyView enemyView);
     }
 }

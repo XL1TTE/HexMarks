@@ -19,10 +19,17 @@ namespace Project.Enemies{
         
         private EnemyAI m_AI;
         
-        private BaseEnemyDieAnimation m_DieAnimation;
-        public void SetDieAnimation(BaseEnemyDieAnimation anim) => m_DieAnimation = anim;
+        private BaseEnemyAnimation m_DieAnimation;
+        public void SetDieAnimation(BaseEnemyAnimation anim) => m_DieAnimation = anim;
+        public IEnumerator GetDieAnimation(EnemyView view) => m_DieAnimation.GetAnimationRoutine(view);
         
-        public IEnumerator GetDieSequence(EnemyView view) => m_DieAnimation.GetDieSequence(view);
+        private BaseEnemyAnimation m_IdleAnimation;
+        public void SetIdleAnimation(BaseEnemyAnimation anim) => m_IdleAnimation = anim;
+        public IEnumerator GetIdleAnimation(EnemyView view) => m_IdleAnimation.GetAnimationRoutine(view);
+
+        private BaseEnemyAnimation m_AttackAnimation;
+        public void SetAttackAnimation(BaseEnemyAnimation anim) => m_AttackAnimation = anim;
+        public IEnumerator GetAttackAnimation(EnemyView view) => m_AttackAnimation.GetAnimationRoutine(view);
 
         public void TakeDamage(float amount){
             m_Stats.m_BaseStats.m_Health = Mathf.Clamp(m_Stats.m_BaseStats.m_Health - amount, 0, m_Stats.m_BaseStats.m_MaxHealth);

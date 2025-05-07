@@ -10,6 +10,7 @@ using Project.EventBus.Signals;
 using Project.Factories;
 using Project.Game.Battle.UI;
 using Project.GameManagers.BattleSequence;
+using Project.JobSystem;
 using Project.Layouts;
 using Project.Player;
 using Project.TurnSystem;
@@ -64,18 +65,22 @@ namespace Project.GameManagers{
 
         private void OnBattleStarted(BattleStartSignal signal)
         {
+            StartCoroutine(BattleStartRoutine(signal));
+        }
+        private IEnumerator BattleStartRoutine(BattleStartSignal signal)
+        {
             m_EnemiesInBattle = signal.GetEnemiesInBattle();
             m_PlayerInBattle = signal.GetPlayerInBattle();
-            
-            m_PlayerInBattle.OnDamageTaken += OnPlayerDamageTaken;            
+
+            m_PlayerInBattle.OnDamageTaken += OnPlayerDamageTaken;
 
             m_TurnsQueue = CreateTurnQueue(signal);
 
 
             // Initial notification
             m_SignalBus.SendSignal(new PlayerHealthChangedSingal(m_PlayerInBattle));
-
-            UpdatePlayerHand();
+            
+            yield return new WaitForSeconds(2f);
 
             ProccessTurn();
         }
@@ -117,6 +122,7 @@ namespace Project.GameManagers{
         }
 
         private void ProccessTurn(){
+            
             if(m_TurnsQueue.Count == 0){return;}
             if(!m_EnemySequencer.isAlowedToProccessTurn) {return;}
             
@@ -127,13 +133,13 @@ namespace Project.GameManagers{
         
         private void OnPlayerTurn(PlayerTurnSignal signal){
 
+            UpdatePlayerHand();
+
             // Enable dragging for every card on enemy turn...
             foreach (var card in m_CardsHand.GetAllItems())
             {
                 card.EnableDragging();
             }
-
-            UpdatePlayerHand();
             
         } 
         
@@ -149,9 +155,19 @@ namespace Project.GameManagers{
                 card.DisableDragging();
             }
 
-            EnemyAI enemyAI = signal.GetEnemy().GetController().GetAI();
+            var enemy = signal.GetEnemy();
 
-            yield return DoEnemyTurnRoutine(enemyAI);
+            EnemyAI enemyAI = enemy.GetController().GetAI();
+            
+            enemy.StopIdleAnimation();
+
+            // Enemy turn
+            yield return new ParallelJobSequence(new List<Job>{
+                new JobPlayRoutine(enemy.GetController().GetAttackAnimation()),
+                new JobPlayRoutine(DoEnemyTurnRoutine(enemyAI)),
+            }, this).Proccess();
+            
+            enemy.StartIdleAnimation();
 
             ProccessTurn();
         }
@@ -159,7 +175,7 @@ namespace Project.GameManagers{
         private IEnumerator DoEnemyTurnRoutine(EnemyAI enemyAI){
             
             DataContext aiContext = m_DataResolver.Resolve(enemyAI);
-
+            
             yield return enemyAI.GetAITurnSequence(aiContext);
         }
 
@@ -174,12 +190,21 @@ namespace Project.GameManagers{
         }
         
         private void OnEnemyDied(EnemyDiedSignal signal){
+            StartCoroutine(OnEnemyDiedRoutine(signal));
+        }
+        private IEnumerator OnEnemyDiedRoutine(EnemyDiedSignal signal){
             var enemy = signal.GetEnemy();
-            
+
             m_TurnsQueue.TryRemove((t) => t is EnemyTurnTaker tt && tt.GetEnemy() == enemy);
             m_EnemiesInBattle.Remove(enemy);
 
-            if(CheckWinConditions()){
+            yield return m_EnemySequencer.AwaitEnemyDie(enemy);
+            
+            yield return new WaitForSeconds(0.5f);
+
+            if (CheckWinConditions())
+            {
+                ClearHand();
                 m_SignalBus.SendSignal(new PlayerWonBattleSignal());
             }
         }

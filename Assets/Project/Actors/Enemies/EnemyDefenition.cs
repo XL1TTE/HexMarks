@@ -8,11 +8,16 @@ namespace Project.Enemies{
         public EnemyView GetPrefab() => m_Prefab;
         [SerializeField] EnemyStats m_Stats;
 
-        [SerializeField] private BaseEnemyDieAnimation m_DieAnimation;
+        [SerializeReference, SubclassSelector] private BaseEnemyAnimation m_DieAnimation;
+        [SerializeReference, SubclassSelector] private BaseEnemyAnimation m_IdleAnimation;
+        [SerializeReference, SubclassSelector] private BaseEnemyAnimation m_AttackAnimation;
 
         public EnemyModel GetModel(){
             var model = new EnemyModel(m_Stats);
             model.SetDieAnimation(m_DieAnimation);
+            model.SetAttackAnimation(m_AttackAnimation);
+            model.SetIdleAnimation(m_IdleAnimation);
+
             return model;
         }
     }

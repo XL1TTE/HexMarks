@@ -4,6 +4,7 @@ using Project.DataResolving;
 using Project.Enemies;
 using Project.JobSystem;
 using Project.Utilities.Extantions;
+using UnityEngine;
 
 namespace Project.Cards.Effects{
     
@@ -23,7 +24,7 @@ namespace Project.Cards.Effects{
             var Enemies = context.Get<List<EnemyView>>("EnemiesInBattle");
             //var CardCaster = context.Get<PlayerInBattle>("CardCaster");
 
-            var EnemyBurnAnim = new ColorWithTextEnemyAnimation("#ff9115".ToColor(), "Burning!");
+            var EnemyBurnAnim = new ColorWithTextEnemyAnimation(Color.white, "#ff9115".ToColor(), "Burning!");
 
             var job_seq = new List<Job>();
 

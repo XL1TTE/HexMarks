@@ -1,5 +1,7 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using Project.Cards.Effects;
 using Project.DataResolving;
 using Project.JobSystem;
@@ -28,7 +30,27 @@ namespace Project.Cards{
                 jobs.Add(effect.GetJob(a_cardView, ExContext));
             }
             
+            jobs.Add(new JobPlayRoutine(CardDisappearAnimation(a_cardView)));
+            jobs.Add(new JobReturnCardViewToPool(a_cardView));
+            jobs.Add(new JobPlayRoutine(ResetCardView(a_cardView)));
+            
             return new JobSequence(jobs);
+        }
+        
+        private IEnumerator CardDisappearAnimation(CardView cardView){
+            var tween = cardView.GetRenderer().DOFade(0, 0.5f);
+            
+            yield return tween.WaitForCompletion();
+            
+            tween.Kill();
+        }
+        
+        private IEnumerator ResetCardView(CardView cardView){
+            var tween = cardView.GetRenderer().DOFade(1, 0f);
+
+            yield return tween.WaitForCompletion();
+
+            tween.Kill();
         }
         
     }

@@ -28,7 +28,7 @@ namespace Project.ObjectInteractions{
             
             m_signalBus.SendSignal(new SetEnemyTargetSignal(enemy));
 
-            m_signalBus.SendSignal(new CardUsedOnEnemySignal(enemy, cardView));
+            m_signalBus.SendSignal(new CardUsedSignal(cardView));
         }
 
         public void HandleDrop(GameObject obj)

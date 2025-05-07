@@ -15,8 +15,17 @@ MonoBehaviour:
   m_Prefab: {fileID: 2575075141357443638, guid: 91760cfad1ada334d9fd0bec57e2684c, type: 3}
   m_Stats:
     m_BaseStats:
-      m_Health: 100
+      m_Health: 10
       m_MaxHealth: 100
       m_Initiative: 1
     m_Damage: 15
-  m_DieAnimation: {fileID: 11400000, guid: 54591daa57648a344a08c29240f61a4e, type: 2}
+  m_DieAnimation:
+    rid: 559003975467925506
+  references:
+    version: 2
+    RefIds:
+    - rid: 559003975467925506
+      type: {class: EnemyDieWithShaking, ns: Project.Enemies, asm: Assembly-CSharp}
+      data:
+        m_ShakePower: {x: 0.15, y: 0.15, z: 0}
+        m_ShakeDuration: 2

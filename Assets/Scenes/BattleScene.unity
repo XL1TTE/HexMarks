@@ -778,7 +778,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Spacing: 1
-  m_AlingDuration: 0.25
+  m_AlignDuration: 0.25
+  m_HoverSpacingMultiplier: 2
+  m_HoverYOffset: 0.5
 --- !u!1 &619394800
 GameObject:
   m_ObjectHideFlags: 0
@@ -1156,7 +1158,7 @@ Transform:
   m_GameObject: {fileID: 1203208626}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0.6, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1645,8 +1647,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: dc67c7d0d6c995e42be8bc69cb017a6c, type: 2}
   - {fileID: 11400000, guid: dea62f3a3204a9b4388cd86cde873568, type: 2}
   m_EnemySpawnPoints:
-  - {fileID: 1087350923}
   - {fileID: 1698581269}
+  - {fileID: 1087350923}
   - {fileID: 4593904}
   WinMessage: {fileID: 907590061}
 --- !u!4 &1981819450

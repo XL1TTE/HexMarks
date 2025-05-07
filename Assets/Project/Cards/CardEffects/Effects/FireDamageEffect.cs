@@ -1,14 +1,10 @@
 using System;
 using System.Collections.Generic;
-using DG.Tweening;
 using Project.DataResolving;
 using Project.Enemies;
 using Project.JobSystem;
-using Project.Player;
 using Project.Utilities.Extantions;
-using Project.Utilities.Tooltips;
-using TMPro;
-using UnityEngine;
+
 
 namespace Project.Cards.Effects{
     

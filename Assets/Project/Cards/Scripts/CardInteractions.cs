@@ -21,6 +21,10 @@ namespace Project.Cards
             
             m_interactable.AddBeginDragListener(LockHover);
             m_interactable.AddEndDragListener(UnlockHover);
+            
+            
+            m_interactable.AddPointerEnterListener(OnPointerEnter);
+            m_interactable.AddPointerExitListener(OnPointerExit);
         }
 
         void OnDisable()
@@ -32,6 +36,9 @@ namespace Project.Cards
         {
             m_interactable.RemoveBeginDragListener(LockHover);
             m_interactable.RemoveEndDragListener(UnlockHover);
+
+            m_interactable.RemovePointerEnterListener(OnPointerEnter);
+            m_interactable.RemovePointerExitListener(OnPointerExit);
         }
 
         #region Locks
@@ -42,9 +49,34 @@ namespace Project.Cards
 
         #endregion
 
+        #region InteractionNorifications
+        
+        public event UnityAction<CardView> NotifyPointerEnter;
+        private void OnPointerEnter(BaseEventData eventData){
+            
+            if(m_hoverLocks != 0){return;}
+            
+            PointerEventData pointerEventData = eventData as PointerEventData;
+            var cardView = pointerEventData.pointerEnter.GetComponent<CardView>();
+            
+            NotifyPointerEnter?.Invoke(cardView);
+        }
+        public event UnityAction<CardView> NotifyPointerExit;
+        private void OnPointerExit(BaseEventData eventData)
+        {
+            if (m_hoverLocks != 0) { return; }
+            
+            PointerEventData pointerEventData = eventData as PointerEventData;
+            var cardView = pointerEventData.pointerEnter.GetComponent<CardView>();
+            
+            NotifyPointerExit?.Invoke(cardView);
+        }
+
+        #endregion
+
 
         #region Animations Settings
-        Tween m_ScaleTween;
+            Tween m_ScaleTween;
             Vector3 m_CardDefaultScale;
             Color m_CardDefaultColor;
         

@@ -65,10 +65,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Project\DataResolving\DataContext.cs" />
-    <Compile Include="Assets\Project\EventBus\Signals\BattleSignals\Cards\CardUsedOnEnemySignal.cs" />
     <Compile Include="Assets\Project\EventBus\Signals\BattleSignals\Enemies\SetEnemyTargetSignal.cs" />
     <Compile Include="Assets\Project\Factories\HealthBarFactory.cs" />
     <Compile Include="Assets\Project\Testing.cs" />
+    <Compile Include="Assets\Project\EventBus\Signals\BattleSignals\Cards\CardUsedSignal.cs" />
     <Compile Include="Assets\Project\EventBus\Signals\BattleSignals\Enemies\EnemyDyingSignal.cs" />
     <Compile Include="Assets\Project\Cards\CardEffects\Effects\ColdDamageEffect.cs" />
     <Compile Include="Assets\Project\EventBus\Signals\BattleSignals\PlayerWonBattleSignal.cs" />
@@ -98,7 +98,6 @@
     <Compile Include="Assets\Project\EventBus\Signals\BattleSignals\BattleStartSignal.cs" />
     <Compile Include="Assets\Project\JobSystem\Jobs\JobReturnCardViewToPool.cs" />
     <Compile Include="Assets\Project\ZenjectInstallers\EnemyInstaller.cs" />
-    <Compile Include="Assets\Project\Actors\Enemies\DieAnimations\EnemyDieAnimationClip.cs" />
     <Compile Include="Assets\Project\ZenjectInstallers\CardInstaller.cs" />
     <Compile Include="Assets\Project\Cards\Scripts\Card.cs" />
     <Compile Include="Assets\Project\Actors\Enemies\EnemyModel.cs" />
@@ -146,12 +145,14 @@
     <Compile Include="Assets\Project\DataResolving\IDataRequestResolver.cs" />
     <Compile Include="Assets\Project\EventBus\EventBus.cs" />
     <Compile Include="Assets\Project\Actors\Enemies\EnemyDefenition.cs" />
+    <Compile Include="Assets\Project\Actors\Enemies\DieAnimations\EnemyAnimationWithSpritesAnimation.cs" />
     <Compile Include="Assets\Project\EventBus\Signals\BattleSignals\PlayerLostBattleSignal.cs" />
     <Compile Include="Assets\Project\Factories\IHealthBarFactory.cs" />
     <Compile Include="Assets\Project\Cards\CardEffects\Effects\EffectsAnimations\ColorWithTextAnimation.cs" />
     <Compile Include="Assets\Project\DataResolving\DataRequierment.cs" />
     <Compile Include="Assets\Project\Factories\IEnemyViewFactory.cs" />
     <Compile Include="Assets\Project\Player\PlayerData.cs" />
+    <Compile Include="Assets\Project\JobSystem\Jobs\JobPlayRoutine.cs" />
     <Compile Include="Assets\Project\EventBus\Signals\ISignal.cs" />
     <Compile Include="Assets\Project\Actors\Stats\ActorStats.cs" />
   </ItemGroup>

@@ -30,7 +30,9 @@ namespace Project.Enemies{
         
         public int GetInitiaive() => m_Model.GetInitiaive();
         
-        public IEnumerator GetDieSequence() => m_Model.GetDieSequence(m_View);
+        public IEnumerator GetDieAnimation() => m_Model.GetDieAnimation(m_View);
+        public IEnumerator GetIdleAnimation() => m_Model.GetIdleAnimation(m_View);
+        public IEnumerator GetAttackAnimation() => m_Model.GetAttackAnimation(m_View);
     }
     
 }

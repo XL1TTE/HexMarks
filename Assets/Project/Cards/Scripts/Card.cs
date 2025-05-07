@@ -22,7 +22,7 @@ namespace Project.Cards{
             yield return new JobSwitchColliderEnabledState(m_view.gameObject, false).Proccess();
             yield return m_model.GetCardExecutionSequence(m_view, m_dataResolver).Proccess();
             yield return new JobSwitchColliderEnabledState(m_view.gameObject, true).Proccess();
-            yield return new JobReturnCardViewToPool(m_view).Proccess();
+            
         }
     }
 }

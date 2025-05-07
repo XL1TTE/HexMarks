@@ -252,18 +252,18 @@ MonoBehaviour:
     - rid: 559003927408541704
   - m_CardSprite: {fileID: 21300000, guid: 45e99f80eb3d9c44c946931b41cc155b, type: 3}
     m_Effects:
-    - rid: 559003927408541703
+    - rid: 559003946950590467
   references:
     version: 2
     RefIds:
     - rid: 559003927408541702
       type: {class: FireDamageEffect, ns: Project.Cards.Effects, asm: Assembly-CSharp}
       data: 
-    - rid: 559003927408541703
-      type: {class: AoeOnAllEnemiesFireDamageEffect, ns: Project.Cards.Effects, asm: Assembly-CSharp}
-      data: 
     - rid: 559003927408541704
       type: {class: ColdDamageEffect, ns: Project.Cards.Effects, asm: Assembly-CSharp}
+      data: 
+    - rid: 559003946950590467
+      type: {class: AoeOnAllEnemiesFireDamageEffect, ns: Project.Cards.Effects, asm: Assembly-CSharp}
       data: 
 --- !u!1 &6359750325381898505
 GameObject:

@@ -15,7 +15,15 @@ namespace Project.Layouts
         protected List<CardView> m_ClaimedItems = new();
         public IReadOnlyList<CardView> GetAllItems() => m_ClaimedItems;
         [SerializeField, Range(1.0f, 10.0f)] protected float m_Spacing = 1.0f;
-        [SerializeField, Range(0.1f, 2f)] protected float m_AlingDuration = 0.25f;
+        [SerializeField, Range(0.1f, 2f)] protected float m_AlignDuration = 0.25f;
+
+
+        [Header("Hover Effect")]
+        [SerializeField, Range(0.5f, 3f)]
+        private float m_HoverSpacingMultiplier = 1.5f;
+        [SerializeField]
+        private float m_HoverYOffset = 0.5f;
+        private CardView m_HoveredCard;
 
         private bool m_NeedsAlignment = false;
         private List<Tween> m_ActiveAlignTweens = new List<Tween>();
@@ -31,6 +39,9 @@ namespace Project.Layouts
 
             a_card.AddDragBeginListener(OnBeginDrag);
             a_card.AddDragEndListener(OnEndDrag);
+            
+            a_card.AddPointerEnterListener(OnPointerEnterCard);
+            a_card.AddPointerExitListener(OnPointerExitCard);
 
             RequestAlignment();
             return true;
@@ -43,18 +54,18 @@ namespace Project.Layouts
             a_card.RemoveDragBeginListener(OnBeginDrag);
             a_card.RemoveDragEndListener(OnEndDrag);
 
+            a_card.RemovePointerEnterListener(OnPointerEnterCard);
+            a_card.RemovePointerExitListener(OnPointerExitCard);
+
             RequestAlignment();
         }
         public virtual void ClearHand()
         {
             List<CardView> temp = new (m_ClaimedItems);
-            foreach (var item in m_ClaimedItems)
+            foreach (var item in temp)
             {
-                item.RemoveDragBeginListener(OnBeginDrag);
-                item.RemoveDragEndListener(OnEndDrag);
+                Release(item);
             }
-            
-            m_ClaimedItems.Clear();
             
             foreach(var card in temp){
                 CardViewObjectPool.current.Return(card);
@@ -63,8 +74,22 @@ namespace Project.Layouts
             RequestAlignment();
         }
 
+        private void OnPointerEnterCard(CardView card)
+        {
+            m_HoveredCard = card;
+            RequestAlignment();
+        }
+
+        private void OnPointerExitCard(CardView card)
+        {
+            m_HoveredCard = null;
+            RequestAlignment();
+        }
+
+
         protected void OnBeginDrag()
         {
+            m_HoveredCard = null;
             RequestAlignment();
         }
 
@@ -80,28 +105,53 @@ namespace Project.Layouts
 
         public virtual void AlignItems()
         {
-            foreach (var tween in m_ActiveAlignTweens)
-            {
-                if (tween.IsActive()) tween.Kill();
-            }
+            m_ActiveAlignTweens.ForEach(t => t?.Kill());
             m_ActiveAlignTweens.Clear();
 
-            var align = m_ClaimedItems.Where(i => !i.IsDragging()).ToList();
+            if (m_ClaimedItems.Count == 0) return;
 
-            var m_position = gameObject.transform.localPosition;
+            var cardsToAlign = m_ClaimedItems.Where(c => !c.IsDragging()).ToList();
 
-            float totalWidth = (align.Count - 1) * m_Spacing;
+            float totalWidth = (cardsToAlign.Count - 1) * m_Spacing;
+            float startX = -totalWidth / 2f;
 
-            float startOffset = -totalWidth / 2f;
-
-            for (int i = 0; i < align.Count; i++)
+            for (int i = 0; i < cardsToAlign.Count; i++)
             {
-                var c = align[i];
+                CardView card = cardsToAlign[i];
 
-                var x_pos = m_position.x + startOffset + (m_Spacing * i);
+                // Target coordinates
+                float x = startX + i * m_Spacing;
+                float y = 0;
+                float z = i + 1;
 
-                var tween = c.GetTransform().DOLocalMove(new Vector3(x_pos, 0, m_position.z + i + 1), m_AlingDuration);
-                m_ActiveAlignTweens.Add(tween);
+                // If any card hovered
+                if (m_HoveredCard != null && !m_HoveredCard.IsDragging())
+                {
+                    int hoverIndex = cardsToAlign.IndexOf(m_HoveredCard);
+
+                    if (i == hoverIndex)
+                    {
+                        y += m_HoverYOffset;
+                    }
+                    
+                    if (i < hoverIndex)
+                    {
+                        x -= m_Spacing * (m_HoverSpacingMultiplier - 1) * 0.5f;
+                    }
+                    
+                    if (i > hoverIndex)
+                    {
+                        x += m_Spacing * (m_HoverSpacingMultiplier - 1) * 0.5f;
+                    }
+                }
+
+                Vector3 targetPos = new Vector3(x, y, z);
+                
+                m_ActiveAlignTweens.Add(
+                    card.GetTransform()
+                        .DOLocalMove(targetPos, m_AlignDuration)
+                        .SetEase(Ease.OutQuad)
+                );
             }
 
             m_NeedsAlignment = false;

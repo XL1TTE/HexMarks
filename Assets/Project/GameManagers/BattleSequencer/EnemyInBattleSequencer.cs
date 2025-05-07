@@ -18,24 +18,27 @@ namespace Project.GameManagers.BattleSequence{
             m_manager = manager;
 
             m_SignalBus.Subscribe<EnemySpawnedSignal>(OnEnemySpawned);
-            m_SignalBus.Subscribe<CardUsedOnEnemySignal>(OnCardPlayedOnEnemy);
+            m_SignalBus.Subscribe<CardUsedSignal>(OnCardPlayed);
         }
         
         ~EnemyInBattleSequencer(){
             m_SignalBus.Unsubscribe<EnemySpawnedSignal>(OnEnemySpawned);
-            m_SignalBus.Unsubscribe<CardUsedOnEnemySignal>(OnCardPlayedOnEnemy);
+            m_SignalBus.Unsubscribe<CardUsedSignal>(OnCardPlayed);
         }
 
         private SignalBus m_SignalBus;
         private BattleSequenceManager m_manager;
 
-        private Dictionary<EnemyView, List<AwaitedCoroutine>> m_enemiesRoutinesToAwait = new();
+        private List<AwaitedCoroutine> m_CardEffectAwaiters = new();
+        private Dictionary<EnemyView, AwaitedCoroutine> m_EnemyDieAwaiter = new();
         
         public bool isAlowedToProccessTurn = true;
 
         private void OnEnemySpawned(EnemySpawnedSignal signal)
         {
             var enemy = signal.GetEnemy();
+            
+            enemy.StartIdleAnimation();
 
             enemy.GetController().OnDamageTaken += OnEnemyDamageTaken;
         }
@@ -46,65 +49,83 @@ namespace Project.GameManagers.BattleSequence{
 
             if (view.GetController().GetCurrentHealth() == 0)
             {
-                m_manager.StartCoroutine(EnemyDeathRoutine(view));
+                AddEnemyDieAwaiter(view, new AwaitedCoroutine(m_manager, EnemyDeathRoutine(view)));
             }
         }
 
         private IEnumerator EnemyDeathRoutine(EnemyView enemy)
         {
             isAlowedToProccessTurn = false;
-            yield return WaitForAllRoutinesOnEnemy(enemy);
-            isAlowedToProccessTurn = true;
+            yield return AwaitCardEffects();
 
-            yield return PlayEnemyDieSequence(enemy);
-            
             m_SignalBus.SendSignal(new EnemyDiedSignal(enemy));
 
-            Object.Destroy(enemy.gameObject);
-        }
-        
-        private IEnumerator WaitForAllRoutinesOnEnemy(EnemyView enemy)
-        {
-            
-            
-            if (!m_enemiesRoutinesToAwait.TryGetValue(enemy, out var awaiters))
-            {
-                yield break;
-            }
+            enemy.StopIdleAnimation();
 
-            while (awaiters.Any(w => !w.IsDone))
-            {
-                yield return null;
-            }
+            yield return PlayEnemyDieSequence(enemy);
 
-            m_enemiesRoutinesToAwait.Remove(enemy);
+            isAlowedToProccessTurn = true;
         }
 
         private IEnumerator PlayEnemyDieSequence(EnemyView enemy){
             yield return new JobSwitchColliderEnabledState(enemy.gameObject, false).Proccess();
             
-            var enemyDieSequence = enemy.GetController().GetDieSequence();
+            var enemyDieSequence = enemy.GetController().GetDieAnimation();
             yield return enemyDieSequence;
 
             yield return new JobSwitchColliderEnabledState(enemy.gameObject, true).Proccess();
+
+            Object.Destroy(enemy.gameObject);
         }
 
-        private void OnCardPlayedOnEnemy(CardUsedOnEnemySignal signal)
+        private void OnCardPlayed(CardUsedSignal signal)
         {
             var card = signal.GetCardView();
-            var enemy = signal.GetTarget();
 
             // Launch card use sequence and adds it to awaiters of enemy
             var cardUsingAwaiter = new AwaitedCoroutine(m_manager, card.GetCardUseSequence());
 
+            AddCardEffectAwaiter(cardUsingAwaiter);
+        }
 
-            if (m_enemiesRoutinesToAwait.TryGetValue(enemy, out var awaiters))
+
+        public IEnumerator AwaitCardEffects()
+        {        
+            while (m_CardEffectAwaiters.Any(w => !w.IsDone))
             {
-                awaiters.Add(cardUsingAwaiter);
+                yield return null;
+            }
+
+            m_CardEffectAwaiters.Clear();
+        }
+        public IEnumerator AwaitEnemyDie(EnemyView enemy)
+        {
+            if (!m_EnemyDieAwaiter.TryGetValue(enemy, out var awaiter))
+            {
+                yield break;
+            }
+
+            while (!awaiter.IsDone)
+            {
+                yield return null;
+            }
+
+            m_EnemyDieAwaiter.Remove(enemy);
+        }
+
+        private void AddCardEffectAwaiter(AwaitedCoroutine routine)
+        {
+            m_CardEffectAwaiters.Add(routine);
+        }
+        private void AddEnemyDieAwaiter(EnemyView enemy, AwaitedCoroutine routine)
+        {
+            if (m_EnemyDieAwaiter.TryGetValue(enemy, out var awaiters))
+            {
+                return;
             }
             else
             {
-                m_enemiesRoutinesToAwait.Add(enemy, new List<AwaitedCoroutine> { cardUsingAwaiter });
+                m_EnemyDieAwaiter.Add(enemy, routine);
             }
         }
     }

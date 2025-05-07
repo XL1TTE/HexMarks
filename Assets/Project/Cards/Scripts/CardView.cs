@@ -51,9 +51,13 @@ namespace Project.Cards{
         public void RemoveDragEndListener(UnityAction listener) => m_draggable.NotifyDragEnd -= listener;
         #endregion
 
+        public void AddPointerEnterListener(UnityAction<CardView> listener) => m_Interactions.NotifyPointerEnter += listener;
+        public void AddPointerExitListener(UnityAction<CardView> listener) => m_Interactions.NotifyPointerExit += listener;
+        public void RemovePointerEnterListener(UnityAction<CardView> listener) => m_Interactions.NotifyPointerEnter -= listener;
+        public void RemovePointerExitListener(UnityAction<CardView> listener) => m_Interactions.NotifyPointerExit -= listener;
 
         #region Renderer
-            [SerializeField] protected SpriteRenderer m_Renderer;
+        [SerializeField] protected SpriteRenderer m_Renderer;
 
             public SpriteRenderer GetRenderer() => m_Renderer;
         #endregion

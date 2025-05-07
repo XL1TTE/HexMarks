@@ -26,14 +26,8 @@ namespace Project.Enemies.AIs{
         public IEnumerator GetAITurnSequence(DataContext context)
         {
             var player = context.Get<PlayerInBattle>("PlayerInBattle");
-
-
-            Debug.Log($"Enemy {m_Model} taking his turn...");
-            yield return new WaitForSeconds(2f);
             
             player.TakeDamage(m_Model.GetEnemyDamage());
-
-            Debug.Log($"Enemy {m_Model} finished his turn...");
 
             yield return null;
         }
