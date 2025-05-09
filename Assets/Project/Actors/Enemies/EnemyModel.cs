@@ -1,23 +1,27 @@
 using System.Collections;
+using System.Collections.Generic;
+using CMSystem;
 using Project.Actors.Stats;
-using Project.Enemies.AIs;
+using Project.Data.CMS.Tags.Enemies;
 using Project.TurnSystem;
 using UnityEngine;
 
 namespace Project.Enemies{
-    public class EnemyModel
+    public class EnemyState
     {
         
-        public EnemyModel(EnemyStats stats)
+        public EnemyState(
+            EnemyStats stats, 
+            CMSEntity model)
         {
             m_Stats = stats;
 
-            m_AI = new EnemyAI(this);
+            m_Model = model;
         }
         
         private EnemyStats m_Stats;
-        
-        private EnemyAI m_AI;
+        private CMSEntity m_Model;
+        public CMSEntity GetModel() => m_Model;
         
         private BaseEnemyAnimation m_DieAnimation;
         public void SetDieAnimation(BaseEnemyAnimation anim) => m_DieAnimation = anim;
@@ -39,8 +43,6 @@ namespace Project.Enemies{
         public float GetEnemyDamage() => m_Stats.m_Damage;
         
         public int GetInitiaive() => m_Stats.m_BaseStats.m_Initiative;
-        
-        public EnemyAI GetAI() => m_AI;
         
     }
     

@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using Project.Enemies;
@@ -5,6 +6,7 @@ using Project.EventBus;
 using Project.EventBus.Signals;
 using Project.Factories;
 using Project.UI;
+using Unity.VisualScripting;
 using UnityEngine;
 using Zenject;
 
@@ -16,36 +18,34 @@ namespace Project.GameManagers{
         private void Construct(SignalBus signalBus, IHealthBarFactory factory){
             m_SignalBus = signalBus;
             m_Factory = factory;
-            
-            Enable();
         }
         
         private SignalBus m_SignalBus;
         private IHealthBarFactory m_Factory;
         private Dictionary<EnemyView, HealthBar> m_Cache = new();
         
-        public void Disable(){
+        public void OnDisable(){
             m_SignalBus.Unsubscribe<EnemySpawnedSignal>(OnEnemySpawned);
             m_SignalBus.Unsubscribe<EnemyDiedSignal>(OnEnemyDied);
             m_SignalBus.Unsubscribe<EnemyHealthChangedSignal>(OnEnemyHealthChanged);
         } 
-        public void Enable(){
+        public void OnEnable(){
             m_SignalBus.Subscribe<EnemySpawnedSignal>(OnEnemySpawned);
             m_SignalBus.Subscribe<EnemyDiedSignal>(OnEnemyDied);
             m_SignalBus.Subscribe<EnemyHealthChangedSignal>(OnEnemyHealthChanged);
         } 
         
         
-        private void OnEnemyHealthChanged(EnemyHealthChangedSignal signal)
+        private IEnumerator OnEnemyHealthChanged(EnemyHealthChangedSignal signal)
         {
             var enemyView = signal.GetEnemy();
             var enemy = enemyView.GetController();
 
-            if (!m_Cache.TryGetValue(enemyView, out var bar)) { return; }
+            if (!m_Cache.TryGetValue(enemyView, out var bar)) { yield break; }
 
             bar.UpdateProgress(enemy.GetCurrentHealth() / enemy.GetMaxHealth());
         }
-        private void OnEnemySpawned(EnemySpawnedSignal signal)
+        private IEnumerator OnEnemySpawned(EnemySpawnedSignal signal)
         {
             var enemyView = signal.GetEnemy();
             var enemy = enemyView.GetController();
@@ -54,10 +54,11 @@ namespace Project.GameManagers{
             bar.UpdateProgress(enemy.GetCurrentHealth() / enemy.GetMaxHealth());
 
             m_Cache.Add(enemyView, bar);
+            yield return null;
         }
-        private void OnEnemyDied(EnemyDiedSignal signal){
+        private IEnumerator OnEnemyDied(EnemyDiedSignal signal){
             var enemy = signal.GetEnemy();
-            if(!m_Cache.TryGetValue(enemy, out var bar)){return; }
+            if(!m_Cache.TryGetValue(enemy, out var bar)){yield break; }
             
             m_Factory.ReturnToPool(bar);
             

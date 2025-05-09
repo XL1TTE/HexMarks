@@ -1,38 +1,40 @@
 using System;
 using System.Collections;
-using Project.Enemies.AIs;
+using System.Collections.Generic;
+using CMSystem;
+using Project.Data.CMS.Tags.Enemies;
 
 namespace Project.Enemies{
     
     public class Enemy{
         
-        public Enemy(EnemyView enemyView, EnemyModel enemyModel){
+        public Enemy(EnemyView enemyView, EnemyState enemyModel){
             m_View = enemyView;
-            m_Model = enemyModel;
+            m_State = enemyModel;
             m_View.Init(this);
         }
         
         private EnemyView m_View;
-        private EnemyModel m_Model;
+        private EnemyState m_State;
         
         public event Action<EnemyView> OnDamageTaken;
         
         public void TakeDamage(float amount){
-            m_Model.TakeDamage(amount);
+            m_State.TakeDamage(amount);
             OnDamageTaken?.Invoke(m_View);
         }
         
-        public float GetMaxHealth() => m_Model.GetMaxHealth();
-        public float GetCurrentHealth() => m_Model.GetCurrentHealth();
-        public float GetEnemyDamage() => m_Model.GetEnemyDamage();
+        public float GetMaxHealth() => m_State.GetMaxHealth();
+        public float GetCurrentHealth() => m_State.GetCurrentHealth();
+        public float GetEnemyDamage() => m_State.GetEnemyDamage();
         
-        public EnemyAI GetAI() => m_Model.GetAI();
+        public CMSEntity GetModel() => m_State.GetModel();
         
-        public int GetInitiaive() => m_Model.GetInitiaive();
+        public int GetInitiaive() => m_State.GetInitiaive();
         
-        public IEnumerator GetDieAnimation() => m_Model.GetDieAnimation(m_View);
-        public IEnumerator GetIdleAnimation() => m_Model.GetIdleAnimation(m_View);
-        public IEnumerator GetAttackAnimation() => m_Model.GetAttackAnimation(m_View);
+        public IEnumerator GetDieAnimation() => m_State.GetDieAnimation(m_View);
+        public IEnumerator GetIdleAnimation() => m_State.GetIdleAnimation(m_View);
+        public IEnumerator GetAttackAnimation() => m_State.GetAttackAnimation(m_View);
     }
     
 }

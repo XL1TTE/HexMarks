@@ -31,10 +31,16 @@ namespace Project.Enemies
         
 
         public void StartIdleAnimation(){
+            
+            if(m_IdleCoroutine != null){return;}
             m_IdleCoroutine = StartCoroutine(IdleAnimation());
         }
         public void StopIdleAnimation(){
-            StopCoroutine(m_IdleCoroutine);
+            if(m_IdleCoroutine != null){
+                StopCoroutine(m_IdleCoroutine);
+                m_IdleCoroutine = null;
+            }
+
         }
         
         private IEnumerator IdleAnimation(){

@@ -8,7 +8,7 @@ namespace Project.Factories{
     public class CardFactory : ICardFactory
     {
         [Inject]
-        public CardFactory(CardViewObjectPool a_cardViewPool, DataRosolver dataRosolver, List<CardModel> cardModels)
+        public CardFactory(CardViewObjectPool a_cardViewPool, DataResolver dataRosolver, List<CardModel> cardModels)
         {
             m_cardViewPool = a_cardViewPool;
             m_dataResolver = dataRosolver;
@@ -17,7 +17,7 @@ namespace Project.Factories{
         }
         
         private readonly CardViewObjectPool m_cardViewPool;
-        private readonly DataRosolver m_dataResolver;
+        private readonly DataResolver m_dataResolver;
         private readonly List<CardModel> m_CardModels;
         
         public Card CreateCardFromDef(CardDefenition def)

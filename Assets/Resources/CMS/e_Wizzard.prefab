@@ -1,0 +1,135 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &6793892756206786187
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3295958059970616786}
+  - component: {fileID: 5844533272221924270}
+  m_Layer: 0
+  m_Name: e_Wizzard
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3295958059970616786
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6793892756206786187}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5844533272221924270
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6793892756206786187}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 55d213888ab28a146a215707b127df97, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Components:
+  - rid: 559004016258056201
+  - rid: 559004016258056202
+  - rid: 559004016258056203
+  - rid: 559004016258056219
+  - rid: 559004016258056222
+  references:
+    version: 2
+    RefIds:
+    - rid: 559004016258056201
+      type: {class: TagPrefab, ns: Project.Data.CMS.Tags.Generic, asm: Assembly-CSharp}
+      data:
+        prefab: {fileID: 7474540193881344916, guid: 6d8c336de7abc404fb3203efb52e08b8, type: 3}
+    - rid: 559004016258056202
+      type: {class: TagStats, ns: Project.Data.CMS.Tags.Enemies, asm: Assembly-CSharp}
+      data:
+        m_stats:
+          m_BaseStats:
+            m_Health: 50
+            m_MaxHealth: 50
+            m_Initiative: 50
+          m_Damage: 50
+    - rid: 559004016258056203
+      type: {class: TagAnimations, ns: Project.Data.CMS.Tags.Enemies, asm: Assembly-CSharp}
+      data:
+        m_DieAnimation:
+          rid: 559004016258056211
+        m_IdleAnimation:
+          rid: 559004016258056210
+        m_AttackAnimation:
+          rid: 559004016258056212
+    - rid: 559004016258056210
+      type: {class: EnemyAnimationWithSpritesAnimation, ns: Project.Enemies, asm: Assembly-CSharp}
+      data:
+        m_Sprites:
+        - {fileID: 4723107735738678597, guid: 6fc66c021eec74942b4e71a3fde4dc04, type: 3}
+        - {fileID: -7385789195546760866, guid: 6fc66c021eec74942b4e71a3fde4dc04, type: 3}
+        - {fileID: 3234629978573100161, guid: 6fc66c021eec74942b4e71a3fde4dc04, type: 3}
+        - {fileID: 6373048116405451881, guid: 6fc66c021eec74942b4e71a3fde4dc04, type: 3}
+        - {fileID: 7264182050183361747, guid: 6fc66c021eec74942b4e71a3fde4dc04, type: 3}
+        - {fileID: -2834552850196481573, guid: 6fc66c021eec74942b4e71a3fde4dc04, type: 3}
+        - {fileID: 3278449094680734212, guid: 6fc66c021eec74942b4e71a3fde4dc04, type: 3}
+        - {fileID: 3384493420599841878, guid: 6fc66c021eec74942b4e71a3fde4dc04, type: 3}
+        m_FrameSpeed: 200
+    - rid: 559004016258056211
+      type: {class: EnemyAnimationWithSpritesAnimation, ns: Project.Enemies, asm: Assembly-CSharp}
+      data:
+        m_Sprites:
+        - {fileID: 6991849013916550155, guid: 9d1b202d2fb768a45a36389da710721f, type: 3}
+        - {fileID: -276728812324164698, guid: 9d1b202d2fb768a45a36389da710721f, type: 3}
+        - {fileID: 3156895337291164288, guid: 9d1b202d2fb768a45a36389da710721f, type: 3}
+        - {fileID: 1400002288684528572, guid: 9d1b202d2fb768a45a36389da710721f, type: 3}
+        - {fileID: -1891625820773287384, guid: 9d1b202d2fb768a45a36389da710721f, type: 3}
+        m_FrameSpeed: 200
+    - rid: 559004016258056212
+      type: {class: EnemyAnimationWithSpritesAnimation, ns: Project.Enemies, asm: Assembly-CSharp}
+      data:
+        m_Sprites:
+        - {fileID: -7008412969330441016, guid: d6b8c791d8089b44a9a8c5a7423bd180, type: 3}
+        - {fileID: -7763475090823894447, guid: d6b8c791d8089b44a9a8c5a7423bd180, type: 3}
+        - {fileID: 302641331129538988, guid: d6b8c791d8089b44a9a8c5a7423bd180, type: 3}
+        - {fileID: -6329420634031446844, guid: d6b8c791d8089b44a9a8c5a7423bd180, type: 3}
+        - {fileID: -910092549403018386, guid: d6b8c791d8089b44a9a8c5a7423bd180, type: 3}
+        - {fileID: 221524225039350300, guid: d6b8c791d8089b44a9a8c5a7423bd180, type: 3}
+        - {fileID: 1290532464073988732, guid: d6b8c791d8089b44a9a8c5a7423bd180, type: 3}
+        - {fileID: 4780903288873104255, guid: d6b8c791d8089b44a9a8c5a7423bd180, type: 3}
+        m_FrameSpeed: 200
+    - rid: 559004016258056219
+      type: {class: TagOnTurnActions, ns: Project.Data.CMS.Tags.Enemies, asm: Assembly-CSharp}
+      data:
+        actions:
+        - rid: 559004016258056220
+        - rid: 559004016258056221
+    - rid: 559004016258056220
+      type: {class: AttackPlayer, ns: Project.Enemies.AI, asm: Assembly-CSharp}
+      data: 
+    - rid: 559004016258056221
+      type: {class: DecreasePlayerHandCapacity, ns: Project.Enemies.AI, asm: Assembly-CSharp}
+      data:
+        Amount: 1
+    - rid: 559004016258056222
+      type: {class: TagOnDieActions, ns: Project.Data.CMS.Tags.Enemies, asm: Assembly-CSharp}
+      data:
+        actions:
+        - rid: 559004016258056223
+    - rid: 559004016258056223
+      type: {class: IncreasePlayerHandCapacity, ns: Project.Enemies.AI, asm: Assembly-CSharp}
+      data:
+        Amount: 1

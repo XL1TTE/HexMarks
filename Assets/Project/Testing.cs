@@ -1,4 +1,5 @@
 using System;
+using CMSystem;
 using Project.EventBus;
 using Project.Game.Battle;
 using Project.GameManagers;
@@ -13,9 +14,9 @@ namespace Project
 
         void Start()
         {
-
-            battleManager.Enable();
             
+            CMS.Init();
+                        
             battleController.Initialize();
             
             battleController.StartBattle();

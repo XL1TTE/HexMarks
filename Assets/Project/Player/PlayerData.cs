@@ -20,6 +20,13 @@ namespace Project.Player
         public float GetMaxHealth() => m_Stats.m_BaseStats.m_MaxHealth;
         public float GetCurrentHealth() => m_Stats.m_BaseStats.m_Health;
         public int GetInitiative() => m_Stats.m_BaseStats.m_Initiative;
+        public int GetHandCapacity() => m_Stats.m_MaxCardsInHand;
+        public void SetHandCapacity(int value){
+            if(value < 0 ){
+                throw new Exception("Hand capacity cannot be negative!");
+            }
+            m_Stats.m_MaxCardsInHand = value;
+        } 
 
         public event Action<PlayerInBattle> OnDamageTaken;
 

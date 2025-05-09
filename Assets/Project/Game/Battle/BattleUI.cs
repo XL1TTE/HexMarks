@@ -1,9 +1,6 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using Project.EventBus;
 using Project.EventBus.Signals;
-using Project.UI;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
@@ -20,14 +17,16 @@ namespace Project.Game.Battle.UI
             signalBus.Subscribe<EnemyTurnSignal>(OnEnemyTurn);
         }
 
-        private void OnEnemyTurn(EnemyTurnSignal signal)
+        private IEnumerator OnEnemyTurn(EnemyTurnSignal signal)
         {
             m_EndTurnButton.interactable = false;
+            yield return null;
         }
 
-        private void OnPlayerTurn(PlayerTurnSignal signal)
+        private IEnumerator OnPlayerTurn(PlayerTurnSignal signal)
         {
             m_EndTurnButton.interactable = true;
+            yield return null;
         }
 
         [SerializeField] Slider m_HealthBar;
@@ -39,11 +38,13 @@ namespace Project.Game.Battle.UI
             m_EndTurnButton.onClick.RemoveListener(listener);
         }
     
-        private void OnPlayerHealthChanged(PlayerHealthChangedSingal signal)
+        private IEnumerator OnPlayerHealthChanged(PlayerHealthChangedSingal signal)
         {
             var maxHealth = signal.GetMaxHealth();
             var curHealth = signal.GetCurrentHealth();
             m_HealthBar.value = curHealth / maxHealth;
+            
+            yield return null;
         }
     }
 }

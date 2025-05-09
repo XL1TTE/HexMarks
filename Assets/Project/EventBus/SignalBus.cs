@@ -1,14 +1,21 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
+using ModestTree;
+using Project.JobSystem;
 using Unity.VisualScripting;
+using UnityEngine;
 
 namespace Project.EventBus{
     
-    public class SignalBus{
+    public delegate IEnumerator AwaitableAction<T>(T signal);
+
+    
+    public class SignalBus : MonoBehaviour{
         
         Dictionary<string, List<object>> m_Subscribers = new();
-        
-        public void Subscribe<T>(Action<T> subscriber) where T: ISignal
+                        
+        public void Subscribe<T>(AwaitableAction<T> subscriber) where T: ISignal
         {
             string key = typeof(T).FullName;
             if (!m_Subscribers.ContainsKey(key)){
@@ -18,7 +25,7 @@ namespace Project.EventBus{
             m_Subscribers[key].Add(subscriber);
         }   
         
-        public void Unsubscribe<T>(Action<T> subscriber) where T: ISignal
+        public void Unsubscribe<T>(AwaitableAction<T> subscriber) where T: ISignal
         {
             string key = typeof(T).FullName;
             if(!m_Subscribers.TryGetValue(key, out var subscribers)){return;}
@@ -27,14 +34,19 @@ namespace Project.EventBus{
         
         public void SendSignal<T>(T signal) where T: ISignal
         {
-            string key = typeof(T).FullName;
+            string key = signal.GetType().FullName;
             if(!m_Subscribers.TryGetValue(key, out var subscribers)){return;}
             
-            foreach(var sub in subscribers){
-                Action<T> handler = sub as Action<T>;
-                handler?.Invoke(signal);
+            List<Job> invokationList = new();
+
+            foreach (var item in subscribers){
+                if(item is AwaitableAction<T> sub){;
+                    invokationList.Add(new JobPlayRoutine(sub?.Invoke(signal)));
+                }
             }
+            StartCoroutine(new JobSequence(invokationList).Proccess());
         }
+        
         
     }
     

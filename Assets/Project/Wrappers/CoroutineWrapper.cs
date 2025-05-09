@@ -2,13 +2,13 @@ using System.Collections;
 using UnityEngine;
 
 namespace Project.Wrappers{
-    public class AwaitedCoroutine
+    public class AwaitableCoroutine
     {
         private Coroutine Coroutine { get; }
         private MonoBehaviour Owner {get;} 
         public bool IsDone { get; private set; } = false;
 
-        public AwaitedCoroutine(MonoBehaviour owner, IEnumerator routine)
+        public AwaitableCoroutine(MonoBehaviour owner, IEnumerator routine)
         {
             Coroutine = owner.StartCoroutine(Run(routine));
             Owner = owner;
@@ -18,7 +18,6 @@ namespace Project.Wrappers{
         {
             yield return routine;
             IsDone = true;
-            Kill();
         }
         
         public void Kill(){

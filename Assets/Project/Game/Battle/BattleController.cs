@@ -1,19 +1,14 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
-using Project.Cards;
 using Project.DataResolving.DataRequestResolvers;
 using Project.Enemies;
 using Project.EventBus;
 using Project.EventBus.Signals;
 using Project.Factories;
-using Project.Game.Battle.UI;
 using Project.Game.GameLevels;
-using Project.Layouts;
 using Project.Player;
 using Project.UI;
 using Project.Utilities.Extantions;
-using Unity.VisualScripting;
 using UnityEngine;
 using Zenject;
 
@@ -76,7 +71,7 @@ namespace Project.Game.Battle{
             int index = 0;
             foreach (var p in m_EnemySpawnPoints){
                 
-                var enemy = m_enemyViewFactory.CreateFromDef(enemies[index], p);
+                var enemy = m_enemyViewFactory.CreateFromCMS(enemies[index], p);
                 m_EnemiesInBattle.Add(enemy);
 
                 m_SignalBus.SendSignal(new EnemySpawnedSignal(enemy));
@@ -86,12 +81,12 @@ namespace Project.Game.Battle{
             m_SignalBus.SendSignal(new BattleStartSignal(m_EnemiesInBattle, m_playerInBattle));
         }
 
-        private void OnPlayerWon(PlayerWonBattleSignal signal)
+        private IEnumerator OnPlayerWon(PlayerWonBattleSignal signal)
         {
-            StartCoroutine(OnLevelComplete());
+            yield return OnLevelComplete();
         }
-        private void OnPlayerLost(PlayerLostBattleSignal signal){
-            StartCoroutine(OnPlayerLostRoutine());
+        private IEnumerator OnPlayerLost(PlayerLostBattleSignal signal){
+            yield return OnPlayerLostRoutine();
         }
 
         private IEnumerator OnLevelComplete(){

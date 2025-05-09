@@ -5,7 +5,7 @@ using Project.JobSystem;
 namespace Project.Cards{
     public class Card
     {
-        public Card(CardModel a_model, CardView a_cardView, DataRosolver DataResolver){
+        public Card(CardModel a_model, CardView a_cardView, DataResolver DataResolver){
             m_model = a_model;
             m_view = a_cardView;
             m_view.Init(this);
@@ -13,7 +13,7 @@ namespace Project.Cards{
             m_dataResolver = DataResolver;
         }
         
-        private DataRosolver m_dataResolver;
+        private DataResolver m_dataResolver;
         private CardModel m_model;
         private CardView m_view;
         public CardView GetView() => m_view;

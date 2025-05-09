@@ -6,7 +6,7 @@ namespace Project.ZenjectInstallers{
     public class DataResoverInstaller: MonoInstaller{
         public override void InstallBindings()
         {
-            Container.Bind<DataRosolver>().FromNew().AsSingle();
+            Container.Bind<DataResolver>().FromNew().AsSingle();
 
             
             //Here we bind all of our Data Request Resolvers//
@@ -15,6 +15,8 @@ namespace Project.ZenjectInstallers{
             Container.Bind<PlayerInBattleReqResolver>().FromNew().AsSingle();
             
             Container.Bind<EnemiesInBattleReqResolver>().FromNew().AsSingle();
+            
+            Container.Bind<CardHandReqResolver>().FromNew().AsSingle();
         }
     }
 }

@@ -35,13 +35,13 @@ namespace Project.JobSystem{
         private List<Job> m_Jobs;
         private MonoBehaviour m_RoutinesParent;
         
-        List<AwaitedCoroutine> m_ExecutingJobs = new();
+        List<AwaitableCoroutine> m_ExecutingJobs = new();
         
         public override IEnumerator Proccess()
         {
             foreach (var job in m_Jobs)
             {
-                m_ExecutingJobs.Add(new AwaitedCoroutine(m_RoutinesParent, job.Proccess()));
+                m_ExecutingJobs.Add(new AwaitableCoroutine(m_RoutinesParent, job.Proccess()));
             }
             
             while(m_ExecutingJobs.Any(j => !j.IsDone)){

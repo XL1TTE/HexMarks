@@ -12,14 +12,14 @@ namespace Project.Enemies{
         [SerializeReference, SubclassSelector] private BaseEnemyAnimation m_IdleAnimation;
         [SerializeReference, SubclassSelector] private BaseEnemyAnimation m_AttackAnimation;
 
-        public EnemyModel GetModel(){
-            var model = new EnemyModel(m_Stats);
-            model.SetDieAnimation(m_DieAnimation);
-            model.SetAttackAnimation(m_AttackAnimation);
-            model.SetIdleAnimation(m_IdleAnimation);
+        // public EnemyState GetModel(){
+        //     var model = new EnemyModel(m_Stats);
+        //     model.SetDieAnimation(m_DieAnimation);
+        //     model.SetAttackAnimation(m_AttackAnimation);
+        //     model.SetIdleAnimation(m_IdleAnimation);
 
-            return model;
-        }
+        //     return model;
+        // }
     }
     
 }

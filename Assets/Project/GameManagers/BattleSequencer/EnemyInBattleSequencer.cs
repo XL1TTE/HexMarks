@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Project.Data.CMS.Tags.Enemies;
 using Project.Enemies;
 using Project.EventBus;
 using Project.EventBus.Signals;
@@ -29,18 +30,20 @@ namespace Project.GameManagers.BattleSequence{
         private SignalBus m_SignalBus;
         private BattleSequenceManager m_manager;
 
-        private List<AwaitedCoroutine> m_CardEffectAwaiters = new();
-        private Dictionary<EnemyView, AwaitedCoroutine> m_EnemyDieAwaiter = new();
+        private List<AwaitableCoroutine> m_CardEffectAwaiters = new();
+        private Dictionary<EnemyView, AwaitableCoroutine> m_EnemyDieAwaiter = new();
         
         public bool isAlowedToProccessTurn = true;
 
-        private void OnEnemySpawned(EnemySpawnedSignal signal)
+        private IEnumerator OnEnemySpawned(EnemySpawnedSignal signal)
         {
             var enemy = signal.GetEnemy();
             
             enemy.StartIdleAnimation();
 
             enemy.GetController().OnDamageTaken += OnEnemyDamageTaken;
+            
+            yield return null;
         }
 
         private void OnEnemyDamageTaken(EnemyView view)
@@ -49,7 +52,7 @@ namespace Project.GameManagers.BattleSequence{
 
             if (view.GetController().GetCurrentHealth() == 0)
             {
-                AddEnemyDieAwaiter(view, new AwaitedCoroutine(m_manager, EnemyDeathRoutine(view)));
+                AddEnemyDieAwaiter(view, EnemyDeathRoutine(view));
             }
         }
 
@@ -78,14 +81,16 @@ namespace Project.GameManagers.BattleSequence{
             Object.Destroy(enemy.gameObject);
         }
 
-        private void OnCardPlayed(CardUsedSignal signal)
+        private IEnumerator OnCardPlayed(CardUsedSignal signal)
         {
             var card = signal.GetCardView();
 
             // Launch card use sequence and adds it to awaiters of enemy
-            var cardUsingAwaiter = new AwaitedCoroutine(m_manager, card.GetCardUseSequence());
+            var cardUsingAwaiter = new AwaitableCoroutine(m_manager, card.GetCardUseSequence());
 
             AddCardEffectAwaiter(cardUsingAwaiter);
+            
+            yield return null;
         }
 
 
@@ -113,11 +118,11 @@ namespace Project.GameManagers.BattleSequence{
             m_EnemyDieAwaiter.Remove(enemy);
         }
 
-        private void AddCardEffectAwaiter(AwaitedCoroutine routine)
+        private void AddCardEffectAwaiter(AwaitableCoroutine routine)
         {
             m_CardEffectAwaiters.Add(routine);
         }
-        private void AddEnemyDieAwaiter(EnemyView enemy, AwaitedCoroutine routine)
+        private void AddEnemyDieAwaiter(EnemyView enemy, IEnumerator routine)
         {
             if (m_EnemyDieAwaiter.TryGetValue(enemy, out var awaiters))
             {
@@ -125,7 +130,7 @@ namespace Project.GameManagers.BattleSequence{
             }
             else
             {
-                m_EnemyDieAwaiter.Add(enemy, routine);
+                m_EnemyDieAwaiter.Add(enemy, new AwaitableCoroutine(m_manager, routine));
             }
         }
     }

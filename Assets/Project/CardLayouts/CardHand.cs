@@ -4,14 +4,22 @@ using System.Linq;
 using System.Security.Claims;
 using DG.Tweening;
 using Project.Cards;
+using Project.DataResolving.DataRequestResolvers;
 using Project.Factories;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using Zenject;
 
 namespace Project.Layouts
 {
     public class CardHand : MonoBehaviour, ICardLayout
     {
+        
+        [Inject]
+        private void Construct(CardHandReqResolver cardHandResolver){
+            cardHandResolver.SetHand(this);
+        }
+        
         protected List<CardView> m_ClaimedItems = new();
         public IReadOnlyList<CardView> GetAllItems() => m_ClaimedItems;
         [SerializeField, Range(1.0f, 10.0f)] protected float m_Spacing = 1.0f;
@@ -66,11 +74,12 @@ namespace Project.Layouts
             {
                 Release(item);
             }
-            
-            foreach(var card in temp){
+
+            foreach (var card in temp)
+            {
                 CardViewObjectPool.current.Return(card);
             }
-            
+
             RequestAlignment();
         }
 

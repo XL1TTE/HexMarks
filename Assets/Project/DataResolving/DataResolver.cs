@@ -3,19 +3,21 @@ using Project.DataResolving.DataRequestResolvers;
 using Zenject;
 
 namespace Project.DataResolving{
-    public class DataRosolver{
+    public class DataResolver{
         private List<IDataRequestResolver> m_reqResolvers = new();
         
         [Inject]
         private void Construct(
             EnemyTargetResolver res1, 
             PlayerInBattleReqResolver res2,
-            EnemiesInBattleReqResolver res3)
+            EnemiesInBattleReqResolver res3,
+            CardHandReqResolver res4)
         {
             // Adding reqResolvers here;
             m_reqResolvers.Add(res1);
             m_reqResolvers.Add(res2);
             m_reqResolvers.Add(res3);
+            m_reqResolvers.Add(res4);
         }
         
         public DataContext Resolve(IDataResolverUser user){

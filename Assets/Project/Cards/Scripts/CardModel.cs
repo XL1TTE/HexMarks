@@ -18,7 +18,7 @@ namespace Project.Cards{
         [SerializeReference, SubclassSelector]
         private ICardEffect[] m_Effects = Array.Empty<ICardEffect>();
         
-        public JobSequence GetCardExecutionSequence(CardView a_cardView, DataRosolver a_resolver){
+        public JobSequence GetCardExecutionSequence(CardView a_cardView, DataResolver a_resolver){
 
             var jobs = new List<Job>();
 
