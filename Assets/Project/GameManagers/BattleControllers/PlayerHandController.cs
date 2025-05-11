@@ -1,11 +1,9 @@
-using System;
 using System.Collections;
 using Project.Cards;
 using Project.EventBus;
 using Project.EventBus.Signals;
 using Project.Factories;
 using Project.Layouts;
-using Project.Player;
 using UnityEngine;
 using Zenject;
 
@@ -23,14 +21,14 @@ namespace Project.Game.Battle.Controllers
         void OnEnable()
         {
             m_SignalBus.Subscribe<BattleStartSignal>(OnBattleStartInteraction);
-            m_SignalBus.Subscribe<PlayerTurnSignal>(OnPlayerTurnInteraction);
+            m_SignalBus.Subscribe<HeroTurnSignal>(OnPlayerTurnInteraction);
             m_SignalBus.Subscribe<EnemyTurnSignal>(OnEnemyTurnInteraction);
         }
 
         void OnDisable()
         {
             m_SignalBus.Unsubscribe<BattleStartSignal>(OnBattleStartInteraction);
-            m_SignalBus.Unsubscribe<PlayerTurnSignal>(OnPlayerTurnInteraction);
+            m_SignalBus.Unsubscribe<HeroTurnSignal>(OnPlayerTurnInteraction);
             m_SignalBus.Unsubscribe<EnemyTurnSignal>(OnEnemyTurnInteraction);
 
         }
@@ -42,19 +40,17 @@ namespace Project.Game.Battle.Controllers
         #endregion
 
         #region State
-        private PlayerInBattle m_PlayerInBattle;           
         #endregion
         
         [SerializeField] private CardHand m_CardsHand;
 
         private IEnumerator OnBattleStartInteraction(BattleStartSignal signal)
         {
-            m_PlayerInBattle = signal.GetPlayerInBattle();
             yield return null;
         }
 
         
-        private IEnumerator OnPlayerTurnInteraction(PlayerTurnSignal signal)
+        private IEnumerator OnPlayerTurnInteraction(HeroTurnSignal signal)
         {
             yield return UpdatePlayerHand();
             TurnOnCardsDragging();
@@ -82,8 +78,7 @@ namespace Project.Game.Battle.Controllers
         private IEnumerator UpdatePlayerHand()
         {
             m_CardsHand.ClearHand();
-            DrawCards(m_PlayerInBattle.GetHandCapacity());
-            
+            DrawCards(5);
             yield return null;
         }
 

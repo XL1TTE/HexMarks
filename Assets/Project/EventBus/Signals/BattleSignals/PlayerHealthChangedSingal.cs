@@ -1,5 +1,4 @@
 using Project.Actors.Stats;
-using Project.Player;
 
 namespace Project.EventBus.Signals{
     public class PlayerHealthChangedSingal : ISignal{

@@ -21,7 +21,7 @@ namespace Project.Game.Battle.Controllers
             m_SignalBus = signalBus;
         }
         private SignalBus m_SignalBus;
-        private List<EnemyView> m_EnemiesInBattle;
+        private List<EnemyView> m_EnemiesInBattle = new();
         
         private List<Func<bool>> m_EnemyDieValidators = new();
         

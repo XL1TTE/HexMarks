@@ -1,10 +1,7 @@
-
-using System.Collections;
-using System.IO;
+using Project.Actors;
 using Project.Enemies;
 using Project.EventBus;
 using Project.EventBus.Signals;
-using Project.Player;
 
 namespace Project.TurnSystem{
     public abstract class ITurnTaker{
@@ -19,23 +16,23 @@ namespace Project.TurnSystem{
     }
 
 
-    public class PlayerTurnTaker : ITurnTaker
+    public class HeroTurnTaker : ITurnTaker
     {
-        private PlayerInBattle m_player;
+        private HeroView m_hero;
 
-        public PlayerTurnTaker(SignalBus signalBus, PlayerInBattle playerData) : base(signalBus)
+        public HeroTurnTaker(SignalBus signalBus, HeroView heroView) : base(signalBus)
         {
-            m_player = playerData;
+            m_hero = heroView;
         }
 
         public override int GetInitiative()
         {
-            return m_player.GetInitiative();
+            return m_hero.GetInitiative();
         }
 
         public override void SendTurnNotification()
         {
-            m_SignalBus.SendSignal(new PlayerTurnSignal(m_player));
+            m_SignalBus.SendSignal(new HeroTurnSignal(m_hero));
         }
     }
 

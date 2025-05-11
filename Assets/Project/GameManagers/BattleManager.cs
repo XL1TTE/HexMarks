@@ -15,23 +15,29 @@ namespace Project.GameManagers{
         
         [SerializeField] EnemiesInBattleController m_EnemiesController;
         [SerializeField] CardsExecutionController m_CardsController;
+        [SerializeField] BattleTurnsController m_BattleTurnsController;
 
 
         void OnEnable()
         {
             m_EnemiesController.AddEnemyDieValidator(EnemyDiedValidator);
+            m_BattleTurnsController.AddNextTurnValidator(NextTurnValidator);
         }
 
         void OnDisable()
         {
             m_EnemiesController.RemoveEnemyDieValidator(EnemyDiedValidator);
+            m_BattleTurnsController.RemoveNextTurnValidator(NextTurnValidator);
         }
 
 
         private bool EnemyDiedValidator()
         {
-            var result = !m_CardsController.IsAnyCardExecuting();
-            return result;
+            return !m_CardsController.IsAnyCardExecuting();
+        }
+        
+        private bool NextTurnValidator(){
+            return !m_CardsController.IsAnyCardExecuting();
         }
     }
 }

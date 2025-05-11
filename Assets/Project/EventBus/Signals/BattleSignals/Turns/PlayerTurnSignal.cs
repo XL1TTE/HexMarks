@@ -1,20 +1,11 @@
-using Project.Player;
+using Project.Actors;
 
 namespace Project.EventBus.Signals{
-    public class PlayerTurnSignal: ISignal{
-        private PlayerInBattle m_player;
-        public PlayerInBattle GetPlayer() => m_player;
-        public PlayerTurnSignal(PlayerInBattle player){
-            m_player = player;
+    public class HeroTurnSignal: ISignal{
+        private HeroView m_hero;
+        public HeroView GetHero() => m_hero;
+        public HeroTurnSignal(HeroView hero){
+            m_hero = hero;
         }
     }
-    
-    public class PlayerTurnEndSignal: ISignal{
-        private PlayerData m_player;
-        public PlayerData GetPlayer() => m_player;
-        public PlayerTurnEndSignal(PlayerData player){
-            m_player = player;
-        }
-    }
-    
 }

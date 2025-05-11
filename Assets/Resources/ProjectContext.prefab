@@ -9,9 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5697525157649305409}
-  - component: {fileID: 6558784431752310500}
+  - component: {fileID: 6455593496812155928}
   m_Layer: 0
-  m_Name: PlayerDataInstaller
+  m_Name: SaveFileInstaller
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -32,7 +32,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 943800509882134252}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6558784431752310500
+--- !u!114 &6455593496812155928
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -44,22 +44,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: feedc3dbc55d72c41a91ca9781952603, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_PlayerDataFactory:
-    rid: 559003927408541701
-  references:
-    version: 2
-    RefIds:
-    - rid: 559003927408541701
-      type: {class: PlayerDataFactory, ns: Project.Factories, asm: Assembly-CSharp}
-      data:
-        m_SaveFilePath: 
-        m_defaultData:
-          m_Stats:
-            m_BaseStats:
-              m_Health: 100
-              m_MaxHealth: 100
-              m_Initiative: 10
-            m_MaxCardsInHand: 5
+  m_InitialSaveConfig:
+    m_StartWithHeroes:
+    - {fileID: 1970154056295665792, guid: d1bba12c91c2fe940b6e62fa4717a33e, type: 3}
 --- !u!1 &2227295660237143958
 GameObject:
   m_ObjectHideFlags: 0
@@ -156,7 +143,8 @@ MonoBehaviour:
   - {fileID: 2318599719258109980}
   - {fileID: 414324047775012549}
   - {fileID: 6542667927135969235}
-  - {fileID: 6558784431752310500}
+  - {fileID: 6455593496812155928}
+  - {fileID: 6916960442481970097}
   _installerPrefabs: []
   _parentNewObjectsUnderContext: 1
   _editorReflectionBakingCoverageMode: 0
@@ -213,6 +201,50 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a0fb21b5ec564ed41904f71a52c9562b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1 &4617510716746482709
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3320436597746418982}
+  - component: {fileID: 6916960442481970097}
+  m_Layer: 0
+  m_Name: HeroesInstaller
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3320436597746418982
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4617510716746482709}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 943800509882134252}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6916960442481970097
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4617510716746482709}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 688455fe2e5307744ad933d85a6ea29e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &5516621035712834397
@@ -436,5 +468,6 @@ Transform:
   - {fileID: 201642349731650278}
   - {fileID: 6336365542504442795}
   - {fileID: 5697525157649305409}
+  - {fileID: 3320436597746418982}
   m_Father: {fileID: 1505581008307174464}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

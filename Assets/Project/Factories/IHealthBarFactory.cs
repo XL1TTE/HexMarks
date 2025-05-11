@@ -3,8 +3,16 @@ using UnityEngine;
 
 namespace Project.Factories{
     public interface IHealthBarFactory{
-        HealthBar CreateHealthBar(Transform parent);
-        void ReturnToPool(HealthBar bar);
+        
+        enum BarAlignment {
+            UP,
+            BUTTOM    
+        }
+        
+        HealthBar CreateEnemyHealthBar(Transform parent);
+        public HealthBar CreateHeroHealthBar(Transform parent, BarAlignment alignment);
+        void ReturnEnemyBarToPool(HealthBar bar);
+        void ReturnHeroBarToPool(HealthBar bar);
     }
 }
 

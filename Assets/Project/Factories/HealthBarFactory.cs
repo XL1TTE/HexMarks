@@ -1,69 +1,74 @@
 using System.Collections.Generic;
 using Project.UI;
+using Project.Utilities.Extantions;
 using UnityEngine;
 
 namespace Project.Factories{
     public class HealthBarFactory : MonoBehaviour, IHealthBarFactory
     {
         [SerializeField] private Transform m_PoolContainer;        
-        [SerializeField] private HealthBar m_HealthBarPrefab;
-        private Queue<HealthBar> m_Pool = new();
+        [SerializeField] private HealthBar m_EnemyHealthBarPrefab;
+        [SerializeField] private HealthBar m_HeroesHealthBarPrefab;
+        private Queue<HealthBar> m_EnemyHealthBarPool = new();
+        private Queue<HealthBar> m_HeroHealthBarPool = new();
         
-        public HealthBar CreateHealthBar(Transform parent)
+        public HealthBar CreateEnemyHealthBar(Transform parent)
         {
             HealthBar healthBar;
-            if(m_Pool.Count != 0){
-                healthBar = m_Pool.Dequeue();
+            if (m_EnemyHealthBarPool.Count != 0)
+            {
+                healthBar = m_EnemyHealthBarPool.Dequeue();
                 healthBar.transform.SetParent(parent);
                 healthBar.gameObject.SetActive(true);
             }
-            else{
-                healthBar = Instantiate(m_HealthBarPrefab, parent);
+            else
+            {
+                healthBar = Instantiate(m_EnemyHealthBarPrefab, parent);
             }
 
-            var height = GetObjectHeight(parent);
+            var height = parent.GetHeight();
 
             healthBar.transform.localPosition = Vector3.up * (0.5f + height * 0.5f);
 
             return healthBar;
         }
-
-        public void ReturnToPool(HealthBar bar)
+        public HealthBar CreateHeroHealthBar(Transform parent, IHealthBarFactory.BarAlignment alignment)
         {
-            bar.gameObject.SetActive(false);
-            bar.transform.SetParent(m_PoolContainer);
-            
-            m_Pool.Enqueue(bar);
-        }
-        
-        
-        private float GetObjectHeight(Transform parent){
-            var obj = parent.gameObject;
-            
-            Renderer renderer;
-            if(!obj.TryGetComponent<Renderer>(out renderer)){
-                renderer = obj.GetComponentInChildren<Renderer>();
-            }
-            
-            float height = 0f;
-
-            if (renderer != null)
+            HealthBar healthBar;
+            if (m_HeroHealthBarPool.Count != 0)
             {
-                height = renderer.bounds.size.y;
+                healthBar = m_HeroHealthBarPool.Dequeue();
+                healthBar.transform.SetParent(parent);
+                healthBar.gameObject.SetActive(true);
             }
             else
             {
-                Collider2D collider;
-                if(!obj.TryGetComponent<Collider2D>(out collider)){
-                    collider = obj.GetComponentInChildren<Collider2D>();
-                }
-                if (collider != null)
-                {
-                    height = collider.bounds.size.y;
-                }
+                healthBar = Instantiate(m_HeroesHealthBarPrefab, parent);
             }
+
+            var height = parent.GetHeight();
             
-            return height;
+            if(alignment == IHealthBarFactory.BarAlignment.UP){
+                healthBar.transform.localPosition = Vector3.up * (0.5f + height * 0.5f);
+            }
+            else if(alignment == IHealthBarFactory.BarAlignment.BUTTOM){
+                healthBar.transform.localPosition = Vector3.down * (0.5f + height * 0.5f);
+            }
+
+            return healthBar;
+        }
+
+        public void ReturnEnemyBarToPool(HealthBar bar)
+        {
+            bar.gameObject.SetActive(false);
+            bar.transform.SetParent(m_PoolContainer);
+            m_EnemyHealthBarPool.Enqueue(bar);
+        }
+        public void ReturnHeroBarToPool(HealthBar bar)
+        {
+            bar.gameObject.SetActive(false);
+            bar.transform.SetParent(m_PoolContainer);
+            m_HeroHealthBarPool.Enqueue(bar);
         }
     }
 }

@@ -25,7 +25,7 @@ namespace Project.Actors.Stats{
     }
 
     [Serializable]
-    public struct PlayerStats
+    public struct HeroStats
     {
         public ActorStats m_BaseStats;
         
