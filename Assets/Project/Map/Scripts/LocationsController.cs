@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using Project.Data.CMS.Tags;
 using Project.Data.SaveFile;
@@ -50,8 +51,14 @@ namespace Project.Map
                 
                 m_RuntimeDataProvider.m_CurrentLocationModel = model;
                 
-                SceneManager.LoadScene("BattleScene", LoadSceneMode.Single);
+                StartCoroutine(TransitToScene("BattleScene"));
             }
+        }
+        
+        private IEnumerator TransitToScene(string sceneName){
+            var scene_loading = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Single);
+            
+            yield return new WaitUntil(() => scene_loading.isDone);
         }
     
     }

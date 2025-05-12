@@ -8,12 +8,22 @@ namespace Project.Data.SaveFile{
     
     [Serializable]
     public class SaveFile{
+        public SaveFile(SavePlayerState playerState){
+            m_PlayerState = playerState;
+        }
+        
         public SavePlayerState m_PlayerState = new SavePlayerState();          
     }
     
     [Serializable]
     public class SavePlayerState{
-        public List<SaveHeroState> m_Heroes = new();
+        public SavePlayerState(List<SaveHeroState> heroes){
+            m_Heroes = heroes;
+        }
+        public SavePlayerState(){}
+        
+        private List<SaveHeroState> m_Heroes = new();
+        public IReadOnlyList<SaveHeroState> GetHeroes() => m_Heroes;
     }
     
     

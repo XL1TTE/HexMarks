@@ -1,7 +1,11 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using ModestTree;
+using Project.Actors;
+using Project.Data.CMS.Tags.Generic;
 using Project.DataResolving;
+using Project.Utilities.Extantions;
 using UnityEngine;
 
 namespace Project.Enemies.AI{
@@ -14,25 +18,42 @@ namespace Project.Enemies.AI{
     }
 
     [Serializable]
-    public class AttackPlayer : BaseEnemyAction
+    public class AttackLowestHealthHero : BaseEnemyAction
     {
         public override IReadOnlyList<DataRequierment> GetDataRequests()
         {
             return new List<DataRequierment>{
+                new DataRequierment("HeroesInBattle", typeof(List<HeroView>))
             };
         }
 
         public override IEnumerator GetAction(EnemyView state, DataContext context)
         {
+            var all_heroes = context.Get<List<HeroView>>("HeroesInBattle");
+
+            if(all_heroes.IsEmpty()){yield break;}
 
             var enemy = state.GetController();
+            
+            HeroView toAttack = all_heroes[0];
+            
+            foreach(var hero in all_heroes){
+                if(hero.GetState().GetCurrentHealth() < toAttack.GetState().GetCurrentHealth()){
+                    toAttack = hero;
+                }
+            }
 
-            Debug.Log($"Damaging Player with: {enemy.GetEnemyDamage()} damage.");
+            toAttack.GetState().GetCMSModel().Is<TagName>(out var tagName);
+
+            Debug.Log($"Damaging hero: {tagName.name} with: {enemy.GetEnemyDamage()} damage.");
+            
 
             state.StopIdleAnimation();
 
             // plays attack animation
             yield return enemy.GetAttackAnimation();
+
+            toAttack.TakeDamage(enemy.GetEnemyDamage());
 
             state.StartIdleAnimation();
         }

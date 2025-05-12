@@ -19,7 +19,15 @@ namespace Project.Layouts
         private void Construct(CardHandReqResolver cardHandResolver){
             cardHandResolver.SetHand(this);
         }
-        
+
+        void OnDestroy()
+        {
+            m_HoveredCard = null;
+            
+            m_ActiveAlignTweens.ForEach(t => t?.Kill());
+            m_ActiveAlignTweens.Clear();
+        }
+
         protected List<CardView> m_ClaimedItems = new();
         public IReadOnlyList<CardView> GetAllItems() => m_ClaimedItems;
         [SerializeField, Range(1.0f, 10.0f)] protected float m_Spacing = 1.0f;

@@ -115,21 +115,11 @@ MonoBehaviour:
       type: {class: TagOnTurnActions, ns: Project.Data.CMS.Tags.Enemies, asm: Assembly-CSharp}
       data:
         actions:
-        - rid: 559004016258056220
-        - rid: 559004016258056221
-    - rid: 559004016258056220
-      type: {class: AttackPlayer, ns: Project.Enemies.AI, asm: Assembly-CSharp}
-      data: 
-    - rid: 559004016258056221
-      type: {class: DecreasePlayerHandCapacity, ns: Project.Enemies.AI, asm: Assembly-CSharp}
-      data:
-        Amount: 1
+        - rid: 559004064666091524
     - rid: 559004016258056222
       type: {class: TagOnDieActions, ns: Project.Data.CMS.Tags.Enemies, asm: Assembly-CSharp}
       data:
-        actions:
-        - rid: 559004016258056223
-    - rid: 559004016258056223
-      type: {class: IncreasePlayerHandCapacity, ns: Project.Enemies.AI, asm: Assembly-CSharp}
-      data:
-        Amount: 1
+        actions: []
+    - rid: 559004064666091524
+      type: {class: AttackLowestHealthHero, ns: Project.Enemies.AI, asm: Assembly-CSharp}
+      data: 

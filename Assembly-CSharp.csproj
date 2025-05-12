@@ -67,11 +67,10 @@
     <Compile Include="Assets\Project\DataResolving\DataContext.cs" />
     <Compile Include="Assets\Project\EventBus\Signals\BattleSignals\Enemies\SetEnemyTargetSignal.cs" />
     <Compile Include="Assets\Project\Factories\HealthBarFactory.cs" />
-    <Compile Include="Assets\Project\GameManagers\TurnSystem\TurnsUtility.cs" />
-    <Compile Include="Assets\Project\Testing.cs" />
     <Compile Include="Assets\Project\EventBus\Signals\BattleSignals\Cards\CardUsedSignal.cs" />
     <Compile Include="Assets\Project\Actors\Enemies\Actions\EnemyActions.cs" />
     <Compile Include="Assets\Project\Data\CMSTags\Tags\Enemies\TagEnemyActions.cs" />
+    <Compile Include="Assets\Project\ZenjectInstallers\SignalBusInstaller.cs" />
     <Compile Include="Assets\Project\EventBus\Signals\BattleSignals\Enemies\EnemyDyingSignal.cs" />
     <Compile Include="Assets\Project\Cards\CardEffects\Effects\ColdDamageEffect.cs" />
     <Compile Include="Assets\Project\EventBus\Signals\BattleSignals\Heroes\HeroSpawnedSignal.cs" />
@@ -84,6 +83,7 @@
     <Compile Include="Assets\Project\CardLayouts\CardHand.cs" />
     <Compile Include="Assets\Project\EventBus\Signals\BattleSignals\Enemies\EnemyHealthChanged.cs" />
     <Compile Include="Assets\Project\GameManagers\BattleControllers\BattleTurnsController.cs" />
+    <Compile Include="Assets\Project\DataResolving\DataRequestResolvers\HeroesInBattleReqResolver.cs" />
     <Compile Include="Assets\Project\Factories\IHeroViewFactory.cs" />
     <Compile Include="Assets\Project\UI\ProgressBars\IProgressBar.cs" />
     <Compile Include="Assets\Project\GameManagers\BattleControllers\EnemiesInBattleController.cs" />
@@ -92,6 +92,7 @@
     <Compile Include="Assets\Utilities\Extensions\TransformExtentions.cs" />
     <Compile Include="Assets\Project\GameManagers\BattleControllers\CardsExecutionController.cs" />
     <Compile Include="Assets\Project\Cards\CardEffects\Effects\FireDamageEffect.cs" />
+    <Compile Include="Assets\Project\EventBus\Signals\BattleSignals\Cards\RequestDrawCardsSignal.cs" />
     <Compile Include="Assets\Project\DataResolving\DataResolver.cs" />
     <Compile Include="Assets\Project\Data\SaveFile\SaveHeroState.cs" />
     <Compile Include="Assets\Project\Factories\ICardFactory.cs" />
@@ -100,7 +101,6 @@
     <Compile Include="Assets\Project\Cards\Scripts\CardView.cs" />
     <Compile Include="Assets\Project\Factories\EnemyViewFactory.cs" />
     <Compile Include="Assets\Project\ObjectInteractions\Interactions\IHaveInteractions.cs" />
-    <Compile Include="Assets\Project\GameManagers\BattleControllers\PlayerHandController.cs" />
     <Compile Include="Assets\Project\Actors\Enemies\DieAnimations\EnemyDieWithShaking.cs" />
     <Compile Include="Assets\Project\Actors\Enemies\Enemy.cs" />
     <Compile Include="Assets\Project\DataResolving\DataRequestResolvers\CardHandReqResolver.cs" />
@@ -137,10 +137,10 @@
     <Compile Include="Assets\Project\UI\ProgressBars\HealthBar.cs" />
     <Compile Include="Assets\Project\CardLayouts\LimitCardsLayout.cs" />
     <Compile Include="Assets\Project\JobSystem\Jobs\JobPlayCardAnimation.cs" />
+    <Compile Include="Assets\Project\GameManagers\BattleActionsValidator.cs" />
     <Compile Include="Assets\Project\GameManagers\BattleManager.cs" />
     <Compile Include="Assets\Project\CMS\CMS\CMSEntityPfb.cs" />
     <Compile Include="Assets\Project\Factories\CardViewObjectPool.cs" />
-    <Compile Include="Assets\Project\Game\Battle\BattleController.cs" />
     <Compile Include="Assets\Project\Actors\Enemies\EnemyState.cs" />
     <Compile Include="Assets\Project\Cards\CardEffects\Effects\AoeOnAllEnemiesFireDamageEffect.cs" />
     <Compile Include="Assets\Project\Map\Scripts\MapLocationView.cs" />
@@ -148,7 +148,7 @@
     <Compile Include="Assets\Project\ObjectInteractions\Interactions\InteractionsBase.cs" />
     <Compile Include="Assets\Utilities\Tooltips\ToolTip.cs" />
     <Compile Include="Assets\Project\CardLayouts\ICardLayout.cs" />
-    <Compile Include="Assets\Project\ZenjectInstallers\EventBusInstaller.cs" />
+    <Compile Include="Assets\Project\GameManagers\BattleControllers\HeroesInBattleController.cs" />
     <Compile Include="Assets\Project\ObjectInteractions\Droping\IDropHandler.cs" />
     <Compile Include="Assets\Utilities\Extensions\ListExtentions.cs" />
     <Compile Include="Assets\Project\ObjectInteractions\Interactions\Interactable.cs" />
@@ -169,10 +169,13 @@
     <Compile Include="Assets\Project\EventBus\Signals\BattleSignals\Enemies\EnemyDiedSignal.cs" />
     <Compile Include="Assets\Project\DataResolving\IDataRequestResolver.cs" />
     <Compile Include="Assets\Utilities\ConstantObject.cs" />
+    <Compile Include="Assets\Project\GameManagers\BattleControllers\CardsHandController.cs" />
     <Compile Include="Assets\Project\Actors\Enemies\DieAnimations\EnemyAnimationWithSpritesAnimation.cs" />
     <Compile Include="Assets\Project\EventBus\Signals\BattleSignals\PlayerLostBattleSignal.cs" />
     <Compile Include="Assets\Project\ZenjectInstallers\HeroesInstaller.cs" />
     <Compile Include="Assets\Project\Factories\IHealthBarFactory.cs" />
+    <Compile Include="Assets\Project\GameManagers\BattleStage.cs" />
+    <Compile Include="Assets\Project\Game\Battle\BattleMain.cs" />
     <Compile Include="Assets\Project\Cards\CardEffects\Effects\EffectsAnimations\ColorWithTextAnimation.cs" />
     <Compile Include="Assets\Project\DataResolving\DataRequierment.cs" />
     <Compile Include="Assets\Project\Factories\IEnemyViewFactory.cs" />

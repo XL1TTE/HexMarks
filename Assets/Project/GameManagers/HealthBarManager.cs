@@ -1,13 +1,10 @@
-using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.InteropServices;
 using Project.Actors;
 using Project.Enemies;
 using Project.EventBus;
 using Project.EventBus.Signals;
 using Project.Factories;
 using Project.UI;
-using Unity.VisualScripting;
 using UnityEngine;
 using Zenject;
 
@@ -32,17 +29,20 @@ namespace Project.GameManagers{
 
             m_SignalBus.Unsubscribe<EnemyDiedSignal>(OnEnemyDied);
             m_SignalBus.Unsubscribe<HeroDiedSignal>(OnHeroDied);
+            m_SignalBus.Unsubscribe<HeroHealthChangedSignal>(OnHeroHealthChanged);
             m_SignalBus.Unsubscribe<EnemyHealthChangedSignal>(OnEnemyHealthChanged);
 
             DisableEnemiesHealthBars();
             DisableHeroesHealthBars();
-        } 
+        }
+
         public void OnEnable(){
             m_SignalBus.Subscribe<EnemySpawnedSignal>(OnEnemySpawned);
             m_SignalBus.Subscribe<HeroSpawnedSignal>(OnHeroSpawned);
-            
+            ;
             m_SignalBus.Subscribe<EnemyDiedSignal>(OnEnemyDied);
             m_SignalBus.Subscribe<HeroDiedSignal>(OnHeroDied);
+            m_SignalBus.Subscribe<HeroHealthChangedSignal>(OnHeroHealthChanged);
             m_SignalBus.Subscribe<EnemyHealthChangedSignal>(OnEnemyHealthChanged);
         }
 
@@ -65,17 +65,17 @@ namespace Project.GameManagers{
             }
             m_HeroesCache.Clear();
         }
-        
-        private IEnumerator OnEnemyHealthChanged(EnemyHealthChangedSignal signal)
+
+        private void OnEnemyHealthChanged(EnemyHealthChangedSignal signal)
         {
             var enemyView = signal.GetEnemy();
             var enemy = enemyView.GetController();
 
-            if (!m_EnemiesCache.TryGetValue(enemyView, out var bar)) { yield break; }
+            if (!m_EnemiesCache.TryGetValue(enemyView, out var bar)) { return; }
 
             bar.UpdateProgress(enemy.GetCurrentHealth() / enemy.GetMaxHealth());
         }
-        private IEnumerator OnEnemySpawned(EnemySpawnedSignal signal)
+        private void OnEnemySpawned(EnemySpawnedSignal signal)
         {
             var enemyView = signal.GetEnemy();
             var enemy = enemyView.GetController();
@@ -84,18 +84,28 @@ namespace Project.GameManagers{
             bar.UpdateProgress(enemy.GetCurrentHealth() / enemy.GetMaxHealth());
 
             m_EnemiesCache.Add(enemyView, bar);
-            yield return null;
         }
-        private IEnumerator OnEnemyDied(EnemyDiedSignal signal){
+        private void OnEnemyDied(EnemyDiedSignal signal){
             var enemy = signal.GetEnemy();
-            if(!m_EnemiesCache.TryGetValue(enemy, out var bar)){yield break; }
+            if(!m_EnemiesCache.TryGetValue(enemy, out var bar)){return; }
             
             m_Factory.ReturnEnemyBarToPool(bar);
             
             m_EnemiesCache.Remove(enemy);
         }
-        
-        private IEnumerator OnHeroSpawned(HeroSpawnedSignal signal){
+
+        private void OnHeroHealthChanged(HeroHealthChangedSignal signal)
+        {
+            var heroView = signal.GetHero();
+            var heroState = heroView.GetState();
+
+            if (!m_HeroesCache.TryGetValue(heroView, out var bar)) { return; }
+
+            bar.UpdateProgress(heroState.GetCurrentHealth() / heroState.GetMaxHealth());
+        }
+
+
+        private void OnHeroSpawned(HeroSpawnedSignal signal){
             var heroView = signal.GetHero();
             var heroState = heroView.GetState();
             
@@ -104,12 +114,11 @@ namespace Project.GameManagers{
 
             m_HeroesCache.Add(heroView, bar);
             
-            yield return null;
         }
         
-        private IEnumerator OnHeroDied(HeroDiedSignal signal){
+        private void OnHeroDied(HeroDiedSignal signal){
             var hero = signal.GetHero();
-            if (!m_HeroesCache.TryGetValue(hero, out var bar)) { yield break; }
+            if (!m_HeroesCache.TryGetValue(hero, out var bar)) { return; }
             
             m_Factory.ReturnHeroBarToPool(bar);
             

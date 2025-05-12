@@ -12,7 +12,7 @@ namespace CMSystem
 
         static bool isInit;
 
-        public static void Init()
+        static CMS()
         {
             if (isInit)
                 return;

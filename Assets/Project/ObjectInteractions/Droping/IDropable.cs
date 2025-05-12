@@ -9,10 +9,15 @@ namespace Project.ObjectInteractions
         void Start()
         {
             m_draggable = GetComponent<IDraggable>();
-            g_mainCamera = Camera.main;
 
             ConfigureDropEntry();
         }
+
+        void OnEnable()
+        {
+            g_mainCamera = Camera.main;
+        }
+
         IDraggable m_draggable;
         Camera g_mainCamera;
         [SerializeField] LayerMask m_DropMask;

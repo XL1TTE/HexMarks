@@ -64,7 +64,7 @@ MonoBehaviour:
             m_Health: 10
             m_MaxHealth: 90
             m_Initiative: 5
-          m_Damage: 15
+          m_Damage: 50
     - rid: 559004016258056203
       type: {class: TagAnimations, ns: Project.Data.CMS.Tags.Enemies, asm: Assembly-CSharp}
       data:
@@ -124,7 +124,7 @@ MonoBehaviour:
       type: {class: TagOnTurnActions, ns: Project.Data.CMS.Tags.Enemies, asm: Assembly-CSharp}
       data:
         actions:
-        - rid: 559004016258056225
-    - rid: 559004016258056225
-      type: {class: AttackPlayer, ns: Project.Enemies.AI, asm: Assembly-CSharp}
+        - rid: 559004064666091523
+    - rid: 559004064666091523
+      type: {class: AttackLowestHealthHero, ns: Project.Enemies.AI, asm: Assembly-CSharp}
       data: 

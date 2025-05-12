@@ -1,17 +1,16 @@
-
-using System.Collections;
 using System.Collections.Generic;
-using Project.Enemies;
+using Project.Actors;
 using Project.EventBus;
 using Project.EventBus.Signals;
 using Zenject;
 
 namespace Project.DataResolving.DataRequestResolvers{
-    public class EnemiesInBattleReqResolver : IDataRequestResolver
+    public class HeroesInBattleReqResolver : IDataRequestResolver
     {
-        private IReadOnlyList<EnemyView> m_CurrentEnemiesInButtle;
-        private void OnBattleStartInteraction(BattleStageReadySignal signal) {
-            m_CurrentEnemiesInButtle = signal.Stage.GetEnemies();
+        private IReadOnlyList<HeroView> m_CurrentHeroesInButtle;
+        private void OnBattleStartInteraction(BattleStageReadySignal signal)
+        {
+            m_CurrentHeroesInButtle = signal.Stage.GetHeroes();
         }
 
         [Inject]
@@ -19,15 +18,14 @@ namespace Project.DataResolving.DataRequestResolvers{
         {
             signalBus.Subscribe<BattleStageReadySignal>(OnBattleStartInteraction);
         }
-
         public bool CanResolve(DataRequierment req)
         {
-            return req.GetReqName() == "EnemiesInBattle" && req.GetReqDataType() == typeof(List<EnemyView>);
+            return req.GetReqName() == "HeroesInBattle" && req.GetReqDataType() == typeof(List<HeroView>);
         }
 
         public object Resolve(DataRequierment req)
         {
-            return m_CurrentEnemiesInButtle;
+            return m_CurrentHeroesInButtle;
         }
     }
 }

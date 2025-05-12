@@ -10,12 +10,19 @@ namespace Project.ZenjectInstallers{
         public override void InstallBindings()
         {
             Container.Bind<ISaveSystem>().To<SaveSystem>().FromNew().AsSingle()
-                .WithArguments(Container, m_InitialSaveConfig);
-            
-            Container.Bind<SaveFile>()
-                .FromNew().AsSingle();
-                
+                .WithArguments(m_InitialSaveConfig);
+
+            Container.Bind<SaveFile>().FromMethod(LoadSaveFile).AsSingle().NonLazy();
+
             Container.Bind<RuntimeDataProvider>().FromNew().AsSingle();
+        }
+
+
+        private SaveFile LoadSaveFile(InjectContext context)
+        {
+            var saveSystem = context.Container.Resolve<ISaveSystem>();
+
+            return saveSystem.LoadSave();
         }
     }
 }

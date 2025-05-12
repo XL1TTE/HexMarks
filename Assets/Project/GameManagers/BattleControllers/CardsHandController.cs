@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using Project.Cards;
 using Project.EventBus;
@@ -9,7 +10,7 @@ using Zenject;
 
 namespace Project.Game.Battle.Controllers
 {
-    public class PlayerHandController : MonoBehaviour
+    public class CardsHandController : MonoBehaviour
     {
         [Inject]
         private void Construct(SignalBus signalBus, ICardFactory cardFactory)
@@ -20,47 +21,30 @@ namespace Project.Game.Battle.Controllers
 
         void OnEnable()
         {
-            m_SignalBus.Subscribe<BattleStartSignal>(OnBattleStartInteraction);
-            m_SignalBus.Subscribe<HeroTurnSignal>(OnPlayerTurnInteraction);
-            m_SignalBus.Subscribe<EnemyTurnSignal>(OnEnemyTurnInteraction);
+            m_SignalBus.Subscribe<RequestDrawCardsSignal>(DrawCardsRequestProccess);
+            m_SignalBus.Subscribe<RequestCardsDraggingStateSwitchSignal>(CardsDragSwitchRequestProccess);
         }
-
         void OnDisable()
         {
-            m_SignalBus.Unsubscribe<BattleStartSignal>(OnBattleStartInteraction);
-            m_SignalBus.Unsubscribe<HeroTurnSignal>(OnPlayerTurnInteraction);
-            m_SignalBus.Unsubscribe<EnemyTurnSignal>(OnEnemyTurnInteraction);
-
+            m_SignalBus.Unsubscribe<RequestDrawCardsSignal>(DrawCardsRequestProccess);
         }
 
-
-        #region Services
         private SignalBus m_SignalBus;
         private ICardFactory m_CardFactory;
-        #endregion
-
-        #region State
-        #endregion
         
         [SerializeField] private CardHand m_CardsHand;
-
-        private IEnumerator OnBattleStartInteraction(BattleStartSignal signal)
-        {
-            yield return null;
-        }
-
         
-        private IEnumerator OnPlayerTurnInteraction(HeroTurnSignal signal)
-        {
-            yield return UpdatePlayerHand();
-            TurnOnCardsDragging();
-        }
-        private IEnumerator OnEnemyTurnInteraction(EnemyTurnSignal signal)
-        {
-            TurnOffCardsDragging();
-            yield return null;
+        private void DrawCardsRequestProccess(RequestDrawCardsSignal signal){
+            if(signal.ClearHand){ClearHand();}
+            DrawCards(signal.Amount);
         }
 
+
+        private void CardsDragSwitchRequestProccess(RequestCardsDraggingStateSwitchSignal signal)
+        {
+            if(signal.isEnabled) {TurnOnCardsDragging();}
+            else{TurnOffCardsDragging();}
+        }
 
         private void TurnOnCardsDragging(){
             foreach (var card in m_CardsHand.GetAllItems())
@@ -75,12 +59,8 @@ namespace Project.Game.Battle.Controllers
             }
         }
 
-        private IEnumerator UpdatePlayerHand()
-        {
+        private void ClearHand() =>
             m_CardsHand.ClearHand();
-            DrawCards(5);
-            yield return null;
-        }
 
         private void DrawCards(int amount)
         {

@@ -107,6 +107,8 @@ namespace Project.Utilities{
 
         public static void HideWorldIcon(SpriteRenderer icon)
         {
+            if(m_worldIconPool.Contains(icon.gameObject)){return;}
+            
             var iconObj = icon.gameObject;
             iconObj.SetActive(false);
             iconObj.transform.SetParent(m_worldPoolTransform);
@@ -116,6 +118,8 @@ namespace Project.Utilities{
 
         public static void HideCanvasIcon(Image icon)
         {
+            if (m_canvasIconPool.Contains(icon.gameObject)) { return; }
+
             var iconObj = icon.gameObject;
             iconObj.SetActive(false);
             iconObj.transform.SetParent(m_canvasPoolTransform);

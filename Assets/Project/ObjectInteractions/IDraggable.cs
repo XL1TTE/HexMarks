@@ -14,9 +14,13 @@ namespace Project.ObjectInteractions
         void Awake()
         {
             m_Collider = gameObject.GetComponent<Collider2D>();
-            g_MainCamera = Camera.main;
 
             m_interactable = GetComponent<Interactable>();
+        }
+
+        void OnEnable()
+        {
+            g_MainCamera = Camera.main;
         }
 
         private Interactable m_interactable;

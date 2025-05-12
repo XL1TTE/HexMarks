@@ -1,8 +1,10 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Data.SqlTypes;
 using System.Linq;
 using System.Threading.Tasks;
+using ModestTree;
 using Project.Enemies;
 using Project.EventBus;
 using Project.EventBus.Signals;
@@ -21,22 +23,30 @@ namespace Project.Game.Battle.Controllers
             m_SignalBus = signalBus;
         }
         private SignalBus m_SignalBus;
-        private List<EnemyView> m_EnemiesInBattle = new();
         
+        
+        private IReadOnlyList<EnemyView> m_Enemies;
+            
         private List<Func<bool>> m_EnemyDieValidators = new();
         
-        private Dictionary<EnemyView, Coroutine> m_ActiveEnemyDyingRoutines = new();
-    
+        private Dictionary<EnemyView, AwaitableCoroutine> m_ActiveEnemyDieRoutines = new();
+                    
         void OnEnable()
         {
-            m_SignalBus.Subscribe<BattleStartSignal>(OnBattleStartInteraction);
+            m_SignalBus.Subscribe<BattleStageReadySignal>(BattleStageProccess);
         }
 
         void OnDisable()
         {
-            m_SignalBus.Unsubscribe<BattleStartSignal>(OnBattleStartInteraction);
+            m_SignalBus.Unsubscribe<BattleStageReadySignal>(BattleStageProccess);
+        }
+
+        void OnDestroy()
+        {
+            m_ActiveEnemyDieRoutines = null;
+            m_EnemyDieValidators = null;
             
-            UnsubscribeForEnemyDamageTaken();
+            FreePreviousBattleStage();
         }
 
         public void AddEnemyDieValidator(Func<bool> awaiter) =>
@@ -45,75 +55,79 @@ namespace Project.Game.Battle.Controllers
             m_EnemyDieValidators.Remove(awaiter);
 
 
-        private IEnumerator OnBattleStartInteraction(BattleStartSignal signal)
+        private void BattleStageProccess(BattleStageReadySignal signal)
         {
-            m_EnemiesInBattle = signal.GetEnemiesInBattle();
+            FreePreviousBattleStage();
+
+            m_Enemies = signal.Stage.GetEnemies();
             
-            SubscribeForEnemyDamageTaken();
+            foreach(var enemy in m_Enemies){
+                enemy.GetController().OnDamageTaken += OnEnemyDamageTaken;
+                enemy.StartIdleAnimation();
+            }
+        }
+        private void FreePreviousBattleStage(){
+            if(m_Enemies == null) {return; }
             
-            EnableEnemiesIdleAnimations();
-            
-            yield return null;
+            foreach(var enemy in m_Enemies){
+                enemy.GetController().OnDamageTaken -= OnEnemyDamageTaken;
+            }
         }
         
         private void OnEnemyDamageTaken(EnemyView enemy){            
-            if(m_ActiveEnemyDyingRoutines.ContainsKey(enemy)){return;}
-            var die_routine = StartCoroutine(OnEnemyDamageTakenRoutine(enemy));
-            
-            m_ActiveEnemyDyingRoutines.Add(enemy, die_routine);
+            StartCoroutine(OnEnemyDamageTakenRoutine(enemy));
         }
+        
+        
+        private IEnumerator OnEnemyDamageTakenRoutine(EnemyView enemy)
+        {
+            yield return NotifyEnemyHealthChanged(enemy);
 
-        private IEnumerator OnEnemyDamageTakenRoutine(EnemyView enemy){
-            m_SignalBus.SendSignal(new EnemyHealthChangedSignal(enemy));
+            if(isEnemyJustDied(enemy)){
 
-            if (enemy.GetController().GetCurrentHealth() == 0)
-            {
-                m_EnemiesInBattle.Remove(enemy);
-                yield return new JobSwitchColliderEnabledState(enemy.gameObject, false).Proccess();
-
-                while (m_EnemyDieValidators.Any(v => !v.Invoke())){
+                AwaitableCoroutine dieRoutine = new AwaitableCoroutine(this, EnemyDyingRoutine(enemy));
+                
+                m_ActiveEnemyDieRoutines.Add(enemy, dieRoutine);
+                
+                while(!dieRoutine.IsDone){
                     yield return null;
                 }
                 
-                m_SignalBus.SendSignal(new EnemyDiedSignal(enemy));
-                                
-                yield return EnemyDieSequence(enemy);
+                m_ActiveEnemyDieRoutines.Remove(enemy);
                 
-                m_ActiveEnemyDyingRoutines.Remove(enemy);
+                NotifyEnemyDied(enemy);
             }
         }
-        
-        private IEnumerator EnemyDieSequence(EnemyView enemy){
-            enemy.StopIdleAnimation();
-                    
-            yield return enemy.GetController().GetDieAnimation();
+        private IEnumerator NotifyEnemyHealthChanged(EnemyView enemy)
+        {
+            m_SignalBus.SendSignal(new EnemyHealthChangedSignal(enemy));
+            yield return null;
+        } 
+        private IEnumerator EnemyDyingRoutine(EnemyView enemy){
+
+            yield return new JobSwitchColliderEnabledState(enemy.gameObject, false).Proccess();
+
+            while (m_EnemyDieValidators.Any(v => !v.Invoke())){
+                yield return null;
+            }
             
-            Destroy(enemy.gameObject);
+            yield return PlayEnemyDieAnimation(enemy);
         }
-        
-        
-        private void SubscribeForEnemyDamageTaken(){
-            foreach (var e in m_EnemiesInBattle)
-            {
-                e.GetController().OnDamageTaken += OnEnemyDamageTaken;
-            }
+        private IEnumerator PlayEnemyDieAnimation(EnemyView enemy)
+        {
+            enemy.StopIdleAnimation();
+
+            yield return enemy.GetController().GetDieAnimation();
         }
-        private void UnsubscribeForEnemyDamageTaken(){
-            foreach (var e in m_EnemiesInBattle)
-            {
-                e.GetController().OnDamageTaken -= OnEnemyDamageTaken;
-            }
+
+        private bool isEnemyJustDied(EnemyView enemy) =>
+            enemy.GetController().GetCurrentHealth() == 0
+                && !m_ActiveEnemyDieRoutines.ContainsKey(enemy);
+        public bool isAnyEnemyDying() =>
+            !m_ActiveEnemyDieRoutines.IsEmpty();
+        private void NotifyEnemyDied(EnemyView enemy){
+            m_SignalBus.SendSignal(new EnemyDiedSignal(enemy));
         }
-    
-        private void EnableEnemiesIdleAnimations(){
-            foreach(var e in m_EnemiesInBattle){
-                e.StartIdleAnimation();
-            }
-        }
-        private void DisableEnemiesIdleAnimations(){
-            foreach(var e in m_EnemiesInBattle){
-                e.StopIdleAnimation();
-            }
-        }
+
     }
 }

@@ -22,24 +22,20 @@ namespace Project.UI
         [SerializeField] TextMeshProUGUI m_NotificationText;
         [SerializeField] Image m_BackGround;
         
-        public IEnumerator ShowNotification(string message, float duration, Color backgroundColor){
+        public void ShowNotification(string message,  Color backgroundColor){
             gameObject.SetActive(true);
-            
+
+            ShowText(message);
             m_BackGround.color = backgroundColor;
             
-            yield return ShowNotificationCoroutine(message, duration);
         }
         
         private void ShowText(string a_message) => m_NotificationText.text = a_message;
         private void ClearText() => m_NotificationText.text = String.Empty;
     
-        private IEnumerator ShowNotificationCoroutine(string a_message, float a_duration)
-        {
-            ShowText(a_message);
-            yield return new WaitForSeconds(a_duration);
-            ClearText();
-
+        public void HideNotification(){
             gameObject.SetActive(false);
+            ClearText();
         }
     }
 }

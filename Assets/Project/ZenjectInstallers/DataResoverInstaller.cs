@@ -13,6 +13,8 @@ namespace Project.ZenjectInstallers{
             
             Container.Bind<EnemyTargetResolver>().FromNew().AsSingle();
             
+            Container.Bind<HeroesInBattleReqResolver>().FromNew().AsSingle();
+            
             Container.Bind<EnemiesInBattleReqResolver>().FromNew().AsSingle();
             
             Container.Bind<CardHandReqResolver>().FromNew().AsSingle();

@@ -24,7 +24,9 @@ namespace Project.TurnSystem{
         {
             m_hero = heroView;
         }
-
+        
+        public HeroView GetHero() => m_hero;
+        
         public override int GetInitiative()
         {
             return m_hero.GetInitiative();

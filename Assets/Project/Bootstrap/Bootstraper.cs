@@ -19,10 +19,6 @@ namespace Project.Bootstrap{
 
         void Awake()
         {
-            CMS.Init();
-
-            m_saveSystem.LoadSave();
-
             g_ToolTipManager.Initialize();
         }
 

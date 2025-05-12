@@ -1,22 +1,29 @@
 using System.Collections.Generic;
 using Project.Actors;
 using Project.Enemies;
+using Project.Game.Battle;
 
 namespace Project.EventBus.Signals{
-    public class BattleStartSignal: ISignal{
+    public class BattleStageReadySignal: ISignal{
         
-        private List<HeroView> m_HeroesInBattle;
-        private List<EnemyView> m_EnemiesInBattle;
-        public List<EnemyView> GetEnemiesInBattle() => m_EnemiesInBattle;
+        public BattleStage Stage;
         
-        public List<HeroView> GetHeroesInBattle() => m_HeroesInBattle;
-        
-        public BattleStartSignal(
-            List<EnemyView> enemiesInBattle,
-            List<HeroView> heroesInBattle)
+        public BattleStageReadySignal(BattleStage stage)
         {
-            m_EnemiesInBattle = enemiesInBattle;
-            m_HeroesInBattle = heroesInBattle;
+            Stage = stage;
+        }
+    }
+    
+    public class NextEnemyWaveSignal: ISignal{
+        
+        private List<EnemyView> m_Enemies;
+        public List<EnemyView> GetEnemies() => m_Enemies;
+        
+        public NextEnemyWaveSignal(
+            List<EnemyView> enemies)
+        {
+            m_Enemies = enemies;
+
         }
     }
 }

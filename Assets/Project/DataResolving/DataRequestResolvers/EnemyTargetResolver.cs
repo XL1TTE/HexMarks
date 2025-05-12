@@ -9,9 +9,8 @@ namespace Project.DataResolving.DataRequestResolvers{
     public class EnemyTargetResolver : IDataRequestResolver
     {
         private EnemyView m_CurrentEnemyTarget;
-        private IEnumerator SetCurrentEnemyTarget(SetEnemyTargetSignal signal) {
+        private void SetCurrentEnemyTarget(SetEnemyTargetSignal signal) {
             m_CurrentEnemyTarget = signal.GetTarget();
-            yield return null;
         }
         
         [Inject]

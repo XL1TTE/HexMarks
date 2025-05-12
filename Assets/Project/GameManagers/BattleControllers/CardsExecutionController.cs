@@ -1,12 +1,8 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using ModestTree;
-using Project.Cards;
 using Project.EventBus;
 using Project.EventBus.Signals;
-using Project.Utilities.Extantions;
 using Project.Wrappers;
 using UnityEngine;
 using Zenject;
@@ -37,7 +33,7 @@ namespace Project.Game.Battle.Controllers
             return m_ExecutingCardsRoutines.Any(c => !c.IsDone);
         }
 
-        private IEnumerator OnCardUsedInteraction(CardUsedSignal signal)
+        private void OnCardUsedInteraction(CardUsedSignal signal)
         {
             var cardView = signal.GetCardView();
             var card = cardView.GetCardController();
@@ -46,12 +42,13 @@ namespace Project.Game.Battle.Controllers
 
             m_ExecutingCardsRoutines.Add(new AwaitableCoroutine(this, cardUseRoutine));
             
-            yield return null;
         }
 
         void Update()
         {
-            m_ExecutingCardsRoutines.RemoveAll(c => c.IsDone);
+            if(m_ExecutingCardsRoutines.Count != 0){
+                m_ExecutingCardsRoutines.RemoveAll(c => c.IsDone);
+            }
         }
     }
 }

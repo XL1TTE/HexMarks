@@ -25,12 +25,10 @@ namespace Project.Factories{
     {
         private readonly string m_SaveFilePath = "";
         
-        public SaveSystem(DiContainer container, InitialSaveConfig initialSaveConfig)
+        public SaveSystem(InitialSaveConfig initialSaveConfig)
         {
-            m_saveFile = container.Resolve<SaveFile>();
             m_initialSaveConfig = initialSaveConfig;
         }
-        private SaveFile m_saveFile;
         private InitialSaveConfig m_initialSaveConfig;
         
         public IEnumerator SaveData()
@@ -39,11 +37,10 @@ namespace Project.Factories{
         }
 
         public SaveFile LoadSave()
-        {            
-            
+        {             
+            var startHeroes = new List<SaveHeroState>();              
             foreach(var h in m_initialSaveConfig.m_StartWithHeroes)
             {
-                
                 var heroModel = CMS.Get<CMSEntity>(h.GetId());
 
                 HeroStats stats = new HeroStats();
@@ -53,10 +50,11 @@ namespace Project.Factories{
                 }
 
                 var hero = new SaveHeroState(stats, h.GetId());
-                m_saveFile.m_PlayerState.m_Heroes.Add(hero);
+                startHeroes.Add(hero);
             }
+            var playerState = new SavePlayerState(startHeroes);
 
-            return m_saveFile;
+            return new SaveFile(playerState); ;
         }
     }
 }
