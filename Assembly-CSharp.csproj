@@ -101,6 +101,7 @@
     <Compile Include="Assets\Project\Cards\Scripts\CardView.cs" />
     <Compile Include="Assets\Project\Factories\EnemyViewFactory.cs" />
     <Compile Include="Assets\Project\ObjectInteractions\Interactions\IHaveInteractions.cs" />
+    <Compile Include="Assets\Project\Factories\ISaveSystem.cs" />
     <Compile Include="Assets\Project\Actors\Enemies\DieAnimations\EnemyDieWithShaking.cs" />
     <Compile Include="Assets\Project\Actors\Enemies\Enemy.cs" />
     <Compile Include="Assets\Project\DataResolving\DataRequestResolvers\CardHandReqResolver.cs" />
@@ -154,7 +155,6 @@
     <Compile Include="Assets\Project\ObjectInteractions\Interactions\Interactable.cs" />
     <Compile Include="Assets\Project\Cards\Scripts\CardInteractions.cs" />
     <Compile Include="Assets\Project\ObjectInteractions\Droping\IDropable.cs" />
-    <Compile Include="Assets\Project\Factories\ISaveFileFactory.cs" />
     <Compile Include="Assets\Project\Wrappers\CoroutineWrapper.cs" />
     <Compile Include="Assets\Project\DataResolving\IDataResolverUser.cs" />
     <Compile Include="Assets\Project\JobSystem\Jobs\JobSwitchColliderEnabledState.cs" />

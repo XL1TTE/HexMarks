@@ -5,12 +5,17 @@ using UnityEngine;
 namespace Project.Actors{
 
     public class HeroState{
-        public HeroState(HeroStats stats, CMSEntity model){
+        public HeroState(string id, HeroStats stats, CMSEntity model){
+            this.id = id;
             m_Stats = stats;
             m_Model = model;
         }
         
+        public string id;
         private HeroStats m_Stats;
+        
+        public HeroStats GetStats() => m_Stats;
+        
         private CMSEntity m_Model;
         
         public CMSEntity GetCMSModel() => m_Model; 

@@ -12,17 +12,7 @@ namespace Project.ZenjectInstallers{
             Container.Bind<ISaveSystem>().To<SaveSystem>().FromNew().AsSingle()
                 .WithArguments(m_InitialSaveConfig);
 
-            Container.Bind<SaveFile>().FromMethod(LoadSaveFile).AsSingle().NonLazy();
-
             Container.Bind<RuntimeDataProvider>().FromNew().AsSingle();
-        }
-
-
-        private SaveFile LoadSaveFile(InjectContext context)
-        {
-            var saveSystem = context.Container.Resolve<ISaveSystem>();
-
-            return saveSystem.LoadSave();
         }
     }
 }

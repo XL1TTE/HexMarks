@@ -25,12 +25,15 @@ namespace Project.GameManagers{
             SignalBus signalBus, 
             RuntimeDataProvider dataProvider,
             IEnemyViewFactory enemyFactory,
-            IHeroViewFactory heroFactory)
+            IHeroViewFactory heroFactory,
+            ISaveSystem saveSystem)
         {
             m_SignalBus = signalBus;
             m_RuntimeDataProvider = dataProvider;
             m_EnemyFactory = enemyFactory;
             m_HeroFactory = heroFactory;
+
+            m_SaveSystem = saveSystem;
         }
 
         void OnEnable()
@@ -58,6 +61,7 @@ namespace Project.GameManagers{
         private RuntimeDataProvider m_RuntimeDataProvider;
         private IEnemyViewFactory m_EnemyFactory;
         private IHeroViewFactory m_HeroFactory;
+        private ISaveSystem m_SaveSystem;
         
         // TO REMOVE
         [SerializeField] UINotification uiNotification;
@@ -145,7 +149,16 @@ namespace Project.GameManagers{
                 StartBattle();
                 yield break;
             }
+
+            var save = m_SaveSystem.GetCurrentSave();
             
+            foreach(var hero in m_CurrentBattleStage.GetHeroes()){
+                save.m_PlayerState.SaveHeroState(hero);
+            }
+
+            yield return m_SaveSystem.SaveData();
+
+
             var loading = SceneManager.LoadSceneAsync("MapScene", LoadSceneMode.Single);
             
             loading.allowSceneActivation = false;

@@ -11,11 +11,13 @@ namespace Project.Actors{
             m_Stats = stats;
 
             m_ModelID = modelID;
+            
+            id = Guid.NewGuid().ToString();
         }
 
+        public string id;
         public HeroStats m_Stats;
         public string m_ModelID;
-
     }
     
 }

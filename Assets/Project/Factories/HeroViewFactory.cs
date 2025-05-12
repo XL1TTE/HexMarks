@@ -20,7 +20,7 @@ namespace Project.Factories{
             
             var view = m_container.InstantiatePrefabForComponent<HeroView>(model.GetTag<TagPrefab>().prefab, parent);
              
-            var heroState = new HeroState(state.m_Stats, model);
+            var heroState = new HeroState(state.id, state.m_Stats, model);
 
             view.Init(heroState);
             
