@@ -1,0 +1,10 @@
+
+syntax = "proto3";
+
+option csharp_namespace = "SaveDataProto.DataClasses";
+
+import "p_PlayerSave.proto";
+
+message protoSaveFile{
+    protoPlayerSave playerData = 1;
+}

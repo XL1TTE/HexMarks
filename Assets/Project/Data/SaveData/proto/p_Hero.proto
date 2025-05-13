@@ -1,0 +1,21 @@
+
+syntax = "proto3";
+
+option csharp_namespace = "SaveDataProto.DataClasses";
+
+message protoActorStats{
+    float maxHealth = 1;
+    float health = 2;
+    int32 initiative = 3;
+}
+
+message protoHeroStats{
+    protoActorStats baseStats = 1;
+    int32 handCapacity = 2;
+}
+
+message protoHero{
+    string id = 1;
+    string idModel = 2;
+    protoHeroStats stats = 3;
+}

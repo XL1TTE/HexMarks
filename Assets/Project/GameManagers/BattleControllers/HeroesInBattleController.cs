@@ -1,8 +1,4 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Threading;
-using ModestTree;
 using Project.Actors;
 using Project.EventBus;
 using Project.EventBus.Signals;
@@ -70,6 +66,6 @@ namespace Project.Game.Battle.Controllers
             m_SignalBus.SendSignal(new HeroHealthChangedSignal(enemy));
 
         private bool isHeroJustDied(HeroView hero) =>
-            hero.GetState().GetCurrentHealth() == 0;
+            hero.GetState().m_stats.m_BaseStats.m_Health == 0;
     }
 }

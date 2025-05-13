@@ -62,8 +62,8 @@ MonoBehaviour:
       data:
         m_stats:
           m_BaseStats:
-            m_Health: 50
-            m_MaxHealth: 50
+            m_Health: 1
+            m_MaxHealth: 150
             m_Initiative: 50
           m_Damage: 50
     - rid: 559004016258056203

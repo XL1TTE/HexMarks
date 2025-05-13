@@ -5,10 +5,8 @@ using System.Linq;
 using DG.Tweening;
 using Project.Data.CMS.Tags.Enemies;
 using Project.DataResolving;
-using Project.Enemies;
 using Project.EventBus;
 using Project.EventBus.Signals;
-using Project.JobSystem;
 using Project.TurnSystem;
 using Project.Utilities;
 using Project.Utilities.Extantions;
@@ -109,7 +107,7 @@ namespace Project.Game.Battle.Controllers
 
             MarkTurnTaker(hero.gameObject);
             
-            m_SignalBus.SendSignal(new RequestDrawCardsSignal(hero.GetState().GetHandCapacity(), true));
+            m_SignalBus.SendSignal(new RequestDrawCardsSignal(hero.GetState().m_stats.m_MaxCardsInHand, true));
             m_SignalBus.SendSignal(new RequestCardsDraggingStateSwitchSignal(true));
         }
 
@@ -152,9 +150,13 @@ namespace Project.Game.Battle.Controllers
 
         private IEnumerator ProccessNextTurn()
         {
+            yield return new WaitForEndOfFrame();
+            
             if (m_TurnsQueue.Count == 0) { yield break; }
             
             if(!m_TurnsQueue.Any((t) => t is HeroTurnTaker)) {yield break;}
+            
+            FreeTurnMarker();
 
             m_EndTurnButton.interactable = false;
 

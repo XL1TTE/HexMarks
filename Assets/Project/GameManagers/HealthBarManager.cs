@@ -101,7 +101,7 @@ namespace Project.GameManagers{
 
             if (!m_HeroesCache.TryGetValue(heroView, out var bar)) { return; }
 
-            bar.UpdateProgress(heroState.GetCurrentHealth() / heroState.GetMaxHealth());
+            bar.UpdateProgress(heroState.m_stats.m_BaseStats.m_Health / heroState.m_stats.m_BaseStats.m_MaxHealth);
         }
 
 
@@ -110,7 +110,7 @@ namespace Project.GameManagers{
             var heroState = heroView.GetState();
             
             HealthBar bar = m_Factory.CreateHeroHealthBar(heroView.transform, IHealthBarFactory.BarAlignment.BUTTOM);
-            bar.UpdateProgress(heroState.GetCurrentHealth() / heroState.GetMaxHealth());
+            bar.UpdateProgress(heroState.m_stats.m_BaseStats.m_Health / heroState.m_stats.m_BaseStats.m_MaxHealth);
 
             m_HeroesCache.Add(heroView, bar);
             

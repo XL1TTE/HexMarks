@@ -19,7 +19,7 @@ namespace Project.Cards.Effects{
         private string m_text;
 
         public Job GetAnimation(EnemyView enemyView)
-        {
+        {            
             var m_animSequence = DOTween.Sequence();
             TMP_Text text = null;
 

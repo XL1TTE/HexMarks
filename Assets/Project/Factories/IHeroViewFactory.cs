@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Project.Factories{
     public interface IHeroViewFactory{
-        HeroView CreateFromSaveHeroState(SaveHeroState state, Transform parent);
+        HeroView CreateFromSaveHeroState(HeroState state, Transform parent);
     }
 }
 

@@ -1,8 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Project.Data.CMS.Tags;
-using Project.Data.SaveFile;
-using Project.EventBus;
+using SaveData;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Zenject;
@@ -20,7 +19,7 @@ namespace Project.Map
 
         void Awake()
         {
-            for(int i = 0; i < transform.childCount; i++){
+            for (int i = 0; i < transform.childCount; i++){
                 if(transform.GetChild(i).TryGetComponent<MapLocationView>(out var location)){
                     m_allLocations.Add(location);
                 }
@@ -49,7 +48,7 @@ namespace Project.Map
             
             if(tagLoc is TagDungeon){
                 
-                m_RuntimeDataProvider.m_CurrentLocationModel = model;
+                m_RuntimeDataProvider.SetCurrentLocation(model);
                 
                 StartCoroutine(TransitToScene("BattleScene"));
             }

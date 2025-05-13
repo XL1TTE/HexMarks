@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Project.Internal.Utilities;
+using Project.LoggingSystem;
 using UnityEngine;
 
 
@@ -31,6 +32,8 @@ namespace CMSystem
             foreach (var resEntity in resources)
             {
                 Debug.Log("LOAD ENTITY " + resEntity.GetId());
+                Logging.Info("LOAD ENTITY " + resEntity.GetId());
+                
                 all.Add(new CMSEntity()
                 {
                     id = resEntity.GetId(),

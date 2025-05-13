@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+option csharp_namespace = "SaveDataProto.DataClasses";
+
+import "p_Hero.proto";
+
+
+message protoPlayerSave{
+    repeated protoHero heroes = 1;
+}
+
+
+
+

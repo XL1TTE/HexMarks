@@ -9,18 +9,14 @@ namespace Project.Utilities{
         [SerializeField] private Vector2 offset = new Vector2(10, -10);
         [SerializeField] private float screenMargin = 20f;
 
-        private RectTransform m_Rect;
+        [SerializeField] private RectTransform m_Rect;
         private void Awake()
         {
             m_Rect = GetComponent<RectTransform>();
-            Hide();
-
-            UpdatePosition();
         }
 
         public void Show()
         {
-            UpdatePosition();
             gameObject.SetActive(true);
         }
 
@@ -39,6 +35,18 @@ namespace Project.Utilities{
 
         private void UpdatePosition()
         {
+            if (m_Rect == null)
+            {
+                Debug.LogError("RectTransform is missing!");
+                return;
+            }
+
+            if (Header == null || Message == null)
+            {
+                Debug.LogError("Header or Message TextMeshProUGUI components are not assigned!");
+                return;
+            }
+
             Vector2 mousePos = Input.mousePosition;
             Vector2 size = m_Rect.sizeDelta;
 

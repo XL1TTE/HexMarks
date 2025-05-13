@@ -4,13 +4,13 @@ using System.Linq;
 using CMSystem;
 using Project.Actors;
 using Project.Data.CMS.Tags;
-using Project.Data.SaveFile;
 using Project.Enemies;
 using Project.EventBus;
 using Project.EventBus.Signals;
 using Project.Factories;
 using Project.Game.Battle;
 using Project.UI;
+using SaveData;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -23,15 +23,15 @@ namespace Project.GameManagers{
         [Inject]
         private void Construct(
             SignalBus signalBus, 
-            RuntimeDataProvider dataProvider,
             IEnemyViewFactory enemyFactory,
             IHeroViewFactory heroFactory,
+            RuntimeDataProvider runtimeDataProvider,
             ISaveSystem saveSystem)
         {
             m_SignalBus = signalBus;
-            m_RuntimeDataProvider = dataProvider;
             m_EnemyFactory = enemyFactory;
             m_HeroFactory = heroFactory;
+            m_RuntimeDataProvider = runtimeDataProvider;
 
             m_SaveSystem = saveSystem;
         }
@@ -70,15 +70,22 @@ namespace Project.GameManagers{
         [SerializeField] Transform[] m_HeroesSpawnPoints;
         
         private IReadOnlyList<CMSEntityPfb> m_EnemiesInBattle; 
-        private IReadOnlyList<SaveHeroState> m_HeroesInBattle;
+        private IReadOnlyList<HeroState> m_HeroesInBattle;
+
+
+        private List<HeroView> m_CurrentHeroesInBattle;
+        private List<EnemyView> m_CurrentEnemiesInBattle;
         
         private BattleStage m_CurrentBattleStage;
         private int m_EnemyFightedCounter = 0;
         
         
         public void StartBattle(){
-            
-            ConfigureBattleData();
+
+            if(!ConfigureBattleData()){
+               m_SaveSystem.CreateNewSaveFile();
+                ConfigureBattleData();
+            }
             
             SetupBattleStage();
 
@@ -89,44 +96,52 @@ namespace Project.GameManagers{
             => m_SignalBus.SendSignal(new BattleStageReadySignal(m_CurrentBattleStage));
         
         private void SetupBattleStage(){
-            
-            List<HeroView> HeroesInBattle = new();
-            List<EnemyView> EnemiesInBattle = new();
+
+            m_CurrentHeroesInBattle = new();
+            m_CurrentEnemiesInBattle = new();
             
             int heroIndex = 0;
             foreach(var model in m_HeroesInBattle){
                 var hero = m_HeroFactory.CreateFromSaveHeroState(model, m_HeroesSpawnPoints[heroIndex++]);
-                HeroesInBattle.Add(hero);
+                m_CurrentHeroesInBattle.Add(hero);
                 m_SignalBus.SendSignal(new HeroSpawnedSignal(hero));
             }
             
             int limit = m_EnemiesSpawnPoints.Length;
             for (int i = m_EnemyFightedCounter; i < m_EnemiesInBattle.Count; i++){
                 var enemy = m_EnemyFactory.CreateFromCMS(m_EnemiesInBattle[i], m_EnemiesSpawnPoints[--limit]);
-                EnemiesInBattle.Add(enemy);
+                m_CurrentEnemiesInBattle.Add(enemy);
                 m_SignalBus.SendSignal(new EnemySpawnedSignal(enemy));
                 if(limit == 0){break;}
             }
 
-            m_CurrentBattleStage = new BattleStage(EnemiesInBattle, HeroesInBattle);
+            m_CurrentBattleStage = new BattleStage(ref m_CurrentEnemiesInBattle, ref m_CurrentHeroesInBattle);
         }      
                
-        private void ConfigureBattleData(){
-            var location = m_RuntimeDataProvider.m_CurrentLocationModel;
+        private bool ConfigureBattleData(){
+            var location = m_RuntimeDataProvider.GetCurrentLocation();
             var dungeon = location.GetTag<TagDungeon>();
             
             if(dungeon == null){throw new System.Exception("Unable to setup battle, because current location have not TagDungeon.");}
 
             m_EnemiesInBattle = dungeon.GetEnemies();
-            m_HeroesInBattle = m_RuntimeDataProvider.m_PlayerState.GetHeroes();
+            m_HeroesInBattle = SaveFile.AccessPlayerData().GetHeroes().Where((h) => h.m_stats.m_BaseStats.m_Health != 0).ToList();
+            
+            if(m_HeroesInBattle.Count == 0){
+                return false;
+            }
+            else
+            {
+                return true;
+            }
         }
         
         private void OnEnemyDied(EnemyDiedSignal signal){
             if(!m_CurrentBattleStage.GetEnemies().Contains(signal.GetEnemy())){return ;}
 
             m_EnemyFightedCounter++;
-            m_CurrentBattleStage.EnemyKilled();
             
+            m_CurrentEnemiesInBattle.Remove(signal.GetEnemy());
             Destroy(signal.GetEnemy().gameObject);
             
             if(m_CurrentBattleStage.isCompleted()){
@@ -135,8 +150,9 @@ namespace Project.GameManagers{
         }
         
         private void OnHeroDied(HeroDiedSignal signal){
-            m_CurrentBattleStage.HeroDied();
             
+            m_CurrentHeroesInBattle.Remove(signal.GetHero());
+                        
             if(m_CurrentBattleStage.isAllHeroesDied()){
                 StartCoroutine(Lost());
             }
@@ -148,12 +164,6 @@ namespace Project.GameManagers{
             if(m_EnemyFightedCounter < m_EnemiesInBattle.Count){
                 StartBattle();
                 yield break;
-            }
-
-            var save = m_SaveSystem.GetCurrentSave();
-            
-            foreach(var hero in m_CurrentBattleStage.GetHeroes()){
-                save.m_PlayerState.SaveHeroState(hero);
             }
 
             yield return m_SaveSystem.SaveData();

@@ -11,7 +11,7 @@ namespace Project.Actors{
         
         public HeroState GetState() => m_State;
         
-        public int GetInitiative() => m_State.GetInitiative();
+        public int GetInitiative() => m_State.m_stats.m_BaseStats.m_Initiative;
         
         public event Action<HeroView> OnDamageTaken;
         

@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using CMSystem;
 using Project.Actors.Stats;
 using Project.Data.CMS.Tags.Enemies;

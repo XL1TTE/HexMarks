@@ -4,17 +4,22 @@ namespace Project.Utilities{
 
     public class ToolTipManager : MonoBehaviour
     {
-        public ToolTip TooltipInstance;
+        [SerializeField] private ToolTip TooltipInstance;
         private static ToolTip tooltipInstance;
 
         public void Initialize()
         {
-            if (tooltipInstance == null && TooltipInstance != null)
+            if (TooltipInstance == null)
+            {
+                Debug.LogError("TooltipInstance is not assigned in the inspector!");
+                return;
+            }
+
+            if (tooltipInstance == null)
             {
                 tooltipInstance = TooltipInstance;
-
+                tooltipInstance.Hide();
             }
-            tooltipInstance.Hide();
         }
 
         public static void ShowTooltip(string header, string message)

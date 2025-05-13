@@ -8,7 +8,7 @@ namespace Project.DataResolving.DataRequestResolvers{
     public class HeroesInBattleReqResolver : IDataRequestResolver
     {
         private IReadOnlyList<HeroView> m_CurrentHeroesInButtle;
-        private void OnBattleStartInteraction(BattleStageReadySignal signal)
+        private void OnBattleStageReady(BattleStageReadySignal signal)
         {
             m_CurrentHeroesInButtle = signal.Stage.GetHeroes();
         }
@@ -16,7 +16,7 @@ namespace Project.DataResolving.DataRequestResolvers{
         [Inject]
         private void Construct(SignalBus signalBus)
         {
-            signalBus.Subscribe<BattleStageReadySignal>(OnBattleStartInteraction);
+            signalBus.Subscribe<BattleStageReadySignal>(OnBattleStageReady);
         }
         public bool CanResolve(DataRequierment req)
         {

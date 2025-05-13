@@ -47,6 +47,7 @@ MonoBehaviour:
   m_InitialSaveConfig:
     m_StartWithHeroes:
     - {fileID: 1970154056295665792, guid: d1bba12c91c2fe940b6e62fa4717a33e, type: 3}
+    - {fileID: 1970154056295665792, guid: 42edd5d8081bb5b4b8b222c9778f6288, type: 3}
 --- !u!1 &2227295660237143958
 GameObject:
   m_ObjectHideFlags: 0

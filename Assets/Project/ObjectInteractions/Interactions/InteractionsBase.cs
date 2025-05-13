@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.iOS;
 
 namespace Project.ObjectInteractions
 {

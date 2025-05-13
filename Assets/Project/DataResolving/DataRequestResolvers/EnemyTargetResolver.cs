@@ -1,8 +1,6 @@
-using System.Collections;
 using Project.Enemies;
 using Project.EventBus;
 using Project.EventBus.Signals;
-using UnityEngine;
 using Zenject;
 
 namespace Project.DataResolving.DataRequestResolvers{

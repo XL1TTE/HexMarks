@@ -1,7 +1,6 @@
 using CMSystem;
 using Project.Actors;
 using Project.Data.CMS.Tags.Generic;
-using Project.Data.CMS.Tags.Heroes;
 using UnityEngine;
 using Zenject;
 
@@ -14,15 +13,13 @@ namespace Project.Factories{
         {
             m_container = container;
         }
-        public HeroView CreateFromSaveHeroState(SaveHeroState state, Transform parent)
+        public HeroView CreateFromSaveHeroState(HeroState state, Transform parent)
         {
-            var model = CMS.Get<CMSEntity>(state.m_ModelID);
+            var model = state.m_model;
             
             var view = m_container.InstantiatePrefabForComponent<HeroView>(model.GetTag<TagPrefab>().prefab, parent);
              
-            var heroState = new HeroState(state.id, state.m_Stats, model);
-
-            view.Init(heroState);
+            view.Init(state);
             
             return view;
         }

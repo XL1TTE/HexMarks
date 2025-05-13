@@ -1,0 +1,74 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2323840612306268796
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4744581425698682936}
+  - component: {fileID: -5362159619898560868}
+  m_Layer: 0
+  m_Name: Dungeon 2
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4744581425698682936
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2323840612306268796}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &-5362159619898560868
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2323840612306268796}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 55d213888ab28a146a215707b127df97, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Components:
+  - rid: 559004049409572867
+  - rid: 559004041604759552
+  - rid: 559004041604759553
+  references:
+    version: 2
+    RefIds:
+    - rid: 559004041604759552
+      type: {class: TagName, ns: Project.Data.CMS.Tags.Generic, asm: Assembly-CSharp}
+      data:
+        name: <color=#8B0000>The Shadowspire Cavern  </color>
+    - rid: 559004041604759553
+      type: {class: TagDescription, ns: Project.Data.CMS.Tags.Generic, asm: Assembly-CSharp}
+      data:
+        desc: "Deep within the <color=#555555>forsaken mountains</color> lies the
+          <color=#8B0000><b>Shadowspire Cavern</b></color>, a twisted labyrinth of
+          jagged stone and suffocating darkness. Ancient whispers <color=#AAAAAA>echo
+          through the damp passages</color>, said to be the voices of lost souls
+          and forgotten cultists. The air is thick with <color=#FF0000>malevolent
+          energy</color>, and flickering shadows dance along the walls, revealing
+          glimpses of <color=#c92d0c>arcane symbols etched in blood</color>. \r\r\nThose
+          who dare enter risk being <color=#FF0000>consumed by the darkness</color>\u2014or
+          awakening forces best left undisturbed."
+    - rid: 559004049409572867
+      type: {class: TagDungeon, ns: Project.Data.CMS.Tags, asm: Assembly-CSharp}
+      data:
+        m_Enemies:
+        - {fileID: 5844533272221924270, guid: ceb715c235a7ef24cbeb2f3fd30ccb9d, type: 3}

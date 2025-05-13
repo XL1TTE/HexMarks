@@ -5,19 +5,21 @@ using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 using CMSystem;
+using Google.Protobuf;
 using Project.Actors;
 using Project.Actors.Stats;
 using Project.Data.CMS.Tags.Heroes;
-using Project.Data.SaveFile;
+using SaveData;
+using SaveDataProto.DataClasses;
+using Unity.Mathematics;
 using UnityEngine;
 using Zenject;
 
 namespace Project.Factories{
     public interface ISaveSystem{
-        SaveFile LoadSave();
+        void LoadSave();
         IEnumerator SaveData();
-        
-        SaveFile GetCurrentSave();
+        void CreateNewSaveFile();
     }
     
     [Serializable]
@@ -31,7 +33,8 @@ namespace Project.Factories{
 
         private static readonly string m_SaveFilePath = Path.Combine(m_SaveDirectoryPath, "SaveFile.sav");
         
-        public SaveSystem(InitialSaveConfig initialSaveConfig)
+        [Inject]
+        private SaveSystem(InitialSaveConfig initialSaveConfig)
         {
             m_initialSaveConfig = initialSaveConfig;
 
@@ -42,62 +45,93 @@ namespace Project.Factories{
 
             LoadSave();
         }
+        
         private InitialSaveConfig m_initialSaveConfig;
-        private SaveFile m_CurrentSave;
+        
+        public void CreateNewSaveFile(){
+            var protoSave = CreateNewSave();
+            
+            SaveFile.ClearSave();
+            
+            SaveFileMapper.protoSaveToSaveFile(protoSave);
+        }      
         
         public IEnumerator SaveData()
         {            
-            var saveJson = JsonUtility.ToJson(m_CurrentSave);
-
-            Debug.Log(saveJson);
-
-            byte[] saveBytes = Encoding.UTF8.GetBytes(saveJson);
             
-            using(FileStream stream = File.Open(m_SaveFilePath, FileMode.OpenOrCreate)){
-                Task writeTask = stream.WriteAsync(saveBytes).AsTask();
-                
-                yield return new WaitUntil(() => writeTask.IsCompleted);
+            var protoSave = SaveFileMapper.SaveFileToProtoSave();
+
+            var saveTask = Task.Run(() =>{
+                using (var stream = File.Open(m_SaveFilePath, FileMode.Create))
+                {
+                    using (var codedStream = new CodedOutputStream(stream))
+                    {
+                        protoSave.WriteTo(codedStream);
+                        codedStream.Flush();
+                    }
+                }
+            });
             
-                stream.Close();
+            while(!saveTask.IsCompleted){
+                yield return null;
             }
+            
+            Debug.Log($"Data saved. \n data: {JsonFormatter.Default.Format(protoSave)}");
         }
 
-        public SaveFile LoadSave()
+        public void LoadSave()
         {
+            protoSaveFile proto_saveFile;
             
-            if (!File.Exists(m_SaveFilePath)){ m_CurrentSave = CreateNewSave(); return m_CurrentSave; }
-
-            var saveJson = File.ReadAllText(m_SaveFilePath);
-
-            m_CurrentSave = JsonUtility.FromJson<SaveFile>(saveJson);
+            if (!File.Exists(m_SaveFilePath)){ proto_saveFile = CreateNewSave(); }
+            else{
+                var binarySave = File.ReadAllBytes(m_SaveFilePath);
+                
+                proto_saveFile = protoSaveFile.Parser.ParseFrom(binarySave);
+            }
             
-            Debug.Log(saveJson);
+            SaveFileMapper.protoSaveToSaveFile(proto_saveFile);
             
-            return m_CurrentSave;
+            Debug.Log($"Save data was loaded.\n data: {JsonFormatter.Default.Format(proto_saveFile)}");
         }
-
-        private SaveFile CreateNewSave(){
-            var startHeroes = new List<SaveHeroState>();
+        
+        private protoSaveFile CreateNewSave(){
+            
+            var save = new protoSaveFile();
+            
+            save.PlayerData = new protoPlayerSave();
+            
+            var s_heroes = save.PlayerData.Heroes;
+            
             foreach (var h in m_initialSaveConfig.m_StartWithHeroes)
             {
-                var heroModel = CMS.Get<CMSEntity>(h.GetId());
+                var s_hero = new protoHero();
+                
+                s_hero.Id = Guid.NewGuid().ToString();
+                s_hero.IdModel = h.GetId();
 
-                HeroStats stats = new HeroStats();
+                var heroModel = CMS.Get<CMSEntity>(h.GetId());
 
                 if (heroModel.Is<TagStats>(out var tagStats))
                 {
-                    stats = tagStats.GetDefaultStats();
+                    var d_stats = tagStats.GetDefaultStats();
+                    
+                    s_hero.Stats = new protoHeroStats
+                    {
+                        HandCapacity = d_stats.m_MaxCardsInHand,
+                        BaseStats = new protoActorStats{
+                            Health = d_stats.m_BaseStats.m_Health,
+                            MaxHealth = d_stats.m_BaseStats.m_MaxHealth,
+                            Initiative = d_stats.m_BaseStats.m_Initiative,
+                        } 
+                    };
                 }
-
-                var hero = new SaveHeroState(stats, h.GetId());
-                startHeroes.Add(hero);
+                
+                s_heroes.Add(s_hero);
             }
-            var playerState = new SavePlayerState(startHeroes);
             
-            return new SaveFile(playerState);
+            return save;
         }
-
-        public SaveFile GetCurrentSave() => m_CurrentSave;
     }
 }
 

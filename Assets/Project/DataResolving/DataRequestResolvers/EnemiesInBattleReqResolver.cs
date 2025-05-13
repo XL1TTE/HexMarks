@@ -1,23 +1,22 @@
-
-using System.Collections;
 using System.Collections.Generic;
 using Project.Enemies;
 using Project.EventBus;
 using Project.EventBus.Signals;
+using UnityEngine;
 using Zenject;
 
 namespace Project.DataResolving.DataRequestResolvers{
     public class EnemiesInBattleReqResolver : IDataRequestResolver
     {
-        private IReadOnlyList<EnemyView> m_CurrentEnemiesInButtle;
-        private void OnBattleStartInteraction(BattleStageReadySignal signal) {
-            m_CurrentEnemiesInButtle = signal.Stage.GetEnemies();
+        private IReadOnlyList<EnemyView> m_CurrentEnemiesInBattle;
+        private void OnBattleStageReady(BattleStageReadySignal signal) {
+            m_CurrentEnemiesInBattle = signal.Stage.GetEnemies();
         }
 
         [Inject]
         private void Construct(SignalBus signalBus)
         {
-            signalBus.Subscribe<BattleStageReadySignal>(OnBattleStartInteraction);
+            signalBus.Subscribe<BattleStageReadySignal>(OnBattleStageReady);
         }
 
         public bool CanResolve(DataRequierment req)
@@ -27,7 +26,8 @@ namespace Project.DataResolving.DataRequestResolvers{
 
         public object Resolve(DataRequierment req)
         {
-            return m_CurrentEnemiesInButtle;
+            Debug.Log(m_CurrentEnemiesInBattle.Count);
+            return m_CurrentEnemiesInBattle;
         }
     }
 }

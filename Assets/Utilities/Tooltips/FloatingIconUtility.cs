@@ -5,7 +5,7 @@ using UnityEngine.UI;
 namespace Project.Utilities{
     public static class FloatingIconUtility
     {
-        static FloatingIconUtility()
+        public static void Init()
         {
             var poolObject = new GameObject("WorldIconsPool");
             Object.DontDestroyOnLoad(poolObject);
