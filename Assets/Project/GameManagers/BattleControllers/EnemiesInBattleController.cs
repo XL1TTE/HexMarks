@@ -9,6 +9,7 @@ using Project.EventBus.Signals;
 using Project.JobSystem;
 using Project.Wrappers;
 using UnityEngine;
+using XL1TTE.Animator;
 using Zenject;
 
 namespace Project.Game.Battle.Controllers
@@ -114,7 +115,7 @@ namespace Project.Game.Battle.Controllers
         {
             enemy.StopIdleAnimation();
 
-            yield return enemy.GetController().GetDieAnimation();
+            yield return enemy.GetController().GetDieAnimation().Play().WaitForCompletion();
         }
 
         private bool isEnemyJustDied(EnemyView enemy) =>

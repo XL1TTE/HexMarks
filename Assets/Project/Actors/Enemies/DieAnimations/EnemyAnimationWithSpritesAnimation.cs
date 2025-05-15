@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using XL1TTE.Animator;
 
 namespace Project.Enemies{
     
@@ -8,14 +9,13 @@ namespace Project.Enemies{
     public class EnemyAnimationWithSpritesAnimation : BaseEnemyAnimation
     {
         [SerializeField] private Sprite[] m_Sprites;
-        [SerializeField, Range(50.0f, 1000.0f)] private float m_FrameSpeed = 100.0f; 
-        public override IEnumerator GetAnimationRoutine(EnemyView enemyView)
+        [SerializeField, Range(50, 1000)] private float m_FrameDuration = 100;
+        
+        public override xlAnimation GetAnimation(EnemyView enemyView)
         {
-            foreach(var sprite in m_Sprites){
-                enemyView.GetRenderer().sprite = sprite;
-                yield return new WaitForSeconds(m_FrameSpeed / 1000.0f);
-            }
+            var animation = enemyView.GetRenderer().ToFrameAnimation(m_Sprites, m_FrameDuration);  
             
+            return animation;      
         }
     }
 }

@@ -6,6 +6,6 @@ namespace Project.Enemies{
     
     public abstract class BaseEnemyAnimation
     {
-        public abstract IEnumerator GetAnimationRoutine(EnemyView enemyView);
+        public abstract XL1TTE.Animator.xlAnimation GetAnimation(EnemyView enemyView);
     }
 }

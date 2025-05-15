@@ -90,7 +90,7 @@ MonoBehaviour:
         - {fileID: 1580014297, guid: e745d8b6d30aafc40b1a95cfa77952c0, type: 3}
         - {fileID: 2019699251, guid: e745d8b6d30aafc40b1a95cfa77952c0, type: 3}
         - {fileID: -1518330870, guid: e745d8b6d30aafc40b1a95cfa77952c0, type: 3}
-        m_FrameSpeed: 100
+        m_FrameDuration: 100
     - rid: 559004016258056205
       type: {class: EnemyAnimationWithSpritesAnimation, ns: Project.Enemies, asm: Assembly-CSharp}
       data:
@@ -103,7 +103,7 @@ MonoBehaviour:
         - {fileID: 1585207430, guid: ef2fec780275fce42a1427bebda77939, type: 3}
         - {fileID: 1303415970, guid: ef2fec780275fce42a1427bebda77939, type: 3}
         - {fileID: 2034189150, guid: ef2fec780275fce42a1427bebda77939, type: 3}
-        m_FrameSpeed: 100
+        m_FrameDuration: 100
     - rid: 559004016258056206
       type: {class: EnemyAnimationWithSpritesAnimation, ns: Project.Enemies, asm: Assembly-CSharp}
       data:
@@ -119,7 +119,7 @@ MonoBehaviour:
         - {fileID: -2074745354, guid: 4a6419fa23473824899893636ed3bca2, type: 3}
         - {fileID: 815657327, guid: 4a6419fa23473824899893636ed3bca2, type: 3}
         - {fileID: 1701386119, guid: 4a6419fa23473824899893636ed3bca2, type: 3}
-        m_FrameSpeed: 100
+        m_FrameDuration: 100
     - rid: 559004016258056224
       type: {class: TagOnTurnActions, ns: Project.Data.CMS.Tags.Enemies, asm: Assembly-CSharp}
       data:
@@ -127,4 +127,19 @@ MonoBehaviour:
         - rid: 559004064666091523
     - rid: 559004064666091523
       type: {class: AttackLowestHealthHero, ns: Project.Enemies.AI, asm: Assembly-CSharp}
-      data: 
+      data:
+        m_AttackAnimation:
+          m_Sprites:
+          - {fileID: 1014487760, guid: 4a6419fa23473824899893636ed3bca2, type: 3}
+          - {fileID: 1297498147, guid: 4a6419fa23473824899893636ed3bca2, type: 3}
+          - {fileID: 70061166, guid: 4a6419fa23473824899893636ed3bca2, type: 3}
+          - {fileID: 1223880621, guid: 4a6419fa23473824899893636ed3bca2, type: 3}
+          - {fileID: 271974194, guid: 4a6419fa23473824899893636ed3bca2, type: 3}
+          - {fileID: -171878189, guid: 4a6419fa23473824899893636ed3bca2, type: 3}
+          - {fileID: -432011117, guid: 4a6419fa23473824899893636ed3bca2, type: 3}
+          - {fileID: 1488115905, guid: 4a6419fa23473824899893636ed3bca2, type: 3}
+          - {fileID: -2074745354, guid: 4a6419fa23473824899893636ed3bca2, type: 3}
+          - {fileID: 815657327, guid: 4a6419fa23473824899893636ed3bca2, type: 3}
+          - {fileID: 1701386119, guid: 4a6419fa23473824899893636ed3bca2, type: 3}
+          m_FrameDuration: 100
+        AttackFrameIndex: 7

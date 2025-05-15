@@ -5,6 +5,7 @@ using Project.EventBus.Signals;
 using Project.JobSystem;
 using Unity.VisualScripting;
 using UnityEngine;
+using XL1TTE.Animator;
 using Zenject;
 
 namespace Project.Enemies
@@ -27,26 +28,20 @@ namespace Project.Enemies
         public SpriteRenderer GetRenderer() => m_spriteRenderer;
 
 
-        private Coroutine m_IdleCoroutine;
+        private xlAnimation m_IdleAnimation;
         
 
         public void StartIdleAnimation(){
             
-            if(m_IdleCoroutine != null){return;}
-            m_IdleCoroutine = StartCoroutine(IdleAnimation());
+            if(m_IdleAnimation != null){return;}
+            m_IdleAnimation = m_controller.GetIdleAnimation().SetLoops(-1).Play();
         }
         public void StopIdleAnimation(){
-            if(m_IdleCoroutine != null){
-                StopCoroutine(m_IdleCoroutine);
-                m_IdleCoroutine = null;
+            if(m_IdleAnimation != null){
+                m_IdleAnimation.Kill();
+                m_IdleAnimation = null;
             }
 
-        }
-        
-        private IEnumerator IdleAnimation(){
-            while(true){
-               yield return m_controller.GetIdleAnimation();
-            }
         }
     }
 }

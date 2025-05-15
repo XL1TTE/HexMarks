@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using CMSystem;
 using Project.Data.CMS.Tags.Enemies;
+using XL1TTE.Animator;
 
 namespace Project.Enemies{
     
@@ -32,9 +33,9 @@ namespace Project.Enemies{
         
         public int GetInitiaive() => m_State.GetInitiaive();
         
-        public IEnumerator GetDieAnimation() => m_State.GetDieAnimation(m_View);
-        public IEnumerator GetIdleAnimation() => m_State.GetIdleAnimation(m_View);
-        public IEnumerator GetAttackAnimation() => m_State.GetAttackAnimation(m_View);
+        public xlAnimation GetDieAnimation() => m_State.GetDieAnimation(m_View);
+        public xlAnimation GetIdleAnimation() => m_State.GetIdleAnimation(m_View);
+        public xlAnimation GetAttackAnimation() => m_State.GetAttackAnimation(m_View);
     }
     
 }

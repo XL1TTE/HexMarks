@@ -87,7 +87,7 @@ MonoBehaviour:
         - {fileID: -2834552850196481573, guid: 6fc66c021eec74942b4e71a3fde4dc04, type: 3}
         - {fileID: 3278449094680734212, guid: 6fc66c021eec74942b4e71a3fde4dc04, type: 3}
         - {fileID: 3384493420599841878, guid: 6fc66c021eec74942b4e71a3fde4dc04, type: 3}
-        m_FrameSpeed: 200
+        m_FrameDuration: 200
     - rid: 559004016258056211
       type: {class: EnemyAnimationWithSpritesAnimation, ns: Project.Enemies, asm: Assembly-CSharp}
       data:
@@ -97,7 +97,7 @@ MonoBehaviour:
         - {fileID: 3156895337291164288, guid: 9d1b202d2fb768a45a36389da710721f, type: 3}
         - {fileID: 1400002288684528572, guid: 9d1b202d2fb768a45a36389da710721f, type: 3}
         - {fileID: -1891625820773287384, guid: 9d1b202d2fb768a45a36389da710721f, type: 3}
-        m_FrameSpeed: 200
+        m_FrameDuration: 200
     - rid: 559004016258056212
       type: {class: EnemyAnimationWithSpritesAnimation, ns: Project.Enemies, asm: Assembly-CSharp}
       data:
@@ -110,7 +110,7 @@ MonoBehaviour:
         - {fileID: 221524225039350300, guid: d6b8c791d8089b44a9a8c5a7423bd180, type: 3}
         - {fileID: 1290532464073988732, guid: d6b8c791d8089b44a9a8c5a7423bd180, type: 3}
         - {fileID: 4780903288873104255, guid: d6b8c791d8089b44a9a8c5a7423bd180, type: 3}
-        m_FrameSpeed: 200
+        m_FrameDuration: 100
     - rid: 559004016258056219
       type: {class: TagOnTurnActions, ns: Project.Data.CMS.Tags.Enemies, asm: Assembly-CSharp}
       data:
@@ -122,4 +122,16 @@ MonoBehaviour:
         actions: []
     - rid: 559004064666091524
       type: {class: AttackLowestHealthHero, ns: Project.Enemies.AI, asm: Assembly-CSharp}
-      data: 
+      data:
+        m_AttackAnimation:
+          m_Sprites:
+          - {fileID: -7008412969330441016, guid: d6b8c791d8089b44a9a8c5a7423bd180, type: 3}
+          - {fileID: -7763475090823894447, guid: d6b8c791d8089b44a9a8c5a7423bd180, type: 3}
+          - {fileID: 302641331129538988, guid: d6b8c791d8089b44a9a8c5a7423bd180, type: 3}
+          - {fileID: -6329420634031446844, guid: d6b8c791d8089b44a9a8c5a7423bd180, type: 3}
+          - {fileID: -910092549403018386, guid: d6b8c791d8089b44a9a8c5a7423bd180, type: 3}
+          - {fileID: 221524225039350300, guid: d6b8c791d8089b44a9a8c5a7423bd180, type: 3}
+          - {fileID: 1290532464073988732, guid: d6b8c791d8089b44a9a8c5a7423bd180, type: 3}
+          - {fileID: 4780903288873104255, guid: d6b8c791d8089b44a9a8c5a7423bd180, type: 3}
+          m_FrameDuration: 200
+        AttackFrameIndex: 3

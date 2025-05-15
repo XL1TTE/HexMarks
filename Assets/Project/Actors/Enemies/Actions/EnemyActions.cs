@@ -7,6 +7,7 @@ using Project.Data.CMS.Tags.Generic;
 using Project.DataResolving;
 using Project.Utilities.Extantions;
 using UnityEngine;
+using XL1TTE.Animator;
 
 namespace Project.Enemies.AI{
     
@@ -20,6 +21,10 @@ namespace Project.Enemies.AI{
     [Serializable]
     public class AttackLowestHealthHero : BaseEnemyAction
     {
+        [SerializeField] EnemyAnimationWithSpritesAnimation m_AttackAnimation;
+        
+        [SerializeField] int AttackFrameIndex;
+        
         public override IReadOnlyList<DataRequierment> GetDataRequests()
         {
             return new List<DataRequierment>{
@@ -51,9 +56,13 @@ namespace Project.Enemies.AI{
             state.StopIdleAnimation();
 
             // plays attack animation
-            yield return enemy.GetAttackAnimation();
-
-            toAttack.TakeDamage(enemy.GetEnemyDamage());
+            var anim = m_AttackAnimation.GetAnimation(state) as FrameAnimation;
+            
+            anim.AddFrameCallback(AttackFrameIndex, () => {
+                toAttack.TakeDamage(enemy.GetEnemyDamage());
+            });
+            
+            yield return anim.Play().WaitForCompletion();
 
             state.StartIdleAnimation();
         }
