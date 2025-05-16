@@ -48,7 +48,7 @@ MonoBehaviour:
   - rid: 559004016258056201
   - rid: 559004016258056202
   - rid: 559004016258056203
-  - rid: 559004016258056224
+  - rid: 559004177793810438
   references:
     version: 2
     RefIds:
@@ -120,26 +120,8 @@ MonoBehaviour:
         - {fileID: 815657327, guid: 4a6419fa23473824899893636ed3bca2, type: 3}
         - {fileID: 1701386119, guid: 4a6419fa23473824899893636ed3bca2, type: 3}
         m_FrameDuration: 100
-    - rid: 559004016258056224
-      type: {class: TagOnTurnActions, ns: Project.Data.CMS.Tags.Enemies, asm: Assembly-CSharp}
+    - rid: 559004177793810438
+      type: {class: TagOnTurnAbilities, ns: Project.Data.CMS.Tags.Enemies, asm: Assembly-CSharp}
       data:
-        actions:
-        - rid: 559004064666091523
-    - rid: 559004064666091523
-      type: {class: AttackLowestHealthHero, ns: Project.Enemies.AI, asm: Assembly-CSharp}
-      data:
-        m_AttackAnimation:
-          m_Sprites:
-          - {fileID: 1014487760, guid: 4a6419fa23473824899893636ed3bca2, type: 3}
-          - {fileID: 1297498147, guid: 4a6419fa23473824899893636ed3bca2, type: 3}
-          - {fileID: 70061166, guid: 4a6419fa23473824899893636ed3bca2, type: 3}
-          - {fileID: 1223880621, guid: 4a6419fa23473824899893636ed3bca2, type: 3}
-          - {fileID: 271974194, guid: 4a6419fa23473824899893636ed3bca2, type: 3}
-          - {fileID: -171878189, guid: 4a6419fa23473824899893636ed3bca2, type: 3}
-          - {fileID: -432011117, guid: 4a6419fa23473824899893636ed3bca2, type: 3}
-          - {fileID: 1488115905, guid: 4a6419fa23473824899893636ed3bca2, type: 3}
-          - {fileID: -2074745354, guid: 4a6419fa23473824899893636ed3bca2, type: 3}
-          - {fileID: 815657327, guid: 4a6419fa23473824899893636ed3bca2, type: 3}
-          - {fileID: 1701386119, guid: 4a6419fa23473824899893636ed3bca2, type: 3}
-          m_FrameDuration: 100
-        AttackFrameIndex: 7
+        defenitions:
+        - {fileID: 11400000, guid: eee23998f7462e343a75c471a464d097, type: 2}

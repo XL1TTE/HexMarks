@@ -1,4 +1,5 @@
 using Project.Layouts;
+using XL1TTE.GameActions;
 
 namespace Project.DataResolving.DataRequestResolvers{
     public class CardHandReqResolver : IDataRequestResolver
@@ -8,12 +9,12 @@ namespace Project.DataResolving.DataRequestResolvers{
         }
         private CardHand CardHand;
         
-        public bool CanResolve(DataRequierment req)
+        public bool CanResolve(DataRequest req)
         {
-            return req.GetReqName() == "CardHand" && req.GetReqDataType() == typeof(CardHand);
+            return req.Key == "CardHand" && req.Type == typeof(CardHand);
         }
 
-        public object Resolve(DataRequierment req)
+        public object Resolve(DataRequest req)
         {
             return CardHand;
         }

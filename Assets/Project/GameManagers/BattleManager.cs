@@ -9,6 +9,7 @@ using Project.EventBus;
 using Project.EventBus.Signals;
 using Project.Factories;
 using Project.Game.Battle;
+using Project.Sound;
 using Project.UI;
 using SaveData;
 using Unity.VisualScripting;
@@ -66,6 +67,10 @@ namespace Project.GameManagers{
         // TO REMOVE
         [SerializeField] UINotification uiNotification;
         
+        
+        [SerializeField] SoundChannel m_MusicChannel;
+        [SerializeField] AudioClip m_Music;
+        
         [SerializeField] Transform[] m_EnemiesSpawnPoints;
         [SerializeField] Transform[] m_HeroesSpawnPoints;
         
@@ -79,10 +84,20 @@ namespace Project.GameManagers{
         private BattleStage m_CurrentBattleStage;
         private int m_EnemyFightedCounter = 0;
         
+        private IEnumerator PlayMusic(){
+            while(true){
+                m_MusicChannel.SetVolume(0.1f);
+                m_MusicChannel.PlaySound(m_Music);
+
+                yield return new WaitForSeconds(m_Music.length - 0.1f);
+            }    
+        }
         
         public void StartBattle(){
 
-            if(!ConfigureBattleData()){
+            StartCoroutine(PlayMusic());
+
+            if (!ConfigureBattleData()){
                m_SaveSystem.CreateNewSaveFile();
                 ConfigureBattleData();
             }

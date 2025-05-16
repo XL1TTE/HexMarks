@@ -23,7 +23,7 @@ namespace Project.Factories{
             var view = m_container.InstantiatePrefabForComponent<EnemyView>(model.GetTag<TagPrefab>().prefab, parent);
             
             EnemyStats stats = model.GetTag<TagStats>().m_stats;
-            TagOnTurnActions ai = model.GetTag<TagOnTurnActions>();
+            TagOnTurnAbilities ai = model.GetTag<TagOnTurnAbilities>();
             
             var e_state = new EnemyState(stats, model);
             

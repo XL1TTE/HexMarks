@@ -6,6 +6,7 @@ using Project.Cards.Effects;
 using Project.DataResolving;
 using Project.JobSystem;
 using UnityEngine;
+using XL1TTE.GameActions;
 
 namespace Project.Cards{
     
@@ -18,14 +19,14 @@ namespace Project.Cards{
         [SerializeReference, SubclassSelector]
         private ICardEffect[] m_Effects = Array.Empty<ICardEffect>();
         
-        public JobSequence GetCardExecutionSequence(CardView a_cardView, DataResolver a_resolver){
+        public JobSequence GetCardExecutionSequence(CardView a_cardView){
 
             var jobs = new List<Job>();
 
             // Gets all effect's jobs.
             foreach (var effect in m_Effects){
                 
-                var ExContext = a_resolver.Resolve(effect);
+                var ExContext = ContextResolver.Resolve(effect);
 
                 jobs.Add(effect.GetJob(a_cardView, ExContext));
             }

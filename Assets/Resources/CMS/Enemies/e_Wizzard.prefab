@@ -48,8 +48,7 @@ MonoBehaviour:
   - rid: 559004016258056201
   - rid: 559004016258056202
   - rid: 559004016258056203
-  - rid: 559004016258056219
-  - rid: 559004016258056222
+  - rid: 559004177793810439
   references:
     version: 2
     RefIds:
@@ -111,27 +110,8 @@ MonoBehaviour:
         - {fileID: 1290532464073988732, guid: d6b8c791d8089b44a9a8c5a7423bd180, type: 3}
         - {fileID: 4780903288873104255, guid: d6b8c791d8089b44a9a8c5a7423bd180, type: 3}
         m_FrameDuration: 100
-    - rid: 559004016258056219
-      type: {class: TagOnTurnActions, ns: Project.Data.CMS.Tags.Enemies, asm: Assembly-CSharp}
+    - rid: 559004177793810439
+      type: {class: TagOnTurnAbilities, ns: Project.Data.CMS.Tags.Enemies, asm: Assembly-CSharp}
       data:
-        actions:
-        - rid: 559004064666091524
-    - rid: 559004016258056222
-      type: {class: TagOnDieActions, ns: Project.Data.CMS.Tags.Enemies, asm: Assembly-CSharp}
-      data:
-        actions: []
-    - rid: 559004064666091524
-      type: {class: AttackLowestHealthHero, ns: Project.Enemies.AI, asm: Assembly-CSharp}
-      data:
-        m_AttackAnimation:
-          m_Sprites:
-          - {fileID: -7008412969330441016, guid: d6b8c791d8089b44a9a8c5a7423bd180, type: 3}
-          - {fileID: -7763475090823894447, guid: d6b8c791d8089b44a9a8c5a7423bd180, type: 3}
-          - {fileID: 302641331129538988, guid: d6b8c791d8089b44a9a8c5a7423bd180, type: 3}
-          - {fileID: -6329420634031446844, guid: d6b8c791d8089b44a9a8c5a7423bd180, type: 3}
-          - {fileID: -910092549403018386, guid: d6b8c791d8089b44a9a8c5a7423bd180, type: 3}
-          - {fileID: 221524225039350300, guid: d6b8c791d8089b44a9a8c5a7423bd180, type: 3}
-          - {fileID: 1290532464073988732, guid: d6b8c791d8089b44a9a8c5a7423bd180, type: 3}
-          - {fileID: 4780903288873104255, guid: d6b8c791d8089b44a9a8c5a7423bd180, type: 3}
-          m_FrameDuration: 200
-        AttackFrameIndex: 3
+        defenitions:
+        - {fileID: 11400000, guid: 5dad20b27d0924440ba2f63dc9167a08, type: 2}

@@ -1860,6 +1860,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   uiNotification: {fileID: 92535125}
+  m_MusicChannel: {fileID: 11400000, guid: 13fb7d0a533d3b44f951c9701224930b, type: 2}
+  m_Music: {fileID: 8300000, guid: 51559f60fbdbd684d8f80f56212835d9, type: 3}
   m_EnemiesSpawnPoints:
   - {fileID: 4593904}
   - {fileID: 1087350923}

@@ -4,6 +4,7 @@ using Project.DataResolving;
 using Project.Enemies;
 using Project.JobSystem;
 using Project.Utilities.Extantions;
+using XL1TTE.GameActions;
 
 
 namespace Project.Cards.Effects{
@@ -11,14 +12,14 @@ namespace Project.Cards.Effects{
     [Serializable]
     public class FireDamageEffect : ICardEffect
     {
-        public override IReadOnlyList<DataRequierment> GetDataRequests()
+        public override IEnumerable<DataRequest> GetRequests()
         {
-            return new List<DataRequierment>{
-              new DataRequierment("EnemyTarget", typeof(EnemyView))  
+            return new List<DataRequest>{
+              new DataRequest("EnemyTarget", typeof(EnemyView))  
             };
         }
 
-        public override Job GetJob(CardView cardView, DataContext context)
+        public override Job GetJob(CardView cardView, Context context)
         {
             var target = context.Get<EnemyView>("EnemyTarget");
             

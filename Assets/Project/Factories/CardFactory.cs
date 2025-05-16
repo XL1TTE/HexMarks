@@ -8,16 +8,14 @@ namespace Project.Factories{
     public class CardFactory : ICardFactory
     {
         [Inject]
-        public CardFactory(CardViewObjectPool a_cardViewPool, DataResolver dataRosolver, List<CardModel> cardModels)
+        public CardFactory(CardViewObjectPool a_cardViewPool, List<CardModel> cardModels)
         {
             m_cardViewPool = a_cardViewPool;
-            m_dataResolver = dataRosolver;
             m_CardModels = cardModels;
 
         }
         
         private readonly CardViewObjectPool m_cardViewPool;
-        private readonly DataResolver m_dataResolver;
         private readonly List<CardModel> m_CardModels;
         
         public Card CreateCardFromDef(CardDefenition def)
@@ -33,7 +31,7 @@ namespace Project.Factories{
             
             view.GetRenderer().sprite = model.GetCardSprite();
             
-            Card controller = new Card(model, view, m_dataResolver);
+            Card controller = new Card(model, view);
             
             return controller;
         }

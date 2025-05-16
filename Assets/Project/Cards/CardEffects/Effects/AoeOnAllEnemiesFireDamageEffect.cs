@@ -5,21 +5,22 @@ using Project.Enemies;
 using Project.JobSystem;
 using Project.Utilities.Extantions;
 using UnityEngine;
+using XL1TTE.GameActions;
 
 namespace Project.Cards.Effects{
     
     [Serializable]
     public class AoeOnAllEnemiesFireDamageEffect : ICardEffect
     {
-        public override IReadOnlyList<DataRequierment> GetDataRequests()
+        public override IEnumerable<DataRequest> GetRequests()
         {
-            return new List<DataRequierment>{
-                new DataRequierment("EnemiesInBattle", typeof(List<EnemyView>)),
+            return new List<DataRequest>{
+                new DataRequest("EnemiesInBattle", typeof(List<EnemyView>)),
                 //new DataRequierment("CardCaster", typeof(PlayerInBattle))
             };
         }
 
-        public override Job GetJob(CardView cardView, DataContext context)
+        public override Job GetJob(CardView cardView, Context context)
         {
             var Enemies = context.Get<List<EnemyView>>("EnemiesInBattle");
             //var CardCaster = context.Get<PlayerInBattle>("CardCaster");

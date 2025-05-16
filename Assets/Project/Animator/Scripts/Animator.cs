@@ -73,6 +73,8 @@ namespace XL1TTE.Animator{
     
     
     public delegate void FrameCallback();
+    public delegate IEnumerator AwaitableFrameCallback();
+    
     public class FrameAnimation : xlAnimation{
         public class Frame{
             public Frame(Sprite sprite, float duration = 100){this.sprite = sprite; m_duration = duration;} 
@@ -81,11 +83,14 @@ namespace XL1TTE.Animator{
             private Sprite sprite;
             private float m_duration;
             private FrameCallback callback;
+            private AwaitableFrameCallback awaitableCallback;
 
             internal Sprite GetSprite() => sprite; 
             internal float GetDuration() => m_duration;           
             public void AddCallback(FrameCallback callback) => this.callback += callback;
-            internal void OnEndofFrame(){callback?.Invoke();}   
+            public void AddCallback(AwaitableFrameCallback callback) => this.awaitableCallback += callback;
+            internal FrameCallback GetCallback() => this.callback;  
+            internal AwaitableFrameCallback GetAwaitableCallback() => this.awaitableCallback;  
         }
         
         public FrameAnimation(SpriteRenderer renderer, IEnumerable<Frame> frames) : base(){
@@ -103,6 +108,14 @@ namespace XL1TTE.Animator{
             
             m_frames[frameIndex].AddCallback(callback);
         }
+        public void AddFrameCallback(int frameIndex, AwaitableFrameCallback callback)
+        {
+            if(frameIndex < 0 || frameIndex >= m_frames.Length){
+                throw new IndexOutOfRangeException("Frame index was out of range.");
+            }
+            
+            m_frames[frameIndex].AddCallback(callback);
+        }
         
         internal override IEnumerator GetAnimation()
         {
@@ -113,7 +126,9 @@ namespace XL1TTE.Animator{
                 {
                     m_renderer.sprite = frame.GetSprite();
                     yield return new WaitForSeconds(frame.GetDuration() / 1000f);
-                    frame.OnEndofFrame();
+                    
+                    frame.GetCallback()?.Invoke();
+                    yield return frame.GetAwaitableCallback()?.Invoke();
                 }
 
                 loopsCompleted++;

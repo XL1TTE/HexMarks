@@ -13,6 +13,8 @@ using Project.Utilities.Extantions;
 using Project.Wrappers;
 using UnityEngine;
 using UnityEngine.UI;
+using XL1TTE.Animator;
+using XL1TTE.GameActions;
 using Zenject;
 
 namespace Project.Game.Battle.Controllers
@@ -20,9 +22,8 @@ namespace Project.Game.Battle.Controllers
     public class BattleTurnsController: MonoBehaviour{
         
         [Inject]
-        private void Construct(SignalBus signalBus, DataResolver dataResolver){
+        private void Construct(SignalBus signalBus){
             m_SignalBus = signalBus;
-            m_DataResolver = dataResolver;
         }
         void OnEnable()
         {
@@ -67,9 +68,7 @@ namespace Project.Game.Battle.Controllers
             m_NextTurnProccessValidators = null;
         }
 
-        private SignalBus m_SignalBus;
-        private DataResolver m_DataResolver;
-                
+        private SignalBus m_SignalBus;                
         [SerializeField] private Sprite m_TurnMarkerSprite;
         [SerializeField] private Vector3 m_TurnMarkerScale;
 
@@ -123,13 +122,15 @@ namespace Project.Game.Battle.Controllers
             var enemy = signal.GetEnemy();
             var enemyModel = enemy.GetController().GetModel();
 
-            if (enemyModel.Is<TagOnTurnActions>(out var onTurn))
+            if (enemyModel.Is<TagOnTurnAbilities>(out var onTurn))
             {
-                foreach (var a in onTurn.actions)
-                {
-                    var context = m_DataResolver.Resolve(a);
-                    yield return a.GetAction(enemy, context);
-                }
+
+                enemy.StopIdleAnimation();
+                
+                yield return onTurn.ExecuteOnTurnAbilities(enemy);
+                
+                enemy.StartIdleAnimation();
+
             }
 
             yield return ProccessNextTurn();

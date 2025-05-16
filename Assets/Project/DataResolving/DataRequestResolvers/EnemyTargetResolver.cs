@@ -1,6 +1,7 @@
 using Project.Enemies;
 using Project.EventBus;
 using Project.EventBus.Signals;
+using XL1TTE.GameActions;
 using Zenject;
 
 namespace Project.DataResolving.DataRequestResolvers{
@@ -16,12 +17,12 @@ namespace Project.DataResolving.DataRequestResolvers{
             signalBus.Subscribe<SetEnemyTargetSignal>(SetCurrentEnemyTarget);
         }
         
-        public bool CanResolve(DataRequierment req)
+        public bool CanResolve(DataRequest req)
         {
-            return req.GetReqName() == "EnemyTarget" && req.GetReqDataType() == typeof(EnemyView);
+            return req.Key == "EnemyTarget" && req.Type == typeof(EnemyView);
         }
 
-        public object Resolve(DataRequierment req)
+        public object Resolve(DataRequest req)
         {
             return m_CurrentEnemyTarget;
         }

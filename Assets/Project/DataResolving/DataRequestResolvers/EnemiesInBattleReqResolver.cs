@@ -3,6 +3,7 @@ using Project.Enemies;
 using Project.EventBus;
 using Project.EventBus.Signals;
 using UnityEngine;
+using XL1TTE.GameActions;
 using Zenject;
 
 namespace Project.DataResolving.DataRequestResolvers{
@@ -19,14 +20,13 @@ namespace Project.DataResolving.DataRequestResolvers{
             signalBus.Subscribe<BattleStageReadySignal>(OnBattleStageReady);
         }
 
-        public bool CanResolve(DataRequierment req)
+        public bool CanResolve(DataRequest req)
         {
-            return req.GetReqName() == "EnemiesInBattle" && req.GetReqDataType() == typeof(List<EnemyView>);
+            return req.Key == "EnemiesInBattle" && req.Type == typeof(List<EnemyView>);
         }
 
-        public object Resolve(DataRequierment req)
+        public object Resolve(DataRequest req)
         {
-            Debug.Log(m_CurrentEnemiesInBattle.Count);
             return m_CurrentEnemiesInBattle;
         }
     }

@@ -16,6 +16,8 @@ namespace XL1TTE.Animator{
         }
 
         internal void OnKillAnimation(xlAnimation animation){
+            if(m_activeAnimations == null){return; }
+            
             if(m_activeAnimations.ContainsKey(animation)){
                 
                 m_activeAnimations[animation].Kill();

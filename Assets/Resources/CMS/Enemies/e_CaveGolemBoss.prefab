@@ -48,7 +48,7 @@ MonoBehaviour:
   - rid: 559004016258056201
   - rid: 559004016258056202
   - rid: 559004016258056203
-  - rid: 559004016258056224
+  - rid: 559004177793810437
   references:
     version: 2
     RefIds:
@@ -120,25 +120,26 @@ MonoBehaviour:
         - {fileID: 815657327, guid: 4a6419fa23473824899893636ed3bca2, type: 3}
         - {fileID: 1701386119, guid: 4a6419fa23473824899893636ed3bca2, type: 3}
         m_FrameDuration: 100
-    - rid: 559004016258056224
-      type: {class: TagOnTurnActions, ns: Project.Data.CMS.Tags.Enemies, asm: Assembly-CSharp}
+    - rid: 559004177793810437
+      type: {class: TagOnTurnAbilities, ns: Project.Data.CMS.Tags.Enemies, asm: Assembly-CSharp}
       data:
-        actions:
-        - rid: 559004064666091523
-    - rid: 559004064666091523
-      type: {class: AttackLowestHealthHero, ns: Project.Enemies.AI, asm: Assembly-CSharp}
+        m_Ability:
+          rid: 559004177793810442
+    - rid: 559004177793810442
+      type: {class: EnemyAbilitiesSequence, ns: Project.Enemies.Abilities, asm: Assembly-CSharp}
       data:
-        m_AttackAnimation:
-          m_Sprites:
-          - {fileID: 1014487760, guid: 4a6419fa23473824899893636ed3bca2, type: 3}
-          - {fileID: 1297498147, guid: 4a6419fa23473824899893636ed3bca2, type: 3}
-          - {fileID: 70061166, guid: 4a6419fa23473824899893636ed3bca2, type: 3}
-          - {fileID: 1223880621, guid: 4a6419fa23473824899893636ed3bca2, type: 3}
-          - {fileID: 271974194, guid: 4a6419fa23473824899893636ed3bca2, type: 3}
-          - {fileID: -171878189, guid: 4a6419fa23473824899893636ed3bca2, type: 3}
-          - {fileID: -432011117, guid: 4a6419fa23473824899893636ed3bca2, type: 3}
-          - {fileID: 1488115905, guid: 4a6419fa23473824899893636ed3bca2, type: 3}
-          - {fileID: -2074745354, guid: 4a6419fa23473824899893636ed3bca2, type: 3}
-          - {fileID: 815657327, guid: 4a6419fa23473824899893636ed3bca2, type: 3}
-          - {fileID: 1701386119, guid: 4a6419fa23473824899893636ed3bca2, type: 3}
-          m_FrameDuration: 100
+        abilities:
+        - rid: 559004177793810443
+        - rid: 559004177793810444
+    - rid: 559004177793810443
+      type: {class: EnemyAbility, ns: Project.Enemies.Abilities, asm: Assembly-CSharp}
+      data:
+        defenition: {fileID: 11400000, guid: 16598b873d7de044db2957553b8adf01, type: 2}
+    - rid: 559004177793810444
+      type: {class: EnemyAbilitiesFromProbability, ns: Project.Enemies.Abilities, asm: Assembly-CSharp}
+      data:
+        settings:
+        - weight: 25
+          ability: {fileID: 11400000, guid: 16598b873d7de044db2957553b8adf01, type: 2}
+        - weight: 75
+          ability: {fileID: 11400000, guid: a2ab5c5b0911048438b9948df1563eb4, type: 2}

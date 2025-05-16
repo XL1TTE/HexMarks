@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using Project.Actors;
 using Project.EventBus;
 using Project.EventBus.Signals;
+using XL1TTE.GameActions;
 using Zenject;
 
 namespace Project.DataResolving.DataRequestResolvers{
@@ -18,12 +19,13 @@ namespace Project.DataResolving.DataRequestResolvers{
         {
             signalBus.Subscribe<BattleStageReadySignal>(OnBattleStageReady);
         }
-        public bool CanResolve(DataRequierment req)
+
+        public bool CanResolve(DataRequest req)
         {
-            return req.GetReqName() == "HeroesInBattle" && req.GetReqDataType() == typeof(List<HeroView>);
+            return req.Key == "HeroesInBattle" && req.Type == typeof(List<HeroView>);
         }
 
-        public object Resolve(DataRequierment req)
+        public object Resolve(DataRequest req)
         {
             return m_CurrentHeroesInButtle;
         }

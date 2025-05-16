@@ -23,6 +23,13 @@ public static class GameResources
     {
         public static class Enemies
         {
+            public static class Abilities
+            {
+                public static class CaveGolem
+                {
+                    public static AudioClip Monster_Rumble3 => Resources.Load<AudioClip>("CMS/Enemies/Abilities/CaveGolem/Monster_Rumble3");
+                }
+            }
             public static CMSEntityPfb e_CaveGolemBoss => Resources.Load<CMSEntityPfb>("CMS/Enemies/e_CaveGolemBoss");
             public static CMSEntityPfb e_StoneGolem => Resources.Load<CMSEntityPfb>("CMS/Enemies/e_StoneGolem");
             public static CMSEntityPfb e_Wizzard => Resources.Load<CMSEntityPfb>("CMS/Enemies/e_Wizzard");
