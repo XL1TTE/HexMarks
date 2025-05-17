@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8209491295c30a545ae5c772daffe135, type: 3}
+  m_Name: SummonLunarWraith
+  m_EditorClassIdentifier: 
+  m_CardAnimation: []
+  m_FrameDuration: 100
+  m_FrameSettings:
+  - m_FrameTriggerIndex: 0
+    m_SFX: []
+    m_Actions:
+    - rid: 559004200519598086
+  SFX_Channel: {fileID: 11400000, guid: d7800e8cdd970a1429722bdd526930ac, type: 2}
+  references:
+    version: 2
+    RefIds:
+    - rid: 559004200519598086
+      type: {class: SummonLunarWraith, ns: XL1TTE.GameAbilities.CardActions, asm: Assembly-CSharp}
+      data:
+        m_LunarWraithAnimation: []
+        m_effectTriggerFrameIndex: 0
+        m_LunarWraithObject: {fileID: 0}

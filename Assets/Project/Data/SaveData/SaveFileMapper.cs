@@ -1,6 +1,9 @@
+using System.Collections.Generic;
+using System.Linq;
 using CMSystem;
 using Project.Actors;
 using Project.Actors.Stats;
+using Project.Game.Battle.Controllers;
 using SaveDataProto.DataClasses;
 
 namespace SaveData{
@@ -13,6 +16,8 @@ namespace SaveData{
 
             foreach (var h in protoHeroes)
             {
+                List<CMSEntity> cards = h.Deck.Cards.Select(c => CMS.Get<CMSEntity>(c)).ToList();
+                
                 var hero = new HeroState(
                     h.Id, CMS.Get<CMSEntity>(h.IdModel),
                     new HeroStats
@@ -24,7 +29,8 @@ namespace SaveData{
                             m_Initiative = h.Stats.BaseStats.Initiative
                         },
                         m_MaxCardsInHand = h.Stats.HandCapacity
-                    });
+                    },
+                    new HeroDeck(cards));
 
                 SaveFile.AccessPlayerData().AddHero(hero);
             }
@@ -38,6 +44,8 @@ namespace SaveData{
 
             foreach (var h in SaveFile.AccessPlayerData().GetHeroes())
             {
+                var cards = h.m_deck.GetCards().Select((c) => c.id);
+                
                 var hero = new protoHero
                 {
                     Id = h.m_id,
@@ -51,6 +59,9 @@ namespace SaveData{
                             Initiative = h.m_stats.m_BaseStats.m_Initiative
                         },
                         HandCapacity = h.m_stats.m_MaxCardsInHand
+                    },
+                    Deck = new protoHeroDeck{
+                        Cards = {cards}
                     }
                 };
 

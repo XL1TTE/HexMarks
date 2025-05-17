@@ -27,16 +27,18 @@ namespace SaveDataProto.DataClasses {
             "CgxwX0hlcm8ucHJvdG8iSAoPcHJvdG9BY3RvclN0YXRzEhEKCW1heEhlYWx0",
             "aBgBIAEoAhIOCgZoZWFsdGgYAiABKAISEgoKaW5pdGlhdGl2ZRgDIAEoBSJL",
             "Cg5wcm90b0hlcm9TdGF0cxIjCgliYXNlU3RhdHMYASABKAsyEC5wcm90b0Fj",
-            "dG9yU3RhdHMSFAoMaGFuZENhcGFjaXR5GAIgASgFIkgKCXByb3RvSGVybxIK",
-            "CgJpZBgBIAEoCRIPCgdpZE1vZGVsGAIgASgJEh4KBXN0YXRzGAMgASgLMg8u",
-            "cHJvdG9IZXJvU3RhdHNCHKoCGVNhdmVEYXRhUHJvdG8uRGF0YUNsYXNzZXNi",
-            "BnByb3RvMw=="));
+            "dG9yU3RhdHMSFAoMaGFuZENhcGFjaXR5GAIgASgFIh4KDXByb3RvSGVyb0Rl",
+            "Y2sSDQoFY2FyZHMYASADKAkiZgoJcHJvdG9IZXJvEgoKAmlkGAEgASgJEg8K",
+            "B2lkTW9kZWwYAiABKAkSHgoFc3RhdHMYAyABKAsyDy5wcm90b0hlcm9TdGF0",
+            "cxIcCgRkZWNrGAQgASgLMg4ucHJvdG9IZXJvRGVja0IcqgIZU2F2ZURhdGFQ",
+            "cm90by5EYXRhQ2xhc3Nlc2IGcHJvdG8z"));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
             new pbr::GeneratedClrTypeInfo(typeof(global::SaveDataProto.DataClasses.protoActorStats), global::SaveDataProto.DataClasses.protoActorStats.Parser, new[]{ "MaxHealth", "Health", "Initiative" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::SaveDataProto.DataClasses.protoHeroStats), global::SaveDataProto.DataClasses.protoHeroStats.Parser, new[]{ "BaseStats", "HandCapacity" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::SaveDataProto.DataClasses.protoHero), global::SaveDataProto.DataClasses.protoHero.Parser, new[]{ "Id", "IdModel", "Stats" }, null, null, null, null)
+            new pbr::GeneratedClrTypeInfo(typeof(global::SaveDataProto.DataClasses.protoHeroDeck), global::SaveDataProto.DataClasses.protoHeroDeck.Parser, new[]{ "Cards" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::SaveDataProto.DataClasses.protoHero), global::SaveDataProto.DataClasses.protoHero.Parser, new[]{ "Id", "IdModel", "Stats", "Deck" }, null, null, null, null)
           }));
     }
     #endregion
@@ -560,6 +562,193 @@ namespace SaveDataProto.DataClasses {
   }
 
   [global::System.Diagnostics.DebuggerDisplayAttribute("{ToString(),nq}")]
+  public sealed partial class protoHeroDeck : pb::IMessage<protoHeroDeck>
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      , pb::IBufferMessage
+  #endif
+  {
+    private static readonly pb::MessageParser<protoHeroDeck> _parser = new pb::MessageParser<protoHeroDeck>(() => new protoHeroDeck());
+    private pb::UnknownFieldSet _unknownFields;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public static pb::MessageParser<protoHeroDeck> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::SaveDataProto.DataClasses.PHeroReflection.Descriptor.MessageTypes[2]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public protoHeroDeck() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public protoHeroDeck(protoHeroDeck other) : this() {
+      cards_ = other.cards_.Clone();
+      _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public protoHeroDeck Clone() {
+      return new protoHeroDeck(this);
+    }
+
+    /// <summary>Field number for the "cards" field.</summary>
+    public const int CardsFieldNumber = 1;
+    private static readonly pb::FieldCodec<string> _repeated_cards_codec
+        = pb::FieldCodec.ForString(10);
+    private readonly pbc::RepeatedField<string> cards_ = new pbc::RepeatedField<string>();
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public pbc::RepeatedField<string> Cards {
+      get { return cards_; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public override bool Equals(object other) {
+      return Equals(other as protoHeroDeck);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public bool Equals(protoHeroDeck other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      if(!cards_.Equals(other.cards_)) return false;
+      return Equals(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public override int GetHashCode() {
+      int hash = 1;
+      hash ^= cards_.GetHashCode();
+      if (_unknownFields != null) {
+        hash ^= _unknownFields.GetHashCode();
+      }
+      return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void WriteTo(pb::CodedOutputStream output) {
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      output.WriteRawMessage(this);
+    #else
+      cards_.WriteTo(output, _repeated_cards_codec);
+      if (_unknownFields != null) {
+        _unknownFields.WriteTo(output);
+      }
+    #endif
+    }
+
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
+      cards_.WriteTo(ref output, _repeated_cards_codec);
+      if (_unknownFields != null) {
+        _unknownFields.WriteTo(ref output);
+      }
+    }
+    #endif
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public int CalculateSize() {
+      int size = 0;
+      size += cards_.CalculateSize(_repeated_cards_codec);
+      if (_unknownFields != null) {
+        size += _unknownFields.CalculateSize();
+      }
+      return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void MergeFrom(protoHeroDeck other) {
+      if (other == null) {
+        return;
+      }
+      cards_.Add(other.cards_);
+      _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void MergeFrom(pb::CodedInputStream input) {
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      input.ReadRawMessage(this);
+    #else
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+      if ((tag & 7) == 4) {
+        // Abort on any end group tag.
+        return;
+      }
+      switch(tag) {
+          default:
+            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+            break;
+          case 10: {
+            cards_.AddEntriesFrom(input, _repeated_cards_codec);
+            break;
+          }
+        }
+      }
+    #endif
+    }
+
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    void pb::IBufferMessage.InternalMergeFrom(ref pb::ParseContext input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+      if ((tag & 7) == 4) {
+        // Abort on any end group tag.
+        return;
+      }
+      switch(tag) {
+          default:
+            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
+            break;
+          case 10: {
+            cards_.AddEntriesFrom(ref input, _repeated_cards_codec);
+            break;
+          }
+        }
+      }
+    }
+    #endif
+
+  }
+
+  [global::System.Diagnostics.DebuggerDisplayAttribute("{ToString(),nq}")]
   public sealed partial class protoHero : pb::IMessage<protoHero>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       , pb::IBufferMessage
@@ -574,7 +763,7 @@ namespace SaveDataProto.DataClasses {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::SaveDataProto.DataClasses.PHeroReflection.Descriptor.MessageTypes[2]; }
+      get { return global::SaveDataProto.DataClasses.PHeroReflection.Descriptor.MessageTypes[3]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -597,6 +786,7 @@ namespace SaveDataProto.DataClasses {
       id_ = other.id_;
       idModel_ = other.idModel_;
       stats_ = other.stats_ != null ? other.stats_.Clone() : null;
+      deck_ = other.deck_ != null ? other.deck_.Clone() : null;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
@@ -642,6 +832,18 @@ namespace SaveDataProto.DataClasses {
       }
     }
 
+    /// <summary>Field number for the "deck" field.</summary>
+    public const int DeckFieldNumber = 4;
+    private global::SaveDataProto.DataClasses.protoHeroDeck deck_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public global::SaveDataProto.DataClasses.protoHeroDeck Deck {
+      get { return deck_; }
+      set {
+        deck_ = value;
+      }
+    }
+
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public override bool Equals(object other) {
@@ -660,6 +862,7 @@ namespace SaveDataProto.DataClasses {
       if (Id != other.Id) return false;
       if (IdModel != other.IdModel) return false;
       if (!object.Equals(Stats, other.Stats)) return false;
+      if (!object.Equals(Deck, other.Deck)) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
@@ -670,6 +873,7 @@ namespace SaveDataProto.DataClasses {
       if (Id.Length != 0) hash ^= Id.GetHashCode();
       if (IdModel.Length != 0) hash ^= IdModel.GetHashCode();
       if (stats_ != null) hash ^= Stats.GetHashCode();
+      if (deck_ != null) hash ^= Deck.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -700,6 +904,10 @@ namespace SaveDataProto.DataClasses {
         output.WriteRawTag(26);
         output.WriteMessage(Stats);
       }
+      if (deck_ != null) {
+        output.WriteRawTag(34);
+        output.WriteMessage(Deck);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
       }
@@ -722,6 +930,10 @@ namespace SaveDataProto.DataClasses {
         output.WriteRawTag(26);
         output.WriteMessage(Stats);
       }
+      if (deck_ != null) {
+        output.WriteRawTag(34);
+        output.WriteMessage(Deck);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(ref output);
       }
@@ -740,6 +952,9 @@ namespace SaveDataProto.DataClasses {
       }
       if (stats_ != null) {
         size += 1 + pb::CodedOutputStream.ComputeMessageSize(Stats);
+      }
+      if (deck_ != null) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(Deck);
       }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
@@ -764,6 +979,12 @@ namespace SaveDataProto.DataClasses {
           Stats = new global::SaveDataProto.DataClasses.protoHeroStats();
         }
         Stats.MergeFrom(other.Stats);
+      }
+      if (other.deck_ != null) {
+        if (deck_ == null) {
+          Deck = new global::SaveDataProto.DataClasses.protoHeroDeck();
+        }
+        Deck.MergeFrom(other.Deck);
       }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
@@ -799,6 +1020,13 @@ namespace SaveDataProto.DataClasses {
             input.ReadMessage(Stats);
             break;
           }
+          case 34: {
+            if (deck_ == null) {
+              Deck = new global::SaveDataProto.DataClasses.protoHeroDeck();
+            }
+            input.ReadMessage(Deck);
+            break;
+          }
         }
       }
     #endif
@@ -831,6 +1059,13 @@ namespace SaveDataProto.DataClasses {
               Stats = new global::SaveDataProto.DataClasses.protoHeroStats();
             }
             input.ReadMessage(Stats);
+            break;
+          }
+          case 34: {
+            if (deck_ == null) {
+              Deck = new global::SaveDataProto.DataClasses.protoHeroDeck();
+            }
+            input.ReadMessage(Deck);
             break;
           }
         }

@@ -19,7 +19,7 @@ namespace Project.Utilities.Tooltips{
 
         
         private static Vector3 m_DefaultTextScale;
-        private static TMP_FontAsset m_DefaultFont = $"Fonts/Kaph".LoadResource<TMP_FontAsset>();
+        private static TMP_FontAsset m_DefaultFont = $"UI/Fonts/Kaph".LoadResource<TMP_FontAsset>();
         
         public static TMP_Text ShowWorldText(
             string text,

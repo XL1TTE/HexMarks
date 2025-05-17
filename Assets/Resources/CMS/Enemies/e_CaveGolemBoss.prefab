@@ -69,57 +69,33 @@ MonoBehaviour:
       type: {class: TagAnimations, ns: Project.Data.CMS.Tags.Enemies, asm: Assembly-CSharp}
       data:
         m_DieAnimation:
-          rid: 559004016258056204
+          m_Sprites:
+          - {fileID: 88627788, guid: e745d8b6d30aafc40b1a95cfa77952c0, type: 3}
+          - {fileID: 492656338, guid: e745d8b6d30aafc40b1a95cfa77952c0, type: 3}
+          - {fileID: 1830739528, guid: e745d8b6d30aafc40b1a95cfa77952c0, type: 3}
+          - {fileID: 844424237, guid: e745d8b6d30aafc40b1a95cfa77952c0, type: 3}
+          - {fileID: -1973544271, guid: e745d8b6d30aafc40b1a95cfa77952c0, type: 3}
+          - {fileID: -1709894657, guid: e745d8b6d30aafc40b1a95cfa77952c0, type: 3}
+          - {fileID: 379146222, guid: e745d8b6d30aafc40b1a95cfa77952c0, type: 3}
+          - {fileID: -1322022009, guid: e745d8b6d30aafc40b1a95cfa77952c0, type: 3}
+          - {fileID: 428235526, guid: e745d8b6d30aafc40b1a95cfa77952c0, type: 3}
+          - {fileID: 1580014297, guid: e745d8b6d30aafc40b1a95cfa77952c0, type: 3}
+          - {fileID: 2019699251, guid: e745d8b6d30aafc40b1a95cfa77952c0, type: 3}
+          - {fileID: -1518330870, guid: e745d8b6d30aafc40b1a95cfa77952c0, type: 3}
+          m_FrameDuration: 100
+          SFX_Channel: {fileID: 11400000, guid: d7800e8cdd970a1429722bdd526930ac, type: 2}
         m_IdleAnimation:
-          rid: 559004016258056205
-        m_AttackAnimation:
-          rid: 559004016258056206
-    - rid: 559004016258056204
-      type: {class: EnemyAnimationWithSpritesAnimation, ns: Project.Enemies, asm: Assembly-CSharp}
-      data:
-        m_Sprites:
-        - {fileID: 88627788, guid: e745d8b6d30aafc40b1a95cfa77952c0, type: 3}
-        - {fileID: 492656338, guid: e745d8b6d30aafc40b1a95cfa77952c0, type: 3}
-        - {fileID: 1830739528, guid: e745d8b6d30aafc40b1a95cfa77952c0, type: 3}
-        - {fileID: 844424237, guid: e745d8b6d30aafc40b1a95cfa77952c0, type: 3}
-        - {fileID: -1973544271, guid: e745d8b6d30aafc40b1a95cfa77952c0, type: 3}
-        - {fileID: -1709894657, guid: e745d8b6d30aafc40b1a95cfa77952c0, type: 3}
-        - {fileID: 379146222, guid: e745d8b6d30aafc40b1a95cfa77952c0, type: 3}
-        - {fileID: -1322022009, guid: e745d8b6d30aafc40b1a95cfa77952c0, type: 3}
-        - {fileID: 428235526, guid: e745d8b6d30aafc40b1a95cfa77952c0, type: 3}
-        - {fileID: 1580014297, guid: e745d8b6d30aafc40b1a95cfa77952c0, type: 3}
-        - {fileID: 2019699251, guid: e745d8b6d30aafc40b1a95cfa77952c0, type: 3}
-        - {fileID: -1518330870, guid: e745d8b6d30aafc40b1a95cfa77952c0, type: 3}
-        m_FrameDuration: 100
-    - rid: 559004016258056205
-      type: {class: EnemyAnimationWithSpritesAnimation, ns: Project.Enemies, asm: Assembly-CSharp}
-      data:
-        m_Sprites:
-        - {fileID: 226871081, guid: ef2fec780275fce42a1427bebda77939, type: 3}
-        - {fileID: 2079753194, guid: ef2fec780275fce42a1427bebda77939, type: 3}
-        - {fileID: 1289824476, guid: ef2fec780275fce42a1427bebda77939, type: 3}
-        - {fileID: -1283469122, guid: ef2fec780275fce42a1427bebda77939, type: 3}
-        - {fileID: 2055423082, guid: ef2fec780275fce42a1427bebda77939, type: 3}
-        - {fileID: 1585207430, guid: ef2fec780275fce42a1427bebda77939, type: 3}
-        - {fileID: 1303415970, guid: ef2fec780275fce42a1427bebda77939, type: 3}
-        - {fileID: 2034189150, guid: ef2fec780275fce42a1427bebda77939, type: 3}
-        m_FrameDuration: 100
-    - rid: 559004016258056206
-      type: {class: EnemyAnimationWithSpritesAnimation, ns: Project.Enemies, asm: Assembly-CSharp}
-      data:
-        m_Sprites:
-        - {fileID: 1014487760, guid: 4a6419fa23473824899893636ed3bca2, type: 3}
-        - {fileID: 1297498147, guid: 4a6419fa23473824899893636ed3bca2, type: 3}
-        - {fileID: 70061166, guid: 4a6419fa23473824899893636ed3bca2, type: 3}
-        - {fileID: 1223880621, guid: 4a6419fa23473824899893636ed3bca2, type: 3}
-        - {fileID: 271974194, guid: 4a6419fa23473824899893636ed3bca2, type: 3}
-        - {fileID: -171878189, guid: 4a6419fa23473824899893636ed3bca2, type: 3}
-        - {fileID: -432011117, guid: 4a6419fa23473824899893636ed3bca2, type: 3}
-        - {fileID: 1488115905, guid: 4a6419fa23473824899893636ed3bca2, type: 3}
-        - {fileID: -2074745354, guid: 4a6419fa23473824899893636ed3bca2, type: 3}
-        - {fileID: 815657327, guid: 4a6419fa23473824899893636ed3bca2, type: 3}
-        - {fileID: 1701386119, guid: 4a6419fa23473824899893636ed3bca2, type: 3}
-        m_FrameDuration: 100
+          m_Sprites:
+          - {fileID: 226871081, guid: ef2fec780275fce42a1427bebda77939, type: 3}
+          - {fileID: 2079753194, guid: ef2fec780275fce42a1427bebda77939, type: 3}
+          - {fileID: 1289824476, guid: ef2fec780275fce42a1427bebda77939, type: 3}
+          - {fileID: -1283469122, guid: ef2fec780275fce42a1427bebda77939, type: 3}
+          - {fileID: 2055423082, guid: ef2fec780275fce42a1427bebda77939, type: 3}
+          - {fileID: 1585207430, guid: ef2fec780275fce42a1427bebda77939, type: 3}
+          - {fileID: 1303415970, guid: ef2fec780275fce42a1427bebda77939, type: 3}
+          - {fileID: 2034189150, guid: ef2fec780275fce42a1427bebda77939, type: 3}
+          m_FrameDuration: 100
+          SFX_Channel: {fileID: 11400000, guid: d7800e8cdd970a1429722bdd526930ac, type: 2}
     - rid: 559004177793810437
       type: {class: TagOnTurnAbilities, ns: Project.Data.CMS.Tags.Enemies, asm: Assembly-CSharp}
       data:

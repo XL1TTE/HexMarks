@@ -14,8 +14,13 @@ message protoHeroStats{
     int32 handCapacity = 2;
 }
 
+message protoHeroDeck{
+    repeated string cards = 1;
+}
+
 message protoHero{
     string id = 1;
     string idModel = 2;
     protoHeroStats stats = 3;
+    protoHeroDeck deck = 4;
 }

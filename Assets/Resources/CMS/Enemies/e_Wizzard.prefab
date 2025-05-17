@@ -69,49 +69,34 @@ MonoBehaviour:
       type: {class: TagAnimations, ns: Project.Data.CMS.Tags.Enemies, asm: Assembly-CSharp}
       data:
         m_DieAnimation:
-          rid: 559004016258056211
+          m_Sprites:
+          - {fileID: 6991849013916550155, guid: 9d1b202d2fb768a45a36389da710721f, type: 3}
+          - {fileID: -276728812324164698, guid: 9d1b202d2fb768a45a36389da710721f, type: 3}
+          - {fileID: 3156895337291164288, guid: 9d1b202d2fb768a45a36389da710721f, type: 3}
+          - {fileID: 1400002288684528572, guid: 9d1b202d2fb768a45a36389da710721f, type: 3}
+          - {fileID: -1891625820773287384, guid: 9d1b202d2fb768a45a36389da710721f, type: 3}
+          m_FrameDuration: 200
+          m_settings: []
+          SFX_Channel: {fileID: 11400000, guid: d7800e8cdd970a1429722bdd526930ac, type: 2}
         m_IdleAnimation:
-          rid: 559004016258056210
-        m_AttackAnimation:
-          rid: 559004016258056212
-    - rid: 559004016258056210
-      type: {class: EnemyAnimationWithSpritesAnimation, ns: Project.Enemies, asm: Assembly-CSharp}
-      data:
-        m_Sprites:
-        - {fileID: 4723107735738678597, guid: 6fc66c021eec74942b4e71a3fde4dc04, type: 3}
-        - {fileID: -7385789195546760866, guid: 6fc66c021eec74942b4e71a3fde4dc04, type: 3}
-        - {fileID: 3234629978573100161, guid: 6fc66c021eec74942b4e71a3fde4dc04, type: 3}
-        - {fileID: 6373048116405451881, guid: 6fc66c021eec74942b4e71a3fde4dc04, type: 3}
-        - {fileID: 7264182050183361747, guid: 6fc66c021eec74942b4e71a3fde4dc04, type: 3}
-        - {fileID: -2834552850196481573, guid: 6fc66c021eec74942b4e71a3fde4dc04, type: 3}
-        - {fileID: 3278449094680734212, guid: 6fc66c021eec74942b4e71a3fde4dc04, type: 3}
-        - {fileID: 3384493420599841878, guid: 6fc66c021eec74942b4e71a3fde4dc04, type: 3}
-        m_FrameDuration: 200
-    - rid: 559004016258056211
-      type: {class: EnemyAnimationWithSpritesAnimation, ns: Project.Enemies, asm: Assembly-CSharp}
-      data:
-        m_Sprites:
-        - {fileID: 6991849013916550155, guid: 9d1b202d2fb768a45a36389da710721f, type: 3}
-        - {fileID: -276728812324164698, guid: 9d1b202d2fb768a45a36389da710721f, type: 3}
-        - {fileID: 3156895337291164288, guid: 9d1b202d2fb768a45a36389da710721f, type: 3}
-        - {fileID: 1400002288684528572, guid: 9d1b202d2fb768a45a36389da710721f, type: 3}
-        - {fileID: -1891625820773287384, guid: 9d1b202d2fb768a45a36389da710721f, type: 3}
-        m_FrameDuration: 200
-    - rid: 559004016258056212
-      type: {class: EnemyAnimationWithSpritesAnimation, ns: Project.Enemies, asm: Assembly-CSharp}
-      data:
-        m_Sprites:
-        - {fileID: -7008412969330441016, guid: d6b8c791d8089b44a9a8c5a7423bd180, type: 3}
-        - {fileID: -7763475090823894447, guid: d6b8c791d8089b44a9a8c5a7423bd180, type: 3}
-        - {fileID: 302641331129538988, guid: d6b8c791d8089b44a9a8c5a7423bd180, type: 3}
-        - {fileID: -6329420634031446844, guid: d6b8c791d8089b44a9a8c5a7423bd180, type: 3}
-        - {fileID: -910092549403018386, guid: d6b8c791d8089b44a9a8c5a7423bd180, type: 3}
-        - {fileID: 221524225039350300, guid: d6b8c791d8089b44a9a8c5a7423bd180, type: 3}
-        - {fileID: 1290532464073988732, guid: d6b8c791d8089b44a9a8c5a7423bd180, type: 3}
-        - {fileID: 4780903288873104255, guid: d6b8c791d8089b44a9a8c5a7423bd180, type: 3}
-        m_FrameDuration: 100
+          m_Sprites:
+          - {fileID: 4723107735738678597, guid: 6fc66c021eec74942b4e71a3fde4dc04, type: 3}
+          - {fileID: -7385789195546760866, guid: 6fc66c021eec74942b4e71a3fde4dc04, type: 3}
+          - {fileID: 3234629978573100161, guid: 6fc66c021eec74942b4e71a3fde4dc04, type: 3}
+          - {fileID: 6373048116405451881, guid: 6fc66c021eec74942b4e71a3fde4dc04, type: 3}
+          - {fileID: 7264182050183361747, guid: 6fc66c021eec74942b4e71a3fde4dc04, type: 3}
+          - {fileID: -2834552850196481573, guid: 6fc66c021eec74942b4e71a3fde4dc04, type: 3}
+          - {fileID: 3278449094680734212, guid: 6fc66c021eec74942b4e71a3fde4dc04, type: 3}
+          - {fileID: 3384493420599841878, guid: 6fc66c021eec74942b4e71a3fde4dc04, type: 3}
+          m_FrameDuration: 200
+          m_settings: []
+          SFX_Channel: {fileID: 11400000, guid: d7800e8cdd970a1429722bdd526930ac, type: 2}
     - rid: 559004177793810439
       type: {class: TagOnTurnAbilities, ns: Project.Data.CMS.Tags.Enemies, asm: Assembly-CSharp}
       data:
-        defenitions:
-        - {fileID: 11400000, guid: 5dad20b27d0924440ba2f63dc9167a08, type: 2}
+        m_Ability:
+          rid: 559004200519598093
+    - rid: 559004200519598093
+      type: {class: EnemyAbility, ns: Project.Enemies.Abilities, asm: Assembly-CSharp}
+      data:
+        defenition: {fileID: 11400000, guid: 5dad20b27d0924440ba2f63dc9167a08, type: 2}
