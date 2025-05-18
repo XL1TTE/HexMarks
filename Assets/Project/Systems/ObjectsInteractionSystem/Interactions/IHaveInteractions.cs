@@ -6,8 +6,7 @@ namespace Project.ObjectInteractions{
     {
         Transform GetTransform();
         SpriteRenderer GetRenderer();
-        SortingGroup GetSortingGroup(); 
-        
+        SortingGroup GetSortingGroup();        
         Collider2D GetCollider();
     }
 }

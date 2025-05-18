@@ -76,6 +76,7 @@
     <Compile Include="Assets\Project\Data\CMSTags\Generic\GenericTags.cs" />
     <Compile Include="Assets\Project\Systems\Factories\interfaces\ICardFactory.cs" />
     <Compile Include="Assets\Project\Data\EventBus\Signals\BattleSignals\Heroes\HeroSpawnedSignal.cs" />
+    <Compile Include="Assets\Utilities\Tooltips\CardToolTip.cs" />
     <Compile Include="Assets\Project\GameEntities\Map\Scripts\LocationsController.cs" />
     <Compile Include="Assets\Project\Data\SaveData\SaveFile.cs" />
     <Compile Include="Assets\Project\GameEntities\Map\Scripts\MapLocationView.cs" />
@@ -86,6 +87,7 @@
     <Compile Include="Assets\Project\Game\BattleControllers\Scripts\HealthBarManager.cs" />
     <Compile Include="Assets\Project\Systems\Factories\Factories\CardViewObjectPool.cs" />
     <Compile Include="Assets\Project\Data\EventBus\Signals\BattleSignals\Battle\BattleStartSignal.cs" />
+    <Compile Include="Assets\Project\Game\Battle\Enviroment.cs" />
     <Compile Include="Assets\Project\Systems\ObjectsInteractionSystem\SmoothDrag.cs" />
     <Compile Include="Assets\Project\Data\EventBus\Signals\BattleSignals\Enemies\EnemySpawnedSignal.cs" />
     <Compile Include="Assets\Project\UI\ProgressBars\IProgressBar.cs" />
@@ -108,7 +110,6 @@
     <Compile Include="Assets\Project\Game\BattleControllers\Scripts\CardsHandController.cs" />
     <Compile Include="Assets\Project\Other\ZenjectInstallers\EnemyInstaller.cs" />
     <Compile Include="Assets\Project\GameAbilities\Inspector\Cards\Abilities\Inspector\CardAbilityInspector.cs" />
-    <Compile Include="Assets\Generated\GameResources.cs" />
     <Compile Include="Assets\Project\Data\EventBus\Signals\BattleSignals\Enemies\EnemyDyingSignal.cs" />
     <Compile Include="Assets\Project\Systems\Factories\interfaces\IHealthBarFactory.cs" />
     <Compile Include="Assets\Project\Game\BattleControllers\Scripts\BattleManager.cs" />
@@ -142,6 +143,7 @@
     <Compile Include="Assets\Project\GameEntities\Cards\CardEffects\Effects\FireDamageEffect.cs" />
     <Compile Include="Assets\Project\Data\SaveData\proto_gen\PPlayerSave.cs" />
     <Compile Include="Assets\Project\Data\CMSTags\Enemies\TagEnemyActions.cs" />
+    <Compile Include="Assets\Project\GameEntities\Cards\Scripts\IShowCardTooltip.cs" />
     <Compile Include="Assets\Project\Systems\JobSystem\Job.cs" />
     <Compile Include="Assets\Project\Game\BattleControllers\Scripts\CardsExecutionController.cs" />
     <Compile Include="Assets\Project\Systems\ObjectsInteractionSystem\Droping\IDropHandler.cs" />
@@ -157,8 +159,8 @@
     <Compile Include="Assets\Project\GameEntities\Cards\Scripts\CardInteractions.cs" />
     <Compile Include="Assets\Project\GameEntities\Cards\Scripts\CardModel.cs" />
     <Compile Include="Assets\Project\Systems\LayoutSystem\Cards\CardHand.cs" />
-    <Compile Include="Assets\Project\GameAbilities\ScriptableObjects\Enemies\EnemyAbilityDefenition.cs" />
     <Compile Include="Assets\Project\Data\EventBus\Signals\ISignal.cs" />
+    <Compile Include="Assets\Project\GameAbilities\ScriptableObjects\Enemies\EnemyAbilityDefenition.cs" />
     <Compile Include="Assets\Project\Bootstrap\Bootstrap.cs" />
     <Compile Include="Assets\Project\GameAbilities\ScriptableObjects\Cards\CardAbilityFrameDefenition.cs" />
     <Compile Include="Assets\Project\Data\CMSTags\Cards\TagOnPlayAbilities.cs" />
@@ -177,11 +179,13 @@
     <Compile Include="Assets\Project\GameEntities\Actors\Enemies\EnemyState.cs" />
     <Compile Include="Assets\Project\GameEntities\Actors\Stats\ActorStats.cs" />
     <Compile Include="Assets\Project\Game\BattleControllers\Scripts\BattleStage.cs" />
+    <Compile Include="Assets\Project\Other\Scripts\RellayCoroutiner.cs" />
     <Compile Include="Assets\Project\Systems\ObjectsInteractionSystem\Droping\IDropable.cs" />
-    <Compile Include="Assets\Utilities\ResourceClassGenerator.cs" />
     <Compile Include="Assets\Project\GameAbilities\Inspector\Enemies\Abilities\EnemyAbilityProbabilityPair.cs" />
     <Compile Include="Assets\Project\Systems\ObjectsInteractionSystem\Interactions\Interactable.cs" />
     <Compile Include="Assets\Project\Data\ContextResolvers\DataRequestResolvers\EnemiesInBattleReqResolver.cs" />
+    <Compile Include="Assets\Project\Data\ContextResolvers\DataRequestResolvers\LastAllyCardPlayedReqResolver.cs" />
+    <Compile Include="Assets\Resources\GameEntities\Cards\Abilities\LunarWrath\Scripts\LunarWrathScript.cs" />
     <Compile Include="Assets\Project\UI\UINotification.cs" />
     <Compile Include="Assets\Project\GameEntities\Cards\CardEffects\Scripts\ICardEffect.cs" />
     <Compile Include="Assets\Project\Systems\JobSystem\Jobs\JobReturnCardViewToPool.cs" />

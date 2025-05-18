@@ -12,3 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec18fbae02658dd49a09c35a150225ab, type: 3}
   m_Name: SFX_Channel
   m_EditorClassIdentifier: 
+  m_volume: 0.3

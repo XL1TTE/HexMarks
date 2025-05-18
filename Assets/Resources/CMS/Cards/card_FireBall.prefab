@@ -45,6 +45,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Components:
+  - rid: 559004221489545217
+  - rid: 559004221489545218
   - rid: 559004200519598087
   - rid: 559004200519598089
   references:
@@ -53,7 +55,7 @@ MonoBehaviour:
     - rid: 559004200519598087
       type: {class: TagPrefab, ns: CardTags, asm: Assembly-CSharp}
       data:
-        prefab: {fileID: 7798484748776775827, guid: 9ab304556a5466740bff153b6aebf871, type: 3}
+        prefab: {fileID: 4308027389243589811, guid: 4cb718a683abf164f8f624aa144b46ae, type: 3}
     - rid: 559004200519598089
       type: {class: TagOnPlayAbilities, ns: CardTags, asm: Assembly-CSharp}
       data:
@@ -63,3 +65,12 @@ MonoBehaviour:
       type: {class: CardAbility, ns: CardAbilities.Inspector, asm: Assembly-CSharp}
       data:
         m_defention: {fileID: 11400000, guid: c829b3f6da8e56f4495bfe0b2f107cf8, type: 2}
+    - rid: 559004221489545217
+      type: {class: TagName, ns: Project.Data.CMS.Tags.Generic, asm: Assembly-CSharp}
+      data:
+        name: <color=#d57c37>Fire ball</color>
+    - rid: 559004221489545218
+      type: {class: TagDescription, ns: Project.Data.CMS.Tags.Generic, asm: Assembly-CSharp}
+      data:
+        desc: 'Effect: Cast <color=#d57c37>fire ball</color>, that <color=#c3260e>hits</color>
+          all the enemies with <color=#d57c37>fire damage</color>.'

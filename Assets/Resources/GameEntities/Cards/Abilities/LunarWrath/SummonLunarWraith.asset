@@ -12,20 +12,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8209491295c30a545ae5c772daffe135, type: 3}
   m_Name: SummonLunarWraith
   m_EditorClassIdentifier: 
-  m_CardAnimation: []
+  m_CardAnimation:
+  - {fileID: 21300000, guid: 83bc183fa7c77f84ba90feaefc8f5bea, type: 3}
   m_FrameDuration: 100
   m_FrameSettings:
   - m_FrameTriggerIndex: 0
-    m_SFX: []
+    m_SFX:
+    - {fileID: 8300000, guid: 174b987967638f34685e171aace11e60, type: 3}
     m_Actions:
-    - rid: 559004200519598086
+    - rid: 559004221489545216
   SFX_Channel: {fileID: 11400000, guid: d7800e8cdd970a1429722bdd526930ac, type: 2}
   references:
     version: 2
     RefIds:
-    - rid: 559004200519598086
+    - rid: 559004221489545216
       type: {class: SummonLunarWraith, ns: XL1TTE.GameAbilities.CardActions, asm: Assembly-CSharp}
       data:
-        m_LunarWraithAnimation: []
-        m_effectTriggerFrameIndex: 0
-        m_LunarWraithObject: {fileID: 0}
+        m_effectTriggerFrameIndex: 8
+        m_LunarWraithPrefab: {fileID: 2101268824137466120, guid: 4096a25a00742da448b6e3aa817f5263, type: 3}

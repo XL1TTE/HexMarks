@@ -30,12 +30,12 @@ namespace Project.Layouts
 
         protected List<CardView> m_ClaimedItems = new();
         public IReadOnlyList<CardView> GetAllItems() => m_ClaimedItems;
-        [SerializeField, Range(1.0f, 10.0f)] protected float m_Spacing = 1.0f;
+        [SerializeField, Range(0.1f, 10.0f)] protected float m_Spacing = 1.0f;
         [SerializeField, Range(0.1f, 2f)] protected float m_AlignDuration = 0.25f;
 
 
         [Header("Hover Effect")]
-        [SerializeField, Range(0.5f, 3f)]
+        [SerializeField, Range(1f, 3f)]
         private float m_HoverSpacingMultiplier = 1.5f;
         [SerializeField]
         private float m_HoverYOffset = 0.5f;

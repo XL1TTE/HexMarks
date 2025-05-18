@@ -55,12 +55,13 @@ MonoBehaviour:
     - rid: 559004200519598080
       type: {class: TagName, ns: Project.Data.CMS.Tags.Generic, asm: Assembly-CSharp}
       data:
-        name: 'Summon Lunar Wraith  '
+        name: <color=#A2C8F5>Summon Lunar Wraith</color>
     - rid: 559004200519598081
       type: {class: TagDescription, ns: Project.Data.CMS.Tags.Generic, asm: Assembly-CSharp}
       data:
-        desc: 'Effect: "Summons a shadow that copies the last ally card played, but
-          at half strength. At night, copies at full strength."'
+        desc: 'Effect: Summons a <color=#A2C8F5>shadow</color> that copies the last
+          ally card played, but at <color=#E0E0E0>half strength</color>. <color=#7D5A9B>At
+          night</color>, copies at full strength.'
     - rid: 559004200519598082
       type: {class: TagOnPlayAbilities, ns: CardTags, asm: Assembly-CSharp}
       data:
@@ -69,8 +70,8 @@ MonoBehaviour:
     - rid: 559004200519598085
       type: {class: CardAbility, ns: CardAbilities.Inspector, asm: Assembly-CSharp}
       data:
-        m_defention: {fileID: 0}
+        m_defention: {fileID: 11400000, guid: 38fd13f32f606a14794f68aff61a5763, type: 2}
     - rid: 559004200519598088
       type: {class: TagPrefab, ns: CardTags, asm: Assembly-CSharp}
       data:
-        prefab: {fileID: 0}
+        prefab: {fileID: 3740568454110547392, guid: 18965dda67261a045af0073d195c4c11, type: 3}

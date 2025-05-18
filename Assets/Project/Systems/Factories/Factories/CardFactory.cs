@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using CMSystem;
 using Project.Cards;
 using Project.DataResolving;
+using Project.EventBus;
 using UnityEngine;
 using Zenject;
 
@@ -17,9 +18,9 @@ namespace Project.Factories{
         
         private readonly CardViewObjectPool m_cardViewPool;
         
-        public Card CreateCardFromModel(CMSEntity model)
+        public Card CreateCardFromModel(CMSEntity model, bool isActive = true)
         {
-            CardView view = m_cardViewPool.Get(model.id);
+            CardView view = m_cardViewPool.Get(model.id, isActive);
 
             CardState state = new CardState(model);
 

@@ -10,11 +10,16 @@ namespace Project.ZenjectInstallers{
         [SerializeField] private CardViewObjectPool m_CardViewPool;        
         public override void InstallBindings()
         {
-            Container.Bind<CardViewObjectPool>().FromInstance(m_CardViewPool).AsSingle();
+            Container.Bind<CardViewObjectPool>().FromMethod((c) => ConfigureCardPool(c)).AsSingle();
             
             Container.Bind<ICardFactory>()
                 .To<CardFactory>()
                 .AsSingle();        
+        }
+        
+        
+        private CardViewObjectPool ConfigureCardPool(InjectContext context){
+            return m_CardViewPool.Init(context.Container);
         }
     }
 }

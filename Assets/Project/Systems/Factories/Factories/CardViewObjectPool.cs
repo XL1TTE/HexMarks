@@ -4,6 +4,7 @@ using CMSystem;
 using DG.Tweening;
 using Project.Cards;
 using UnityEngine;
+using Zenject;
 
 namespace Project.Factories{
     public class CardViewObjectPool : MonoBehaviour{
@@ -20,6 +21,12 @@ namespace Project.Factories{
         
         private Dictionary<string, Queue<CardView>> m_freeObjects = new();
         
+        private DiContainer m_Container;
+        public CardViewObjectPool Init(DiContainer container){
+            m_Container = container;
+            return this;
+        }
+        
         public CardView Get(string model_id, bool isActiveByDefault = true){
             if(!m_freeObjects.ContainsKey(model_id) || m_freeObjects[model_id].Count == 0){
                 
@@ -28,7 +35,7 @@ namespace Project.Factories{
                 }
                 var prefab = tagPrefab.prefab;
         
-                var cardView = Instantiate(prefab, transform);
+                var cardView = m_Container.InstantiatePrefabForComponent<CardView>(prefab, transform);
                 return ConfigObject(cardView, isActiveByDefault);
             }
         

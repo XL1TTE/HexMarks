@@ -69,4 +69,4 @@ MonoBehaviour:
             m_Initiative: 15
           m_MaxCardsInHand: 3
         m_DefaultDeck:
-        - {fileID: 4769229897484343582, guid: a47a65b89fbbe5345861ad02ce5fa78c, type: 3}
+        - {fileID: 5405841511661625861, guid: b68870613e19249468d0b938b6e0c617, type: 3}

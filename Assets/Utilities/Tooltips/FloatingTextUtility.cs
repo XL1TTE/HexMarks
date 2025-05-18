@@ -38,7 +38,7 @@ namespace Project.Utilities.Tooltips{
             { 
                 text_obj = new GameObject("WorldSpaceText");
                 
-                text_obj.layer = LayerMask.NameToLayer("VeryTop");
+                text_obj.layer = LayerMask.NameToLayer("VFX");
                 
                 textComponent = text_obj.AddComponent<TextMeshPro>();
                 

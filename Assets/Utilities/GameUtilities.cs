@@ -7,11 +7,11 @@ namespace GameUtilities{
     
     public static class GameUtility{
         
-        public static IEnumerator FlyToCenterOfScreen(GameObject obj, float duration){
+        public static IEnumerator FlyToCenterOfScreen(GameObject obj, float duration, Vector3 offset = default){
 
             Vector3 center = Camera.main.ViewportToWorldPoint(new Vector3(0.5f, 0.5f));
 
-            Tween tween = obj.transform.DOMove(center, duration); 
+            Tween tween = obj.transform.DOMove(center + offset, duration); 
             
             yield return tween.WaitForCompletion();
         }

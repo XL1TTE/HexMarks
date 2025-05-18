@@ -12,8 +12,8 @@ TagManager:
   - Water
   - UI
   - DropHandlers
-  - VeryTop
-  - 
+  - Cards
+  - VFX
   - 
   - 
   - 
@@ -41,6 +41,12 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Actors
+    uniqueID: 2950860155
+    locked: 0
   - name: Cards
     uniqueID: 2537602283
+    locked: 0
+  - name: VFX
+    uniqueID: 143810893
     locked: 0

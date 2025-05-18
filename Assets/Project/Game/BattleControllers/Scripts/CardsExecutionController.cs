@@ -35,12 +35,9 @@ namespace Project.Game.Battle.Controllers
 
         private void OnCardUsedInteraction(CardUsedSignal signal)
         {
-            var card = signal.GetCardView();
-            
-            IEnumerator cardUseRoutine = card.OnCardPlayed().Proccess();
+            IEnumerator cardUseRoutine = signal.GetCardUseSequence().Proccess();
 
-            m_ExecutingCardsRoutines.Add(new AwaitableCoroutine(this, cardUseRoutine));
-            
+            m_ExecutingCardsRoutines.Add(new AwaitableCoroutine(this, cardUseRoutine));            
         }
 
         void Update()

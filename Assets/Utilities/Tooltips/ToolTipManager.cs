@@ -5,6 +5,7 @@ namespace Project.Utilities{
     public class ToolTipManager : MonoBehaviour
     {
         [SerializeField] private ToolTip TooltipInstance;
+         
         private static ToolTip tooltipInstance;
 
         public void Initialize()

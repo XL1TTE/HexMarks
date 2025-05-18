@@ -21,9 +21,26 @@ namespace Enemies.Animations{
         [Header("SFX channel")]
         [SerializeField] SoundChannel SFX_Channel;
 
-        public xlAnimation GetAnimation(EnemyView enemy)
+        public FrameAnimation GetAnimation(EnemyView enemy)
         {
             var animation = enemy.GetRenderer().ToFrameAnimation(m_Sprites, m_FrameDuration);  
+            
+            foreach(var setting in m_settings){
+            
+                //SFX
+                animation.AddFrameCallback(setting.m_FrameIndex, () => {
+                    foreach (var item in setting.SFX)
+                    {
+                        SFX_Channel.PlaySound(item);
+                    }
+                });
+            }
+            
+            return animation;      
+        }
+        public FrameAnimation GetAnimation(SpriteRenderer renderer)
+        {
+            var animation = renderer.ToFrameAnimation(m_Sprites, m_FrameDuration);  
             
             foreach(var setting in m_settings){
             

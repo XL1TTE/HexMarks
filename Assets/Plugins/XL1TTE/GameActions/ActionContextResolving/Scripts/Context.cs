@@ -7,6 +7,11 @@ namespace XL1TTE.GameActions{
         public T Get<T>(string key){
             context.TryGetValue(key, out var value);
             if(value is T obj){return obj;}
+            
+            else if(value == null){
+                return default;
+            }
+            
             else{
                 throw new Exception($"Unable to find record with key: {key} of type {typeof(T)}");
             }

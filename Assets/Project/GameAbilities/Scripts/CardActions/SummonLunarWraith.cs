@@ -4,6 +4,10 @@ using System.Collections;
 using System.Collections.Generic;
 using GameUtilities;
 using Project.Cards;
+using Project.Enemies;
+using Project.Enemies.Abilities;
+using Project.Game.Battle;
+using Project.Other;
 using UnityEngine;
 using XL1TTE.Animator;
 using XL1TTE.GameActions;
@@ -12,17 +16,16 @@ namespace XL1TTE.GameAbilities.CardActions{
 
     [Serializable]
     public class SummonLunarWraith : CardAction, IContextResolverUser
-    {
-        [Header("Animation Settings")]
-        [SerializeField] List<Sprite> m_LunarWraithAnimation = new();
-        
+    {        
         [SerializeField] int m_effectTriggerFrameIndex = 0;
         
-        [SerializeField] SpriteRenderer m_LunarWraithObject = new();
+        [SerializeField] LunarWrathScript m_LunarWraithPrefab;
+        
         
         public IEnumerable<DataRequest> GetRequests()
         {
             return new List<DataRequest>{
+                new DataRequest("EnemyTarget", typeof(EnemyView)),
                 new DataRequest("LastAllyCardPlayed", typeof(CardView)),
             };
         }
@@ -32,33 +35,48 @@ namespace XL1TTE.GameAbilities.CardActions{
             Context context = ContextResolver.Resolve(this);
             
             CardView lastPlayedCard = context.Get<CardView>("LastAllyCardPlayed");
+            EnemyView enemyTarget = context.Get<EnemyView>("EnemyTarget");
             
-            if(lastPlayedCard == null){ yield break; }
-            
-            
+            if(lastPlayedCard == null){ Debug.Log("Can't use this card."); yield break; }
+
+
             /* ########################################## */
             /*            Played Card Animation           */
             /* ########################################## */
             
-            // 
-            
-            
+            lastPlayedCard.transform.position = Enviroment.TOP_CENTER_OUT_OF_SCREEN.position;
+
             /* ########################################## */
             /*           Lunar Wraith Animation           */
             /* ########################################## */
             
-            var anim_wraith = m_LunarWraithObject.ToFrameAnimation(m_LunarWraithAnimation, 100);
+            var lunarWrath = UnityEngine.Object.Instantiate(m_LunarWraithPrefab, Enviroment.LEFT_TOP_OUT_OF_SCREEN.position, m_LunarWraithPrefab.transform.rotation);
+            
+            var target_pos = enemyTarget.transform.position + new Vector3(-4f, 0f, 0f);
+            
+            yield return GameUtility.FlyToPosition(lunarWrath.gameObject, target_pos, 3f);
 
-            IEnumerator ApplyEffect(){
-                yield return GameUtility.FlyToCenterOfScreen(lastPlayedCard.gameObject, 1f);
-                yield return lastPlayedCard.OnCardPlayed().Proccess();
+            var wrath_cast = lunarWrath.GetCastAnimation();
+
+            IEnumerator ApplyEffectCoroutine(){
+                lastPlayedCard.gameObject.SetActive(true);
+                yield return GameUtility.FlyToCenterOfScreen(lastPlayedCard.gameObject, 2f);
+                lastPlayedCard.PlayCard();
             }
             
-            anim_wraith.AddFrameCallback(m_effectTriggerFrameIndex, () => ApplyEffect());
+            void ApplyEffect(){
+                RellayCoroutiner.StartRellayCoroutine(ApplyEffectCoroutine());
+            }
+
+            wrath_cast.AddFrameCallback(m_effectTriggerFrameIndex, () => ApplyEffect());
+
+            lunarWrath.StopIdleAnimation();
             
+            yield return wrath_cast.Play().WaitForCompletion();
             
-            
-            yield return anim_wraith.Play().WaitForCompletion();
+            yield return lunarWrath.GetDisappearAnimation().Play().WaitForCompletion();
+
+            lunarWrath.DestroyGameObject();
         }
 
     }

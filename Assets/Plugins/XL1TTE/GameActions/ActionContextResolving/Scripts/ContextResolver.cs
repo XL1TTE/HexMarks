@@ -7,6 +7,7 @@ using Zenject;
 namespace XL1TTE.GameActions{
     public class ContextResolver{
         private static ContextResolver current;
+        
         public static void Load(ContextResolver resolver){
             if(current == null){
                 current = resolver;
@@ -38,7 +39,7 @@ namespace XL1TTE.GameActions{
             Context context = new Context();
             
             foreach(var req in subject.GetRequests()){
-                var resolver = current.m_resolvers.First((r) => r.CanResolve(req));
+                var resolver = current.m_resolvers.FirstOrDefault((r) => r.CanResolve(req));
                 if(resolver == null){
                     throw new Exception($"None of registred resolvers was able to resolve request (reqKey: {req.Key}, reqType: {req.Type})");
                 }

@@ -61,7 +61,7 @@ MonoBehaviour:
       data:
         m_stats:
           m_BaseStats:
-            m_Health: 1
+            m_Health: 150
             m_MaxHealth: 150
             m_Initiative: 50
           m_Damage: 50

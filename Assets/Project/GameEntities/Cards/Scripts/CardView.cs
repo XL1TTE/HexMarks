@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using CardTags;
 using DG.Tweening;
+using Project.EventBus;
+using Project.EventBus.Signals;
 using Project.JobSystem;
 using Project.Layouts;
 using Project.ObjectInteractions;
@@ -10,6 +12,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.Rendering;
+using Zenject;
 
 namespace Project.Cards{
     
@@ -76,7 +79,17 @@ namespace Project.Cards{
         #endregion
         
         
-        public JobSequence OnCardPlayed()
+        [Inject]
+        private void Construct(SignalBus signalBus){
+            m_signalBus = signalBus;
+        }
+        private SignalBus m_signalBus;
+        
+        public void PlayCard(){
+            m_signalBus.SendSignal(new CardUsedSignal(this, OnCardPlayed()));
+        }
+        
+        private JobSequence OnCardPlayed()
         {
             var jobs = new List<Job>();
             
