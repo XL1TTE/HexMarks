@@ -35,7 +35,7 @@ namespace Project.Game.Battle.Controllers
         
         private void DrawCardsRequestProccess(RequestDrawCardsSignal signal){
             if(signal.ClearHand){ClearHand();}
-            DrawCards(signal.Hero, signal.Amount);
+            DrawCards(signal.Hero, signal.Deck, signal.Amount);
         }
 
 
@@ -61,17 +61,19 @@ namespace Project.Game.Battle.Controllers
         private void ClearHand() =>
             m_CardsHand.ClearHand();
 
-        private void DrawCards(HeroView hero, int amount)
+        private void DrawCards(Hero hero, HeroDeck deck, int amount)
         {
-            var cards = hero.GetState().m_deck.GetCards();
+            var cards = deck.GetCards();
             
             for (int i = 0; i < amount; i++)
             {
                 var cardPick = cards[Random.Range(0, cards.Count)];
                 
                 Card card = m_CardFactory.CreateCardFromModel(cardPick);
+                
+                card.m_state.SetOwner(hero);
 
-                m_CardsHand.TryClaim(card.GetView());
+                m_CardsHand.TryClaim(card.m_view);
             }
         }
 

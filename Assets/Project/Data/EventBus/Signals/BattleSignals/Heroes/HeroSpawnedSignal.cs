@@ -5,32 +5,36 @@ namespace Project.EventBus.Signals{
     
     public class HeroSpawnedSignal: ISignal{
         
-        public HeroSpawnedSignal(HeroView heroView){
-            m_hero = heroView;
+        public HeroSpawnedSignal(Hero hero){
+            this.hero = hero;
         }
         
-        private HeroView m_hero;
-        public HeroView GetHero() => m_hero;
+        public readonly Hero hero;
         
     }
     public class HeroDiedSignal: ISignal{
         
-        public HeroDiedSignal(HeroView heroView){
-            m_hero = heroView;
+        public HeroDiedSignal(Hero hero){
+            this.hero = hero;
         }
         
-        private HeroView m_hero;
-        public HeroView GetHero() => m_hero;
-        
+        public readonly Hero hero;        
     }
     public class HeroHealthChangedSignal: ISignal{
         
-        public HeroHealthChangedSignal(HeroView heroView){
-            m_hero = heroView;
+        public HeroHealthChangedSignal(Hero hero){
+            this.hero = hero;
         }
         
-        private HeroView m_hero;
-        public HeroView GetHero() => m_hero;
-        
+        public readonly Hero hero;        
+    }
+
+    public class HeroDamageTakenSignal: ISignal{
+        public HeroDamageTakenSignal(Hero hero, float amount){
+            this.hero = hero;
+            this.amount = amount;
+        }
+        public readonly Hero hero;
+        public readonly float amount;
     }
 }

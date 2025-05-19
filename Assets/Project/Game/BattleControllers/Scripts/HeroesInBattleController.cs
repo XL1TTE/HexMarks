@@ -16,56 +16,31 @@ namespace Project.Game.Battle.Controllers
     
         void OnEnable()
         {
-            m_SignalBus.Subscribe<BattleStageReadySignal>(BattleStageProccess);
+            m_SignalBus.Subscribe<HeroDamageTakenSignal>(OnHeroDamageTaken);
         }
 
         void OnDisable()
         {
-            m_SignalBus.Unsubscribe<BattleStageReadySignal>(BattleStageProccess);
+            m_SignalBus.Unsubscribe<HeroDamageTakenSignal>(OnHeroDamageTaken);
+
         }
 
         private SignalBus m_SignalBus;
         
-        private IReadOnlyList<HeroView> m_Heroes;      
-        
-          
-        private void BattleStageProccess(BattleStageReadySignal signal)
+        private void OnHeroDamageTaken(HeroDamageTakenSignal signal)
         {
-            FreePreviousBattleStage();
-
-            m_Heroes = signal.Stage.GetHeroes();
-
-            foreach(var hero in m_Heroes){
-                hero.OnDamageTaken += OnHeroDamageTaken;
-            }
-        }
-        
-        private void FreePreviousBattleStage(){
-            if(m_Heroes == null){return;}
+            var hero = signal.hero;
             
-            foreach(var hero in m_Heroes){
-                hero.OnDamageTaken -= OnHeroDamageTaken;
-            }
-        }
-
-        private void OnHeroDamageTaken(HeroView hero)
-        {
-            NotifyEnemyHealthChanged(hero);
-
             if (isHeroJustDied(hero))
             {
-                hero.OnDamageTaken -= OnHeroDamageTaken;
                 NotifyHeroDied(hero);
             }
         }
 
-        private void NotifyHeroDied(HeroView hero) =>
+        private void NotifyHeroDied(Hero hero) =>
             m_SignalBus.SendSignal(new HeroDiedSignal(hero));
         
-        private void NotifyEnemyHealthChanged(HeroView enemy) =>
-            m_SignalBus.SendSignal(new HeroHealthChangedSignal(enemy));
-
-        private bool isHeroJustDied(HeroView hero) =>
-            hero.GetState().m_stats.m_BaseStats.m_Health == 0;
+        private bool isHeroJustDied(Hero hero) =>
+            hero.GetCurrentHealth() == 0;
     }
 }

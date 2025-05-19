@@ -5,6 +5,7 @@ using Project.Enemies;
 using Project.Enemies.Abilities;
 using UnityEngine;
 using XL1TTE.Animator;
+using XL1TTE.GameActions;
 
 namespace Project.Data.CMS.Tags.Enemies{
 
@@ -12,8 +13,8 @@ namespace Project.Data.CMS.Tags.Enemies{
     public class TagOnTurnAbilities : EntityComponentDefinition
     {
         [SerializeReference, SubclassSelector] EnemyAblilityInspector m_Ability;
-        public IEnumerator ExecuteOnTurnAbilities(EnemyView enemyView){
-            yield return m_Ability.ExecuteAbility(enemyView);
+        public IEnumerator ExecuteOnTurnAbilities(EnemyView enemyView, ContextResolver resolver){
+            yield return m_Ability.ExecuteAbility(enemyView, resolver);
         }
     }
 }

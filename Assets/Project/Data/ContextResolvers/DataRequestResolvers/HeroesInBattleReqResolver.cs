@@ -8,7 +8,7 @@ using Zenject;
 namespace Project.DataResolving.DataRequestResolvers{
     public class HeroesInBattleReqResolver : IDataRequestResolver
     {
-        private IReadOnlyList<HeroView> m_CurrentHeroesInButtle;
+        private IReadOnlyList<Hero> m_CurrentHeroesInButtle;
         private void OnBattleStageReady(BattleStageReadySignal signal)
         {
             m_CurrentHeroesInButtle = signal.Stage.GetHeroes();
@@ -22,7 +22,7 @@ namespace Project.DataResolving.DataRequestResolvers{
 
         public bool CanResolve(DataRequest req)
         {
-            return req.Key == "HeroesInBattle" && req.Type == typeof(List<HeroView>);
+            return req.Key == "HeroesInBattle" && req.Type == typeof(List<Hero>);
         }
 
         public object Resolve(DataRequest req)

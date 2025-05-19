@@ -1,13 +1,10 @@
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Claims;
 using DG.Tweening;
 using Project.Cards;
 using Project.DataResolving.DataRequestResolvers;
 using Project.Factories;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using Zenject;
 
 namespace Project.Layouts

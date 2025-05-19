@@ -25,7 +25,7 @@ namespace Project.GameManagers{
         private void Construct(
             SignalBus signalBus, 
             IEnemyViewFactory enemyFactory,
-            IHeroViewFactory heroFactory,
+            IHeroFactory heroFactory,
             RuntimeDataProvider runtimeDataProvider,
             ISaveSystem saveSystem)
         {
@@ -66,7 +66,7 @@ namespace Project.GameManagers{
         private SignalBus m_SignalBus;
         private RuntimeDataProvider m_RuntimeDataProvider;
         private IEnemyViewFactory m_EnemyFactory;
-        private IHeroViewFactory m_HeroFactory;
+        private IHeroFactory m_HeroFactory;
         private ISaveSystem m_SaveSystem;
         
         // TO REMOVE
@@ -83,7 +83,7 @@ namespace Project.GameManagers{
         private IReadOnlyList<HeroState> m_HeroesInBattle;
 
 
-        private List<HeroView> m_CurrentHeroesInBattle;
+        private List<Hero> m_CurrentHeroesInBattle;
         private List<EnemyView> m_CurrentEnemiesInBattle;
         
         private BattleStage m_CurrentBattleStage;
@@ -102,9 +102,11 @@ namespace Project.GameManagers{
 
             if (!ConfigureBattleData()){
                m_SaveSystem.CreateNewSaveFile();
-                ConfigureBattleData();
+               ConfigureBattleData();
             }
-            
+
+            ClearOldHeroesSlots();
+
             SetupBattleStage();
 
             NotifyBattleStageReady();
@@ -112,6 +114,13 @@ namespace Project.GameManagers{
         
         private void NotifyBattleStageReady()
             => m_SignalBus.SendSignal(new BattleStageReadySignal(m_CurrentBattleStage));
+        
+        private void ClearOldHeroesSlots(){
+            if(m_CurrentEnemiesInBattle == null) {return; }
+            foreach(var hero in m_CurrentHeroesInBattle){
+                //Destroy(hero.gameObject);
+            }
+        }
         
         private void SetupBattleStage(){
 
@@ -169,8 +178,8 @@ namespace Project.GameManagers{
         
         private void OnHeroDied(HeroDiedSignal signal){
             
-            m_CurrentHeroesInBattle.Remove(signal.GetHero());
-                        
+            m_CurrentHeroesInBattle.Remove(signal.hero);
+                                    
             if(m_CurrentBattleStage.isAllHeroesDied()){
                 StartCoroutine(Lost());
             }

@@ -9,11 +9,6 @@ using Zenject;
 namespace Project.Bootstrap{
     public class Bootstraper : MonoBehaviour{
 
-        [Inject]
-        private void Construct(ContextResolver contextResolver){
-            ContextResolver.Load(contextResolver);
-        }
-
         [SerializeField] ToolTipManager g_ToolTipManager;
 
         void Awake()

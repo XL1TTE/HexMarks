@@ -1,29 +1,21 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using CardTags;
 using CMSystem;
-using DG.Tweening;
-using Project.Cards.Effects;
-using Project.DataResolving;
-using Project.JobSystem;
+using Project.Actors;
 using UnityEngine;
-using XL1TTE.GameActions;
 
 namespace Project.Cards{
     
-    [Serializable]
+
     public class CardState
     {
         public CardState(CMSEntity cmsModel){
-            m_cmsModel = cmsModel;
-        }
+            model = cmsModel;
+        }   
+        public readonly CMSEntity model;
+        private         Hero      m_owner;
         
-        [SerializeField] private CMSEntity m_cmsModel;
-        public CMSEntity GetModel() => m_cmsModel;        
-
-    
         
+        public Hero GetOwner() => m_owner;
+        public void SetOwner(Hero hero) => m_owner = hero;        
     }
 }
 

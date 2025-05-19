@@ -18,14 +18,14 @@ namespace Project.TurnSystem{
 
     public class HeroTurnTaker : ITurnTaker
     {
-        private HeroView m_hero;
 
-        public HeroTurnTaker(SignalBus signalBus, HeroView heroView) : base(signalBus)
+        public HeroTurnTaker(SignalBus signalBus, Hero hero) : base(signalBus)
         {
-            m_hero = heroView;
+            m_hero = hero;
         }
-        
-        public HeroView GetHero() => m_hero;
+
+        private Hero m_hero;
+        public Hero GetHero() => m_hero;
         
         public override int GetInitiative()
         {
@@ -50,7 +50,7 @@ namespace Project.TurnSystem{
 
         public override int GetInitiative()
         {
-            return m_enemy.GetController().GetInitiaive();
+            return m_enemy.GetState().GetInitiaive();
         }
 
         public override void SendTurnNotification()

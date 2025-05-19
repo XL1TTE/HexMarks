@@ -34,15 +34,16 @@ namespace Project.Cards
 
         private void ShowToolTip(BaseEventData eventData)
         {
-            var model = m_card.GetCardState().GetModel();
+            var card_model = m_card.GetModel();
 
-            string name = "";
-            string desc = "";
+            string card_name = "";
+            string card_desc = "";
 
-            if (model.Is<TagName>(out var tagName)) { name = tagName.name; }
-            if (model.Is<TagDescription>(out var tagDesc)) { desc = tagDesc.desc; }
+            if (card_model.Is<TagName>(out var tagName)) { card_name = tagName.name; }
+            if (card_model.Is<TagDescription>(out var tagDesc)) { card_desc = tagDesc.desc; }
+            
 
-            CardToolTip.Show(name, desc);
+            CardToolTip.Show(card_name, card_desc);
         }
     }
 }

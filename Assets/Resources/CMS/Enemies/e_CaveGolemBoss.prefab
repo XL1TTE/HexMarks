@@ -49,6 +49,7 @@ MonoBehaviour:
   - rid: 559004016258056202
   - rid: 559004016258056203
   - rid: 559004177793810437
+  - rid: 559004251140390912
   references:
     version: 2
     RefIds:
@@ -61,10 +62,10 @@ MonoBehaviour:
       data:
         m_stats:
           m_BaseStats:
-            m_Health: 150
-            m_MaxHealth: 150
+            m_Health: 45
+            m_MaxHealth: 45
             m_Initiative: 5
-          m_Damage: 25
+          m_Damage: 5
     - rid: 559004016258056203
       type: {class: TagAnimations, ns: Project.Data.CMS.Tags.Enemies, asm: Assembly-CSharp}
       data:
@@ -83,6 +84,7 @@ MonoBehaviour:
           - {fileID: 2019699251, guid: e745d8b6d30aafc40b1a95cfa77952c0, type: 3}
           - {fileID: -1518330870, guid: e745d8b6d30aafc40b1a95cfa77952c0, type: 3}
           m_FrameDuration: 100
+          m_settings: []
           SFX_Channel: {fileID: 11400000, guid: d7800e8cdd970a1429722bdd526930ac, type: 2}
         m_IdleAnimation:
           m_Sprites:
@@ -95,6 +97,7 @@ MonoBehaviour:
           - {fileID: 1303415970, guid: ef2fec780275fce42a1427bebda77939, type: 3}
           - {fileID: 2034189150, guid: ef2fec780275fce42a1427bebda77939, type: 3}
           m_FrameDuration: 100
+          m_settings: []
           SFX_Channel: {fileID: 11400000, guid: d7800e8cdd970a1429722bdd526930ac, type: 2}
     - rid: 559004177793810437
       type: {class: TagOnTurnAbilities, ns: Project.Data.CMS.Tags.Enemies, asm: Assembly-CSharp}
@@ -119,3 +122,15 @@ MonoBehaviour:
           ability: {fileID: 11400000, guid: 16598b873d7de044db2957553b8adf01, type: 2}
         - weight: 75
           ability: {fileID: 11400000, guid: a2ab5c5b0911048438b9948df1563eb4, type: 2}
+    - rid: 559004251140390912
+      type: {class: TagAI, ns: Project.Data.CMS.Tags.Enemies, asm: Assembly-CSharp}
+      data:
+        m_targetSelector:
+          m_rules:
+          - rid: 559004251140390916
+    - rid: 559004251140390916
+      type: {class: TargetHealthRule, ns: Enemies.AI, asm: Assembly-CSharp}
+      data:
+        m_factor:
+          m_value: 1
+          m_weightPerValue: -1

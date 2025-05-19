@@ -6,13 +6,13 @@ using Project.Factories;
 namespace Project.JobSystem{
     public class JobReturnCardViewToPool : Job
     {
-        public JobReturnCardViewToPool(CardView a_cardView){
-            m_cardView = a_cardView;
+        public JobReturnCardViewToPool(CardView a_card){
+            m_card = a_card;
         }
-        CardView m_cardView;
+        CardView m_card;
         public override IEnumerator Proccess()
         {
-            CardViewObjectPool.current.Return(m_cardView);
+            CardViewObjectPool.current.Return(m_card);
             yield break;
         }
     }

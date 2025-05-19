@@ -27,6 +27,7 @@ MonoBehaviour:
     m_SFX: []
     m_Actions:
     - rid: 559004177793810436
+  SFX_Channel: {fileID: 0}
   references:
     version: 2
     RefIds:

@@ -4,8 +4,8 @@ using UnityEngine;
 namespace Project.Wrappers{
     public class AwaitableCoroutine
     {
-        private Coroutine Coroutine { get; }
-        private MonoBehaviour Owner {get;} 
+        private Coroutine Coroutine { get; set;}
+        private MonoBehaviour Owner {get; set;} 
         public bool IsDone { get; private set; } = false;
 
         public AwaitableCoroutine(MonoBehaviour owner, IEnumerator routine)
@@ -22,6 +22,8 @@ namespace Project.Wrappers{
         
         public void Kill(){
             Owner.StopCoroutine(Coroutine);
+            Owner = null;
+            Coroutine = null;
         }
     }
 }

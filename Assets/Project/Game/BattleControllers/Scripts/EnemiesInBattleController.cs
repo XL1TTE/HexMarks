@@ -60,7 +60,7 @@ namespace Project.Game.Battle.Controllers
             m_Enemies = signal.Stage.GetEnemies();
             
             foreach(var enemy in m_Enemies){
-                enemy.GetController().OnDamageTaken += OnEnemyDamageTaken;
+                enemy.OnHealthChanged += OnEnemyDamageTaken;
                 enemy.StartIdleAnimation();
             }
         }
@@ -68,7 +68,7 @@ namespace Project.Game.Battle.Controllers
             if(m_Enemies == null) {return; }
             
             foreach(var enemy in m_Enemies){
-                enemy.GetController().OnDamageTaken -= OnEnemyDamageTaken;
+                enemy.OnHealthChanged -= OnEnemyDamageTaken;
             }
         }
         
@@ -115,11 +115,11 @@ namespace Project.Game.Battle.Controllers
         {
             enemy.StopIdleAnimation();
 
-            yield return enemy.GetController().GetDieAnimation().Play().WaitForCompletion();
+            yield return enemy.m_dieAnimation.Play().WaitForCompletion();
         }
 
         private bool isEnemyJustDied(EnemyView enemy) =>
-            enemy.GetController().GetCurrentHealth() == 0
+            enemy.GetState().GetCurrentHealth() == 0
                 && !m_ActiveEnemyDieRoutines.ContainsKey(enemy);
         public bool isAnyEnemyDying() =>
             !m_ActiveEnemyDieRoutines.IsEmpty();

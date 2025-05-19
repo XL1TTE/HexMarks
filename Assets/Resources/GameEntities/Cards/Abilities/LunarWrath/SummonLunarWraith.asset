@@ -17,8 +17,7 @@ MonoBehaviour:
   m_FrameDuration: 100
   m_FrameSettings:
   - m_FrameTriggerIndex: 0
-    m_SFX:
-    - {fileID: 8300000, guid: 174b987967638f34685e171aace11e60, type: 3}
+    m_SFX: []
     m_Actions:
     - rid: 559004221489545216
   SFX_Channel: {fileID: 11400000, guid: d7800e8cdd970a1429722bdd526930ac, type: 2}
@@ -30,3 +29,5 @@ MonoBehaviour:
       data:
         m_effectTriggerFrameIndex: 8
         m_LunarWraithPrefab: {fileID: 2101268824137466120, guid: 4096a25a00742da448b6e3aa817f5263, type: 3}
+        m_LunarWrathSummonReplic: {fileID: 8300000, guid: 174b987967638f34685e171aace11e60, type: 3}
+        m_SFXChannel: {fileID: 11400000, guid: d7800e8cdd970a1429722bdd526930ac, type: 2}

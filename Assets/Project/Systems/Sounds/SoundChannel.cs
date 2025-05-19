@@ -10,7 +10,7 @@ namespace Project.Sound
     [CreateAssetMenu(fileName = "SoundChannel", menuName = "XL1TTE/Sounds")]
     public class SoundChannel : ScriptableObject
     {
-        private UnityEvent<AudioClip, float> m_requests;
+        private UnityEvent<AudioClip, float> m_requests = new();
         
         public void Subscribe(UnityAction<AudioClip, float> speaker){
             if(m_requests.GetPersistentEventCount() != 0){

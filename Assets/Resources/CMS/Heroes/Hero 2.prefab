@@ -64,9 +64,10 @@ MonoBehaviour:
       data:
         m_DefaultStats:
           m_BaseStats:
-            m_Health: 100
-            m_MaxHealth: 100
+            m_Health: 35
+            m_MaxHealth: 35
             m_Initiative: 25
           m_MaxCardsInHand: 5
         m_DefaultDeck:
         - {fileID: 4769229897484343582, guid: a47a65b89fbbe5345861ad02ce5fa78c, type: 3}
+        - {fileID: 5405841511661625861, guid: a57929374a4dfba4185db23a25f00c5d, type: 3}

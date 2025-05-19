@@ -61,10 +61,10 @@ MonoBehaviour:
       data:
         m_stats:
           m_BaseStats:
-            m_Health: 150
-            m_MaxHealth: 150
+            m_Health: 25
+            m_MaxHealth: 25
             m_Initiative: 50
-          m_Damage: 50
+          m_Damage: 10
     - rid: 559004016258056203
       type: {class: TagAnimations, ns: Project.Data.CMS.Tags.Enemies, asm: Assembly-CSharp}
       data:

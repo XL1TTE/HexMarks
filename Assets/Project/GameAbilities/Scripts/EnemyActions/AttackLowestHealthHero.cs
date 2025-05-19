@@ -11,34 +11,32 @@ using XL1TTE.GameActions;
 namespace Project.Enemies.AI{
 
     [Serializable]
-    public class AttackLowestHealthHero : EnemyAction, IContextResolverUser
+    public class AttackLowestHealthHero : EnemyAction
     {                
-        public IEnumerable<DataRequest> GetRequests()
+        public override IEnumerable<DataRequest> GetRequests()
         {
             return new List<DataRequest>{
-                new DataRequest("HeroesInBattle", typeof(List<HeroView>))
+                new DataRequest("HeroesInBattle", typeof(List<Hero>))
             };
         }
 
-        public override IEnumerator Execute(EnemyView state)
-        {
-            var context = ContextResolver.Resolve(this);
-            
-            var all_heroes = context.Get<List<HeroView>>("HeroesInBattle");
+        public override IEnumerator Execute(EnemyView enemyView, Context context)
+        {            
+            var all_heroes = context.Get<List<Hero>>("HeroesInBattle");
 
             if(all_heroes.IsEmpty()){}
 
-            var enemy = state.GetController();
+            var enemy = enemyView.GetState();
             
-            HeroView toAttack = all_heroes[0];
+            Hero toAttack = all_heroes[0];
             
             foreach(var hero in all_heroes){
-                if(hero.GetState().m_stats.m_BaseStats.m_Health < toAttack.GetState().m_stats.m_BaseStats.m_Health){
+                if(hero.GetCurrentHealth() < toAttack.GetCurrentHealth()){
                     toAttack = hero;
                 }
             }
 
-            toAttack.GetState().m_model.Is<TagName>(out var tagName);
+            toAttack.GetModel().Is<TagName>(out var tagName);
 
             Debug.Log($"Damaging hero: {tagName.name} with: {enemy.GetEnemyDamage()} damage.");
             

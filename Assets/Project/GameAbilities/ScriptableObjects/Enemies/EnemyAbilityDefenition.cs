@@ -4,6 +4,7 @@ using Project.Enemies;
 using Project.Sound;
 using UnityEngine;
 using XL1TTE.Animator;
+using XL1TTE.GameActions;
 
 namespace XL1TTE.GameAbilities{
     
@@ -20,7 +21,7 @@ namespace XL1TTE.GameAbilities{
         
         [SerializeField] private SoundChannel SFX_Channel;
         
-        public FrameAnimation GetAbility(EnemyView enemyView){
+        public FrameAnimation GetAbility(EnemyView enemyView, ContextResolver resolver){
             var anim = enemyView.GetRenderer().ToFrameAnimation(m_Animation, m_FrameDuration);
             
             for(int i = 0; i < m_FrameSettings.Length; i++){
@@ -29,7 +30,8 @@ namespace XL1TTE.GameAbilities{
                 
                 IEnumerator EnemyActionCallback(){
                     foreach(var a in frame_settings.m_Actions){
-                        yield return a.Execute(enemyView);
+                        var context = resolver.Resolve(a);
+                        yield return a.Execute(enemyView, context);
                     }
                 }
                 

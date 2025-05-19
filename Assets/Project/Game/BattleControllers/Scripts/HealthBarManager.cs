@@ -21,7 +21,7 @@ namespace Project.GameManagers{
         private SignalBus m_SignalBus;
         private IHealthBarFactory m_Factory;
         private Dictionary<EnemyView, HealthBar> m_EnemiesCache = new();
-        private Dictionary<HeroView, HealthBar> m_HeroesCache = new();
+        private Dictionary<Hero, HealthBar> m_HeroesCache = new();
         
         public void OnDisable(){
             m_SignalBus.Unsubscribe<EnemySpawnedSignal>(OnEnemySpawned);
@@ -69,7 +69,7 @@ namespace Project.GameManagers{
         private void OnEnemyHealthChanged(EnemyHealthChangedSignal signal)
         {
             var enemyView = signal.GetEnemy();
-            var enemy = enemyView.GetController();
+            var enemy = enemyView.GetState();
 
             if (!m_EnemiesCache.TryGetValue(enemyView, out var bar)) { return; }
 
@@ -78,7 +78,7 @@ namespace Project.GameManagers{
         private void OnEnemySpawned(EnemySpawnedSignal signal)
         {
             var enemyView = signal.GetEnemy();
-            var enemy = enemyView.GetController();
+            var enemy = enemyView.GetState();
 
             HealthBar bar = m_Factory.CreateEnemyHealthBar(enemyView.transform);
             bar.UpdateProgress(enemy.GetCurrentHealth() / enemy.GetMaxHealth());
@@ -96,28 +96,26 @@ namespace Project.GameManagers{
 
         private void OnHeroHealthChanged(HeroHealthChangedSignal signal)
         {
-            var heroView = signal.GetHero();
-            var heroState = heroView.GetState();
+            var hero = signal.hero;
+            
+            if (!m_HeroesCache.TryGetValue(hero, out var bar)) { return; }
 
-            if (!m_HeroesCache.TryGetValue(heroView, out var bar)) { return; }
-
-            bar.UpdateProgress(heroState.m_stats.m_BaseStats.m_Health / heroState.m_stats.m_BaseStats.m_MaxHealth);
+            bar.UpdateProgress(hero.GetCurrentHealth() / hero.GetMaximumHealth());
         }
 
 
         private void OnHeroSpawned(HeroSpawnedSignal signal){
-            var heroView = signal.GetHero();
-            var heroState = heroView.GetState();
+            var hero = signal.hero;
             
-            HealthBar bar = m_Factory.CreateHeroHealthBar(heroView.transform, IHealthBarFactory.BarAlignment.BUTTOM);
-            bar.UpdateProgress(heroState.m_stats.m_BaseStats.m_Health / heroState.m_stats.m_BaseStats.m_MaxHealth);
+            HealthBar bar = m_Factory.CreateHeroHealthBar(hero.m_view.transform, IHealthBarFactory.BarAlignment.BUTTOM);
+            bar.UpdateProgress(hero.GetCurrentHealth() / hero.GetMaximumHealth());
 
-            m_HeroesCache.Add(heroView, bar);
+            m_HeroesCache.Add(hero, bar);
             
         }
         
         private void OnHeroDied(HeroDiedSignal signal){
-            var hero = signal.GetHero();
+            var hero = signal.hero;
             if (!m_HeroesCache.TryGetValue(hero, out var bar)) { return; }
             
             m_Factory.ReturnHeroBarToPool(bar);

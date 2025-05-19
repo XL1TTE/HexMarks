@@ -20,18 +20,23 @@ namespace Project.Enemies{
         private EnemyStats m_Stats;
         private CMSEntity m_Model;
         public CMSEntity GetModel() => m_Model;
-        
-        private AnimationDefenition m_DieAnimation;
-        public void SetDieAnimation(AnimationDefenition anim) => m_DieAnimation = anim;
-        public xlAnimation GetDieAnimation(EnemyView view) => m_DieAnimation.GetAnimation(view);
-        
-        private AnimationDefenition m_IdleAnimation;
-        public void SetIdleAnimation(AnimationDefenition anim) => m_IdleAnimation = anim;
-        public xlAnimation GetIdleAnimation(EnemyView view) => m_IdleAnimation.GetAnimation(view);
 
-        public void TakeDamage(float amount){
+        internal float TakeDamage(float amount){
+            var temp = m_Stats.m_BaseStats.m_Health;
+
             m_Stats.m_BaseStats.m_Health = Mathf.Clamp(m_Stats.m_BaseStats.m_Health - amount, 0, m_Stats.m_BaseStats.m_MaxHealth);
+            
+            return temp - m_Stats.m_BaseStats.m_Health;
         }
+
+        internal float TakeHeal(float amount){
+            var temp = m_Stats.m_BaseStats.m_Health;
+
+            m_Stats.m_BaseStats.m_Health = Mathf.Clamp(m_Stats.m_BaseStats.m_Health + amount, 0, m_Stats.m_BaseStats.m_MaxHealth);
+
+            return m_Stats.m_BaseStats.m_Health - temp;
+        }
+        
         public float GetMaxHealth() => m_Stats.m_BaseStats.m_MaxHealth;
         public float GetCurrentHealth() => m_Stats.m_BaseStats.m_Health;
         public float GetEnemyDamage() => m_Stats.m_Damage;

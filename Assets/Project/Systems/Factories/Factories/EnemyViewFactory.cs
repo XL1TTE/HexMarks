@@ -28,11 +28,11 @@ namespace Project.Factories{
             var e_state = new EnemyState(stats, model);
             
             var t_animaions = model.GetTag<TagAnimations>();
+
+            view.SetIdleAnimation(t_animaions.m_IdleAnimation.GetAnimation(view));
+            view.SetDieAnimation(t_animaions.m_DieAnimation.GetAnimation(view));
             
-            e_state.SetIdleAnimation(t_animaions.m_IdleAnimation);
-            e_state.SetDieAnimation(t_animaions.m_DieAnimation);
-            
-            var enemyController = new Enemy(view, e_state);
+            view.Init(e_state);
             
             return view;
         }

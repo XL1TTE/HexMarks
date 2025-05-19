@@ -1,18 +1,9 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using CardTags;
-using DG.Tweening;
-using Project.EventBus;
-using Project.EventBus.Signals;
-using Project.JobSystem;
+using CMSystem;
 using Project.Layouts;
 using Project.ObjectInteractions;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.EventSystems;
 using UnityEngine.Rendering;
-using Zenject;
 
 namespace Project.Cards{
     
@@ -24,11 +15,7 @@ namespace Project.Cards{
             TryGetComponent(out m_sorting);
             TryGetComponent(out m_Interactions);
         }
-        public void Init(Card a_CardController){
-            m_CardController = a_CardController;
-        }
-        private Card m_CardController;
-        public CardState GetCardState() => m_CardController.GetState();
+
 
         #region Dragable
         private IDraggable m_draggable;
@@ -41,7 +28,6 @@ namespace Project.Cards{
         private SortingGroup m_sorting;
         public SortingGroup GetSortingGroup() => m_sorting;
         #endregion
-
 
         public Transform GetTransform() => transform;
 
@@ -65,7 +51,6 @@ namespace Project.Cards{
         #endregion
 
 
-
         #region Renderer
         [SerializeField] protected SpriteRenderer m_Renderer;
         public SpriteRenderer GetRenderer() => m_Renderer;
@@ -79,43 +64,25 @@ namespace Project.Cards{
         #endregion
         
         
-        [Inject]
-        private void Construct(SignalBus signalBus){
-            m_signalBus = signalBus;
-        }
-        private SignalBus m_signalBus;
+        public void OnCardPlayed() => m_controller.PlayCard();
         
-        public void PlayCard(){
-            m_signalBus.SendSignal(new CardUsedSignal(this, OnCardPlayed()));
+        private Card m_controller;
+        public void Init(Card controller){
+            m_controller = controller;
         }
-        
-        private JobSequence OnCardPlayed()
-        {
-            var jobs = new List<Job>();
-            
-            // Disable interaction while card playing...
-            jobs.Add(new JobSwitchColliderEnabledState(gameObject, false));
-            
-            // Play all card abilities
-            if (GetCardState().GetModel().Is<TagOnPlayAbilities>(out var onPlayed))
-            {
-                jobs.Add(new JobPlayRoutine(onPlayed.ExecuteOnPlayAbilities(this)));
-            }
-
-            // Enable interactions when all card abilities have played...
-            jobs.Add(new JobSwitchColliderEnabledState(gameObject, true));
-
-            // Return card to pool...
-            jobs.Add(new JobReturnCardViewToPool(this));
-
-            return new JobSequence(jobs);
-        }
-
+        public string GetModelID() => m_controller.m_state.model.id;
+        public CMSEntity GetModel() => m_controller.m_state.model;
 
         void OnDisable()
         {
             LeaveLayout();
         }
+    }
+
+    public class meta_ToolTip
+    {
+        public string card_name;
+        public string card_desc;
     }
 }
 

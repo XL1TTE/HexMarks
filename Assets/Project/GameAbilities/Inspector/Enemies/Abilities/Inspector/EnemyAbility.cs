@@ -4,6 +4,7 @@ using Project.Enemies;
 using UnityEngine;
 using XL1TTE.Animator;
 using XL1TTE.GameAbilities;
+using XL1TTE.GameActions;
 
 namespace Project.Enemies.Abilities{
     
@@ -12,9 +13,9 @@ namespace Project.Enemies.Abilities{
     {
         [SerializeField] public EnemyAbilityDefenition defenition;
 
-        public override IEnumerator ExecuteAbility(EnemyView enemy)
+        public override IEnumerator ExecuteAbility(EnemyView enemy, ContextResolver resolver)
         {
-              yield return defenition.GetAbility(enemy).Play().WaitForCompletion();  
+              yield return defenition.GetAbility(enemy, resolver).Play().WaitForCompletion();  
         }
     }
 }

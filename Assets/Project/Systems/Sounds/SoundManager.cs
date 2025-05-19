@@ -16,7 +16,7 @@ namespace Project.Sound
                 channel.Subscribe(PlaySound);
             }
         }
-        [SerializeField] List<SoundChannel> m_SoundChannels = new();
+        [SerializeField] List<SoundChannel> m_SoundChannels;
         
         private AudioSource m_audioSource;
         

@@ -1,9 +1,11 @@
+using System;
 using System.Collections.Generic;
 using CMSystem;
 using Project.Actors.Stats;
 using UnityEngine;
 
 namespace Project.Actors{
+
 
     public class HeroState{
         public HeroState(string id, CMSEntity model, HeroStats stats, HeroDeck deck){
@@ -17,11 +19,6 @@ namespace Project.Actors{
         public HeroStats m_stats;   
         public HeroDeck m_deck;
         public CMSEntity m_model;
-
-        public void TakeDamage(float amount)
-        {
-            m_stats.m_BaseStats.m_Health = Mathf.Clamp(m_stats.m_BaseStats.m_Health - amount, 0, m_stats.m_BaseStats.m_MaxHealth);
-        }
     }
     
     public class HeroDeck{

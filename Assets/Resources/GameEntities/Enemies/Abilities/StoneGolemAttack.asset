@@ -24,11 +24,13 @@ MonoBehaviour:
   - {fileID: -2074745354, guid: 4a6419fa23473824899893636ed3bca2, type: 3}
   - {fileID: 815657327, guid: 4a6419fa23473824899893636ed3bca2, type: 3}
   - {fileID: 1701386119, guid: 4a6419fa23473824899893636ed3bca2, type: 3}
+  m_FrameDuration: 100
   m_FrameSettings:
   - m_FrameTriggerIndex: 7
     m_SFX: []
     m_Actions:
     - rid: 559004177793810436
+  SFX_Channel: {fileID: 0}
   references:
     version: 2
     RefIds:

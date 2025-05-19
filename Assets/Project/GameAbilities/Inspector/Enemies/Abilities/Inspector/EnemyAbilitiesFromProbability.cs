@@ -6,13 +6,14 @@ using Project.Enemies.Abilities;
 using UnityEngine;
 using XL1TTE.Animator;
 using XL1TTE.GameAbilities;
+using XL1TTE.GameActions;
 
 namespace Project.Enemies.Abilities{
     [Serializable]
     public class EnemyAbilitiesFromProbability: EnemyAblilityInspector{
         [SerializeField] List<EnemyAbilityProbabilityPair> settings;
         
-        public override IEnumerator ExecuteAbility(EnemyView enemy){
+        public override IEnumerator ExecuteAbility(EnemyView enemy, ContextResolver resolver){
             float total = 0;
             foreach (var v in settings)
             {
@@ -35,7 +36,7 @@ namespace Project.Enemies.Abilities{
             }
             if (choose != null)
             {
-                yield return choose.GetAbility(enemy).Play().WaitForCompletion();
+                yield return choose.GetAbility(enemy, resolver).Play().WaitForCompletion();
             }
         }
     }

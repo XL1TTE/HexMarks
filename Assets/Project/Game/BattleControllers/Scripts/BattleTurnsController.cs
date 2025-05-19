@@ -22,8 +22,9 @@ namespace Project.Game.Battle.Controllers
     public class BattleTurnsController: MonoBehaviour{
         
         [Inject]
-        private void Construct(SignalBus signalBus){
+        private void Construct(SignalBus signalBus, ContextResolver contextResolver){
             m_SignalBus = signalBus;
+            m_ContextResolver = contextResolver;
         }
         void OnEnable()
         {
@@ -68,7 +69,10 @@ namespace Project.Game.Battle.Controllers
             m_NextTurnProccessValidators = null;
         }
 
-        private SignalBus m_SignalBus;                
+        private SignalBus m_SignalBus;    
+        private ContextResolver m_ContextResolver;
+        
+                    
         [SerializeField] private Sprite m_TurnMarkerSprite;
         [SerializeField] private Vector3 m_TurnMarkerScale;
 
@@ -93,8 +97,12 @@ namespace Project.Game.Battle.Controllers
 
         private void BattleStageReadyProccess(BattleStageReadySignal signal)
         {
+            FreeTurnMarker();
             m_TurnsQueue = CreateTurnQueue(signal.Stage);
-            StartCoroutine(ProccessNextTurn());
+            if (m_NextTurnProccessRoutine == null)
+            {
+                m_NextTurnProccessRoutine = new AwaitableCoroutine(this, ProccessNextTurn());
+            }
         }
 
         private void OnHeroTurnInteraction(HeroTurnSignal signal)
@@ -102,11 +110,12 @@ namespace Project.Game.Battle.Controllers
             // Make it able to end turn.
             m_EndTurnButton.interactable = true;
             
-            var hero = signal.GetHero();
+            var hero = signal.hero;
 
-            MarkTurnTaker(hero.gameObject);
+            MarkTurnTaker(hero.m_view.gameObject);
             
-            m_SignalBus.SendSignal(new RequestDrawCardsSignal(hero, hero.GetState().m_stats.m_MaxCardsInHand, true));
+            hero.RequestCardsDraw();
+            
             m_SignalBus.SendSignal(new RequestCardsDraggingStateSwitchSignal(true));
         }
 
@@ -120,14 +129,14 @@ namespace Project.Game.Battle.Controllers
             FreeTurnMarker();
 
             var enemy = signal.GetEnemy();
-            var enemyModel = enemy.GetController().GetModel();
+            var enemyModel = enemy.GetState().GetModel();
 
             if (enemyModel.Is<TagOnTurnAbilities>(out var onTurn))
             {
 
                 enemy.StopIdleAnimation();
                 
-                yield return onTurn.ExecuteOnTurnAbilities(enemy);
+                yield return onTurn.ExecuteOnTurnAbilities(enemy, m_ContextResolver);
                 
                 enemy.StartIdleAnimation();
 
@@ -138,7 +147,7 @@ namespace Project.Game.Battle.Controllers
 
         private void OnHeroDiedInteraction(HeroDiedSignal signal)
         {
-            var hero = signal.GetHero();
+            var hero = signal.hero;
 
             m_TurnsQueue.TryRemove((t) => t is HeroTurnTaker tt && tt.GetHero() == hero);
         }
@@ -203,6 +212,7 @@ namespace Project.Game.Battle.Controllers
 
         private void OnEndTurnButtonClicked()
         {
+            
             if(m_NextTurnProccessRoutine == null){
                 m_SignalBus.SendSignal(new RequestCardsDraggingStateSwitchSignal(false));
                 m_NextTurnProccessRoutine = new AwaitableCoroutine(this, ProccessNextTurn());

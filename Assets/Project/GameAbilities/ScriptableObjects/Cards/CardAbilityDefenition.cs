@@ -4,6 +4,7 @@ using Project.Cards;
 using Project.Sound;
 using UnityEngine;
 using XL1TTE.Animator;
+using XL1TTE.GameActions;
 
 namespace XL1TTE.GameAbilities
 {
@@ -21,9 +22,9 @@ namespace XL1TTE.GameAbilities
 
         [SerializeField] private SoundChannel SFX_Channel;
         
-        public FrameAnimation GetAbility(CardView card){
+        public FrameAnimation GetAbility(Card card, ContextResolver resolver){
             
-            FrameAnimation anim = card.GetRenderer().ToFrameAnimation(m_CardAnimation, m_FrameDuration);
+            FrameAnimation anim = card.m_view.GetRenderer().ToFrameAnimation(m_CardAnimation, m_FrameDuration);
             
             for (int i = 0; i < m_FrameSettings.Length; i++)
             {
@@ -34,7 +35,8 @@ namespace XL1TTE.GameAbilities
                 {
                     foreach (var a in frame_settings.m_Actions)
                     {
-                        yield return a.Execute(card);
+                        var context = resolver.Resolve(a);
+                        yield return a.Execute(card, context);
                     }
                 }
 

@@ -14,7 +14,7 @@ namespace Project.JobSystem{
         }
         public override IEnumerator Proccess()
         {
-            m_Target.GetController().TakeDamage(m_Damage);
+            m_Target.GetState().TakeDamage(m_Damage);
             yield break;
         }
     }

@@ -24,7 +24,7 @@ namespace Project.ZenjectInstallers{
             Container.Bind<LastAllyCardPlayedReqResolver>().FromNew().AsSingle();    
             
             Container.Bind<ContextResolver>().FromMethod(
-                (c) => InitializeContextResolver(c));
+                (c) => InitializeContextResolver(c)).AsSingle();
         }
 
         ContextResolver InitializeContextResolver(InjectContext context)

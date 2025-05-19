@@ -13,10 +13,24 @@ MonoBehaviour:
   m_Name: FireBall
   m_EditorClassIdentifier: 
   m_CardAnimation:
-  - {fileID: 21300000, guid: 45e99f80eb3d9c44c946931b41cc155b, type: 3}
+  - {fileID: -2130220106, guid: 2be8b0eb0c4de54428f2f8f39044942f, type: 3}
+  - {fileID: -858297136, guid: 2be8b0eb0c4de54428f2f8f39044942f, type: 3}
+  - {fileID: 1516266352, guid: 2be8b0eb0c4de54428f2f8f39044942f, type: 3}
+  - {fileID: -1399590255, guid: 2be8b0eb0c4de54428f2f8f39044942f, type: 3}
+  - {fileID: 561936474, guid: 2be8b0eb0c4de54428f2f8f39044942f, type: 3}
+  - {fileID: 1276534357, guid: 2be8b0eb0c4de54428f2f8f39044942f, type: 3}
+  - {fileID: -2002534632, guid: 2be8b0eb0c4de54428f2f8f39044942f, type: 3}
+  - {fileID: -700340975, guid: 2be8b0eb0c4de54428f2f8f39044942f, type: 3}
+  - {fileID: 599162936, guid: 2be8b0eb0c4de54428f2f8f39044942f, type: 3}
+  - {fileID: 1548578927, guid: 2be8b0eb0c4de54428f2f8f39044942f, type: 3}
+  - {fileID: -68439336, guid: 2be8b0eb0c4de54428f2f8f39044942f, type: 3}
+  - {fileID: -414287993, guid: 2be8b0eb0c4de54428f2f8f39044942f, type: 3}
+  - {fileID: -1335687108, guid: 2be8b0eb0c4de54428f2f8f39044942f, type: 3}
+  - {fileID: -879841231, guid: 2be8b0eb0c4de54428f2f8f39044942f, type: 3}
+  - {fileID: -648123847, guid: 2be8b0eb0c4de54428f2f8f39044942f, type: 3}
   m_FrameDuration: 100
   m_FrameSettings:
-  - m_FrameTriggerIndex: 0
+  - m_FrameTriggerIndex: 14
     m_SFX: []
     m_Actions:
     - rid: 559004200519598091
@@ -27,5 +41,6 @@ MonoBehaviour:
     - rid: 559004200519598091
       type: {class: FireBall, ns: XL1TTE.GameAbilities.CardActions, asm: Assembly-CSharp}
       data:
+        m_Damage: 5
         FireBall_SFX: {fileID: 8300000, guid: 92941a3cc75600c49a877e32f76faa24, type: 3}
         SFX_Channel: {fileID: 11400000, guid: d7800e8cdd970a1429722bdd526930ac, type: 2}
