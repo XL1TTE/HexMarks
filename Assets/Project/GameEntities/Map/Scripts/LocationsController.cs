@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Project.Data.CMS.Tags;
-using SaveData;
+using GameData;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Zenject;
@@ -10,10 +10,10 @@ namespace Project.Map
 {
     public class LocationsController: MonoBehaviour{
         [Inject]
-        private void Construct(RuntimeDataProvider runtimeData){
+        private void Construct(GameDataTracker runtimeData){
             m_RuntimeDataProvider = runtimeData;
         }
-        private RuntimeDataProvider m_RuntimeDataProvider;
+        private GameDataTracker m_RuntimeDataProvider;
 
         private List<MapLocationView> m_allLocations = new();
 

@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using Project.Actors;
 
-namespace SaveData{
+namespace GameData{
     
     [Serializable]
     public class SaveFile{

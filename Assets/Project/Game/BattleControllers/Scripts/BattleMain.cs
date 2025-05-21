@@ -1,6 +1,8 @@
 using System.Collections;
 using Project.GameManagers;
+using Project.InteractorSystem;
 using UnityEngine;
+using Zenject;
 
 namespace Project.Game.Battle{
     

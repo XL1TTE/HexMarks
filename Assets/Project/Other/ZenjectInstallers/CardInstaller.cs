@@ -19,6 +19,7 @@ namespace Project.ZenjectInstallers{
         
         
         private CardViewObjectPool ConfigureCardPool(InjectContext context){
+            
             return m_CardViewPool.Init(context.Container);
         }
     }

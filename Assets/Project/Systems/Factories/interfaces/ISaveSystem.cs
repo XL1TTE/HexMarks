@@ -10,7 +10,7 @@ using Google.Protobuf;
 using Project.Actors;
 using Project.Actors.Stats;
 using Project.Data.CMS.Tags.Heroes;
-using SaveData;
+using GameData;
 using SaveDataProto.DataClasses;
 using Unity.Mathematics;
 using UnityEngine;

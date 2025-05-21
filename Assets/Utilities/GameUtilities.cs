@@ -3,8 +3,6 @@ using DG.Tweening;
 using UnityEngine;
 
 namespace GameUtilities{
-    
-    
     public static class GameUtility{
         
         public static IEnumerator FlyToCenterOfScreen(GameObject obj, float duration, Vector3 offset = default){

@@ -66,12 +66,14 @@
   <ItemGroup>
     <Compile Include="Assets\Project\Game\BattleControllers\Scripts\BattleTurnsController.cs" />
     <Compile Include="Assets\Utilities\Nlog\Logging.cs" />
+    <Compile Include="Assets\Project\Systems\InteractorSystem\Scripts\Interactor.cs" />
     <Compile Include="Assets\Project\Other\ZenjectInstallers\SaveFileInstaller.cs" />
     <Compile Include="Assets\Project\GameAbilities\Scripts\EnemyActions\AttackLowestHealthHero.cs" />
     <Compile Include="Assets\Project\Data\EventBus\Signals\BattleSignals\Battle\PlayerLostBattleSignal.cs" />
     <Compile Include="Assets\Project\Game\BattleControllers\Scripts\EnemiesInBattleController.cs" />
     <Compile Include="Assets\Project\Systems\ObjectsInteractionSystem\Interactions\InteractionsBase.cs" />
     <Compile Include="Assets\Project\GameEntities\Cards\CardEffects\Effects\EffectsAnimations\ColorWithTextEnemyAnimation.cs" />
+    <Compile Include="Assets\Project\Systems\InteractorSystem\Scripts\Interactions\interfaces\ICardPlayInteraction.cs" />
     <Compile Include="Assets\Project\Systems\Sounds\SoundChannel.cs" />
     <Compile Include="Assets\Project\Data\CMSTags\Generic\GenericTags.cs" />
     <Compile Include="Assets\Project\Systems\Factories\interfaces\ICardFactory.cs" />
@@ -116,6 +118,7 @@
     <Compile Include="Assets\Project\GameAbilities\Inspector\Cards\Abilities\Inspector\CardAbilityInspector.cs" />
     <Compile Include="Assets\Project\Data\EventBus\Signals\BattleSignals\Cards\CardPlayedSignal.cs" />
     <Compile Include="Assets\Project\Data\EventBus\Signals\BattleSignals\Enemies\EnemyDyingSignal.cs" />
+    <Compile Include="Assets\Project\Systems\InteractorSystem\Scripts\Interactions\CardPlayedInteraction.cs" />
     <Compile Include="Assets\Project\Systems\Factories\Factories\HeroFactory.cs" />
     <Compile Include="Assets\Project\Systems\Factories\interfaces\IHealthBarFactory.cs" />
     <Compile Include="Assets\Project\Game\BattleControllers\Scripts\BattleManager.cs" />
@@ -153,6 +156,7 @@
     <Compile Include="Assets\Project\Systems\JobSystem\Job.cs" />
     <Compile Include="Assets\Project\Game\BattleControllers\Scripts\CardsExecutionController.cs" />
     <Compile Include="Assets\Project\Systems\ObjectsInteractionSystem\Droping\IDropHandler.cs" />
+    <Compile Include="Assets\Project\GameEntities\Actors\Enemies\NewEnemy\Enemy.cs" />
     <Compile Include="Assets\Utilities\Tooltips\FloatingTextUtility.cs" />
     <Compile Include="Assets\Project\Systems\JobSystem\Jobs\JobPlayRoutine.cs" />
     <Compile Include="Assets\Project\Systems\Factories\interfaces\IEnemyViewFactory.cs" />
@@ -160,6 +164,7 @@
     <Compile Include="Assets\Project\UI\ProgressBars\HealthBar.cs" />
     <Compile Include="Assets\Project\Systems\ObjectsInteractionSystem\IDraggable.cs" />
     <Compile Include="Assets\Utilities\GameUtilities.cs" />
+    <Compile Include="Assets\Project\Other\ZenjectInstallers\InteractorInstaller.cs" />
     <Compile Include="Assets\Project\GameEntities\Cards\Scripts\CardInteractions.cs" />
     <Compile Include="Assets\Project\GameEntities\Cards\Scripts\CardModel.cs" />
     <Compile Include="Assets\Project\Systems\LayoutSystem\Cards\CardHand.cs" />
@@ -193,6 +198,7 @@
     <Compile Include="Assets\Resources\GameEntities\Cards\Abilities\LunarWrath\Scripts\LunarWrathScript.cs" />
     <Compile Include="Assets\Project\UI\UINotification.cs" />
     <Compile Include="Assets\Project\GameEntities\Cards\CardEffects\Scripts\ICardEffect.cs" />
+    <Compile Include="Assets\Utilities\ReflectionUtility.cs" />
     <Compile Include="Assets\Project\Systems\JobSystem\Jobs\JobReturnCardViewToPool.cs" />
     <Compile Include="Assets\Utilities\ConstantObject.cs" />
     <Compile Include="Assets\Project\Systems\LayoutSystem\Cards\ICardLayout.cs" />
@@ -1167,12 +1173,28 @@
       <HintPath>Library\ScriptAssemblies\Unity.2D.Aseprite.Editor.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="Unity.Profiling.Core">
+      <HintPath>Library\ScriptAssemblies\Unity.Profiling.Core.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="Unity.RenderPipelines.Universal.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.RenderPipelines.Universal.Editor.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="Unity.MemoryProfiler">
+      <HintPath>Library\ScriptAssemblies\Unity.MemoryProfiler.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary">
       <HintPath>Library\ScriptAssemblies\Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Unity.EditorCoroutines.Editor">
+      <HintPath>Library\ScriptAssemblies\Unity.EditorCoroutines.Editor.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Unity.MemoryProfiler.Editor.MemoryProfilerModule">
+      <HintPath>Library\ScriptAssemblies\Unity.MemoryProfiler.Editor.MemoryProfilerModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="PsdPlugin">
@@ -1249,6 +1271,10 @@
     </Reference>
     <Reference Include="Unity.VisualScripting.SettingsProvider.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.VisualScripting.SettingsProvider.Editor.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Unity.MemoryProfiler.Editor">
+      <HintPath>Library\ScriptAssemblies\Unity.MemoryProfiler.Editor.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Unity.InternalAPIEditorBridge.001">

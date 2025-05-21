@@ -1,5 +1,5 @@
 using Project.Factories;
-using SaveData;
+using GameData;
 using UnityEngine;
 using Zenject;
 
@@ -12,7 +12,7 @@ namespace Project.ZenjectInstallers{
             Container.Bind<ISaveSystem>().To<SaveSystem>().FromNew().AsSingle()
                 .WithArguments(m_InitialSaveConfig);
                 
-            Container.Bind<RuntimeDataProvider>().FromNew().AsSingle();
+            Container.Bind<GameDataTracker>().FromNew().AsSingle();
         }
     }
 }

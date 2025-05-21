@@ -6,7 +6,7 @@ using Project.Actors.Stats;
 using Project.Game.Battle.Controllers;
 using SaveDataProto.DataClasses;
 
-namespace SaveData{
+namespace GameData{
     public static class SaveFileMapper{
         
         

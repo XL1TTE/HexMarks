@@ -11,7 +11,7 @@ using Project.Factories;
 using Project.Game.Battle;
 using Project.Sound;
 using Project.UI;
-using SaveData;
+using GameData;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -26,7 +26,7 @@ namespace Project.GameManagers{
             SignalBus signalBus, 
             IEnemyViewFactory enemyFactory,
             IHeroFactory heroFactory,
-            RuntimeDataProvider runtimeDataProvider,
+            GameDataTracker runtimeDataProvider,
             ISaveSystem saveSystem)
         {
             m_SignalBus = signalBus;
@@ -64,7 +64,7 @@ namespace Project.GameManagers{
         }
 
         private SignalBus m_SignalBus;
-        private RuntimeDataProvider m_RuntimeDataProvider;
+        private GameDataTracker m_RuntimeDataProvider;
         private IEnemyViewFactory m_EnemyFactory;
         private IHeroFactory m_HeroFactory;
         private ISaveSystem m_SaveSystem;
@@ -118,7 +118,7 @@ namespace Project.GameManagers{
         private void ClearOldHeroesSlots(){
             if(m_CurrentEnemiesInBattle == null) {return; }
             foreach(var hero in m_CurrentHeroesInBattle){
-                //Destroy(hero.gameObject);
+                Destroy(hero.m_view.gameObject);
             }
         }
         
