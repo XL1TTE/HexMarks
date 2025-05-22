@@ -82,8 +82,8 @@
     <Compile Include="Assets\Project\GameEntities\Map\Scripts\LocationsController.cs" />
     <Compile Include="Assets\Project\Data\SaveData\SaveFile.cs" />
     <Compile Include="Assets\Project\GameEntities\Map\Scripts\MapLocationView.cs" />
-    <Compile Include="Assets\Project\GameAbilities\Scripts\EnemyActions\EnemyAction.cs" />
     <Compile Include="Assets\Project\Systems\Factories\Factories\CardFactory.cs" />
+    <Compile Include="Assets\Project\GameAbilities\Scripts\EnemyActions\EnemyAction.cs" />
     <Compile Include="Assets\Project\Game\BattleControllers\Scripts\HeroesInBattleController.cs" />
     <Compile Include="Assets\Project\Data\EventBus\Signals\BattleSignals\Enemies\EnemyHealthChanged.cs" />
     <Compile Include="Assets\Project\Game\BattleControllers\Scripts\HealthBarManager.cs" />
@@ -104,8 +104,8 @@
     <Compile Include="Assets\Utilities\Extensions\TransformExtentions.cs" />
     <Compile Include="Assets\Project\GameEntities\Actors\Enemies\EnemyAI\Scripts\TargetRules\TargetHealthRule.cs" />
     <Compile Include="Assets\Project\GameAbilities\Scripts\CardActions\CardAction.cs" />
-    <Compile Include="Assets\Project\GameAbilities\ScriptableObjects\Enemies\EnemyAbilityFrameDefenition.cs" />
     <Compile Include="Assets\Project\Data\EventBus\Signals\BattleSignals\Enemies\EnemyDiedSignal.cs" />
+    <Compile Include="Assets\Project\GameAbilities\ScriptableObjects\Enemies\EnemyAbilityFrameDefenition.cs" />
     <Compile Include="Assets\Project\GameAbilities\ScriptableObjects\Cards\CardAbilityDefenition.cs" />
     <Compile Include="Assets\Project\GameEntities\Actors\Heroes\HeroState.cs" />
     <Compile Include="Assets\Project\Data\ContextResolvers\DataRequestResolvers\CardHandReqResolver.cs" />
@@ -163,8 +163,10 @@
     <Compile Include="Assets\Utilities\Extensions\StringExtantions.cs" />
     <Compile Include="Assets\Project\UI\ProgressBars\HealthBar.cs" />
     <Compile Include="Assets\Project\Systems\ObjectsInteractionSystem\IDraggable.cs" />
+    <Compile Include="Assets\Project\MainMenu\Scripts\InPlayMenuController.cs" />
     <Compile Include="Assets\Utilities\GameUtilities.cs" />
     <Compile Include="Assets\Project\Other\ZenjectInstallers\InteractorInstaller.cs" />
+    <Compile Include="Assets\Project\MainMenu\Scripts\MainMenuController.cs" />
     <Compile Include="Assets\Project\GameEntities\Cards\Scripts\CardInteractions.cs" />
     <Compile Include="Assets\Project\GameEntities\Cards\Scripts\CardModel.cs" />
     <Compile Include="Assets\Project\Systems\LayoutSystem\Cards\CardHand.cs" />

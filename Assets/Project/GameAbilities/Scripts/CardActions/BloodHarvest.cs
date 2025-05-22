@@ -58,4 +58,36 @@ namespace XL1TTE.GameAbilities.CardActions{
         }
 
     }
+
+
+    [Serializable]
+    public class IceBlast : CardAction
+    {
+        [SerializeField] private float m_damage;
+        public override IEnumerator Execute(Card card, Context context)
+        {
+            var enemy = context.Get<EnemyView>("EnemyTarget");
+
+            var freezeAnim = new ColorWithTextEnemyAnimation(Color.white, Color.blue, "Freeze!");
+
+            IEnumerator DamageEnemy(){
+                enemy.TakeDamage(m_damage);
+                yield break;
+            }
+
+            var effect_jobs = new List<Job>{
+                freezeAnim.GetAnimation(enemy),
+                new JobPlayRoutine(DamageEnemy())
+            };
+
+            return new ParallelJobSequence(effect_jobs, card.m_view).Proccess();
+        }
+
+        public override IEnumerable<DataRequest> GetRequests()
+        {
+            return new List<DataRequest>{
+              new DataRequest("EnemyTarget", typeof(EnemyView))  
+            };
+        }
+    }
 }
